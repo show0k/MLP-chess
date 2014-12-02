@@ -9,6 +9,7 @@ class ChessBoard: public GraphicElement{
 }
 
 public ChessBoard::ChessBoard(){
+	
 	for(int i = 0;i<64;i++){
 		cases[i] =  new ChessCase();
 	}

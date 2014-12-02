@@ -3,6 +3,10 @@
 void GUI(){
 	std::vector<GraphicElement> objGraphiques ;
 	
+	ChessBoard plateau = new ChessBoard();
+	objGraphiques.push_back(plateau);
+
+	
 	while (window.isOpen())
 	{
 		// Process events
