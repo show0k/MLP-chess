@@ -1,31 +1,17 @@
-#include <SFML/Graphics.hpp>
+#include "ClickableElement.h"
 
-class ClickableELement : public GraphicElement{
-	private:
-		Point2I pointDebut, pointFin;
-	
-	public:
-		ClickableELement():GraphicElement();
-		virtual void setStartPoint(Point2I p)
-		void setEndPoint(Point2I p)
-		void pressed();
-		void clicked();
-		void released();
-		void wheeled();
-}
-
-public ClickableELement::ClickableELement(){
+ClickableELement::ClickableELement(){
 
 }
 
-public void ClickableELement::setStartPoint(Point p){
-	pointDebut.x = p.x;
-	pointDebut.y = p.y;
+void ClickableELement::setStartPoint(Point2I p){
+	pointDebut.setX(p.getX());
+	pointDebut.setY(p.getY());
 }
 
-public void ClickableELement::setEndPoint(Point p){
-	pointFin.x = p.x;
-	pointFin.y = p.y;
+void ClickableELement::setEndPoint(Point2I p){
+	pointFin.setX(p.getX());
+	pointFin.setY(p.getY());
 }
 
 

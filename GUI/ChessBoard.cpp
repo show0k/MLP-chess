@@ -1,17 +1,9 @@
-#include <SFML/Graphics.hpp>
+#include "ChessBoard.h"
 
-class ChessBoard: public GraphicElement{
-	private:
-		ChessCase cases[64];
-	
-	public:
-		ChessBoard();
-}
-
-public ChessBoard::ChessBoard(){
+ChessBoard::ChessBoard(){
 	
 	for(int i = 0;i<64;i++){
-		cases[i] =  new ChessCase();
+		//cases[i] =  new ChessCase(i,i);
 	}
 }
 

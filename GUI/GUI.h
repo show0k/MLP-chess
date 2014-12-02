@@ -7,9 +7,14 @@
 #include <stdio.h>
 #include <iostream>
 
+#include "ChessBoard.h"
+
+
+#endif
+
 
 void GUI(void);
 
 
 
-#endif
+
