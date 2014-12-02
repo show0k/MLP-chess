@@ -12,8 +12,6 @@ class GraphicElement: public sf::Drawable{
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states);
 }
 
-virtual 
-
 
 virtual void GraphicElement::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	target.draw(imgs[state], states);

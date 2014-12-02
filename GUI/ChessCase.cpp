@@ -1,4 +1,4 @@
-#include "Chess.hpp"
+
 
 class ChessCase : public ClickableELement {
 	private:
