@@ -1,27 +1,41 @@
 #include "GraphicElement.h"
 
-GraphicElement::GraphicElement(const String &){
-	stateNB = 1;
-	state = 1;
-	p = new Point2I();
-	imgs = malloc(sizeof(sf::Sprite));
+GraphicElement::GraphicElement(const string &){
+	nbState = 1;
+	state = 0;
+	//imgs = (sf::Sprite*)malloc(sizeof(sf::Sprite));
 }
 
 GraphicElement::GraphicElement(){
-	stateNB = 1;
-	state = 1;
-	p = new Point2I();
-	imgs = malloc(sizeof(sf::Sprite));
+	nbState = 1;
+	state = 0;
+	//imgs = (sf::Sprite*)malloc(sizeof(sf::Sprite));
 }
 
-GraphicElement::setSprite(String fileName, int lvl){
-	sf::Texture t = new sf::Texture();
+void GraphicElement::setSprite(string fileName, int lvl){
 	t.loadFromFile(fileName);
-	imgs[lvl] = new sf::Sprite(t);
-	
+	img = sf::Sprite(t);
 }
 
-GraphicElement::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void GraphicElement::setSprite(sf::Sprite sp, int lvl){
+	//imgs[lvl] = sp;
+	img = sp;
+}
+
+/*void GraphicElement::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	target.draw(imgs[state], states);
+}*/
+
+GraphicElement::~GraphicElement(){
+    /*free(imgs);
+	free(p);*/
 }
 
+sf::Sprite& GraphicElement::getSprite(char state){
+	//return imgs[state];
+    return img;
+}
+
+void GraphicElement::putIntoVector(std::vector<GraphicElement> v){
+    //v.push_back(this);
+}

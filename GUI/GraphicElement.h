@@ -1,26 +1,37 @@
-/*#ifndef _GUI
-#define _GUI 1*/
+#ifndef GRAPHICS
+#define GRAPHICS
+#define BLANC 100
+#define NOIR 101
 
-
-#include <SFML/Graphics.hpp>
-#include <iostream>
 #include "Point2I.h"
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
 
+using namespace std; 
 
-//#endif
-
-
-class GraphicElement: public sf::Drawable{
-	private:
-		sf::Sprite *imgs;
+class GraphicElement/*: public sf::Drawable*/{
+	protected:
+		//sf::Sprite *imgs;
+		sf::Sprite img;
+		sf::Texture t;
 		Point2I p;
-		char stateNb;
+		char nbState;
 		char state;
+		
+
 	public:
 		GraphicElement();
 		~GraphicElement();
-		void draw(sf::RenderTarget& target, sf::RenderStates states);
+		GraphicElement(const string &);
+		/*void draw(sf::RenderTarget& target, sf::RenderStates states) const;*/
+		void setSprite(string fileName, int lvl);
+		void setSprite(sf::Sprite sp, int lvl);
+		sf::Sprite& getSprite(char state);
+		void putIntoVector(std::vector<GraphicElement> v);
 };
 
-
+#endif
 

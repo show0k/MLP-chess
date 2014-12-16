@@ -1,10 +1,9 @@
-#ifndef _iostream
-#define _iostream 1
+#ifndef includeIO
+#define includeIO 1
 
 #include <iostream>
 
-#endif
-
+using namespace std;
 
 class Point2I{
 	private:
@@ -14,9 +13,12 @@ class Point2I{
 	public:
 		Point2I(int, int);
 		Point2I();
+		~Point2I();
 		int getX();
 		int getY();
 		void setX(int);
 		void setY(int);
+		string toString();
 };
 
+#endif

@@ -5,7 +5,8 @@ class ClickableELement : public GraphicElement{
 		Point2I pointDebut, pointFin;
 	
 	public:
-		ClickableELement(): GraphicElement();
+		//ClickableELement(): GraphicElement();
+		ClickableELement();
 		virtual void setStartPoint(Point2I p);
 		void setEndPoint(Point2I p);
 		void pressed();
