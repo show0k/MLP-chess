@@ -2,10 +2,12 @@ classes :
 
 
 Square:
-Représentation de l'echequier
+Représentation de l'emplacement d'une piece (un numéro)
 
 Move:
 Représentation d'un déplacement et d'une piece
+une piece, une origine, une destination
+Utilisé pour l'API
 
 Board :
 Vue courante du jeu, doit être mise à jour en fonction des différents move et go
