@@ -6,7 +6,7 @@
 #include <iostream> 
 #include <stdint.h>
 
-
+using namespace std;
 // Définit un entier de 0 à 119 qui code l'emplacement sur l'echequier
 
 // Chess représentation
@@ -41,20 +41,27 @@ typedef enum {
 class Square
 {
         public:
-                // Constructors
-                // Square(string sq) fromString(sq) {};
+                // Constructeurs
                 Square(int aSquare = 0) : _square(aSquare) {};
+                Square(string aSquare) {fromString(aSquare);};
 
-                // method
-                bool fromString(char* aSquare) {
-                        int col = aSquare[0] ;
-                        int row = aSquare[1] ;
+                //Conversion implicite vers int
+                operator int() { return _square; } 
+
+
+                // methode
+                bool fromString(string aSquare) {
+                        aSquare[0] = tolower(aSquare[0]);
+                        int col = aSquare[0] - 'a';
+                        int row = aSquare[1] - '1';
+
                         _square = row*10 + col + 21;
                         return (col >= 8 || row >= 8);
                 };
+                uint8_t get(void) {return _square ;} ;
 
         private:
-                uint8_t  _square; // Internal representation, 0 - 119.   
+                uint8_t  _square; // 0 - 119.   
 }; 
 
 
