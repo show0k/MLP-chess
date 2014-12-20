@@ -1,7 +1,12 @@
 #ifndef GRAPHICS
 #define GRAPHICS
+
 #define BLANC 100
 #define NOIR 101
+
+#define MARGE_H 40
+#define MARGE_W 230 
+#define SPRITE_SIZE 80
 
 #include "Point2I.h"
 #include <SFML/System.hpp>
@@ -26,7 +31,7 @@ class GraphicElement/*: public sf::Drawable*/{
 		GraphicElement();
 		~GraphicElement();
 		GraphicElement(const string &);
-		/*void draw(sf::RenderTarget& target, sf::RenderStates states) const;*/
+		void draw(sf::RenderWindow & window);
 		void setSprite(string fileName, int lvl);
 		void setSprite(sf::Sprite sp, int lvl);
 		sf::Sprite& getSprite(char state);

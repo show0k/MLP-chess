@@ -22,9 +22,9 @@ void GraphicElement::setSprite(sf::Sprite sp, int lvl){
 	img = sp;
 }
 
-/*void GraphicElement::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-	target.draw(imgs[state], states);
-}*/
+void GraphicElement::draw(sf::RenderWindow & window){
+	window.draw(img);
+}
 
 GraphicElement::~GraphicElement(){
     /*free(imgs);
