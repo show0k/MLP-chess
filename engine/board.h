@@ -3,22 +3,24 @@
 
 #include <string.h> 
 #include <stdio.h> 
+#include <stdlib.h>
 #include <iostream> 
 #include <stdint.h>
 #include <vector>
 
-#include "square.h"
 #include "move.h"
+#include "utils.h"
 
-#define WHITE 1
-#define BLACK -1
+#define WHITE true
+#define BLACK false
 
 typedef enum // Directions
-{
-    N = 10, S = -10, E = -1, W = 1,
-    NW = 11, SW = -9, NE = 9, SE = -11,
-    NNW = 21, NNE = 19, NWW = 12, NEE = 8,
-    SSW = -19, SSE = -21, SWW = -8, SEE = -12
+{       // Idea from http://chessprogramming.wikispaces.com/Direction
+        nort = 10, sout = -10, east = -1, west = 1,
+        noWe = 11, soWe = -9, noNe = 9, soEa = -11,
+        // Knight
+        noNoWe = 21, noNoEa = 19, noWeWe = 12, noEaEa = 8,
+        soSoWe = -19, soSoEa = -21, soWeWe = -8, soEaEa = -12
 } EDirections;
 
 
@@ -26,15 +28,15 @@ class Board{
 
 public:
         Board(){};
-        bool newGame();
+        void newGame(void);
         bool DoMove(Move &mouve);
         bool UndoMove(Move &mouve);
 
         // Trouve les déplacements possibles pour une pièce donnée
-        std::vector<Move> findLegalMoves(Square sq) ;
+        std::vector<Move> getLegalMoves(Square sq) ;
 
         // Trouve les déplacements possibles pour toutes les pièces
-        std::vector<Move> findAllLegalMoves();
+        std::vector<Move> getAllLegalMoves();
         
         //Fonction d'évaluation
         int getValue() ;
@@ -47,27 +49,19 @@ public:
 
 private:
         
-        void swapPlayer(){_playerToMove = -_playerToMove;}
+        void swapPlayer(){_playerToMove = !_playerToMove;}
 
         // plateau de jeu
-        std::vector<int8_t> _board;
+        std::vector<uint8_t> _board;
 
         // Liste de tous les déplacements effectués
         std::vector<Move> _moveList ; 
 
-        int _playerToMove ;
-
-        
-
-
-
-
-
-
+        // Blanc ou noir
+        bool _playerToMove ;
 
 
 };
-
 
 
 #endif // _BOARD_
