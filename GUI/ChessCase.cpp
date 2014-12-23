@@ -3,12 +3,14 @@
 ChessCase::ChessCase(char a, char b){
 	coord[0] = a+97;
 	coord[1] = 8-b;
-	empty  = false;
+	empty  = true;
+	type = VIDE;
 	setStartPoint(Point2I(a*SPRITE_SIZE + MARGE_W,b*SPRITE_SIZE + MARGE_H));
 	setEndPoint(Point2I((a+1)*SPRITE_SIZE + MARGE_W,(b+1)*SPRITE_SIZE + MARGE_H));
 }
 ChessCase::ChessCase(){
-	empty  = false;
+	empty  = true;
+	type = VIDE;
 	coord[0] = 0;
 	coord[1] = 0;
 }
@@ -25,13 +27,35 @@ ChessCase::~ChessCase(){
 
 void ChessCase::pressed(){
 	//cout << this->toString() << " est cliqué\n";
-	if(!empty)
+	if(empty)
 		cout << this->toString() << " est vide\n";
 	else
-		cout << this->toString() << " est vide\n";
+		cout << this->toString() << " n'est pas vide\n";
 }
 
 void ChessCase::setEmpty(bool c){
 	empty = c;
 }
 
+
+bool ChessCase::operator==(ChessCase const& a){
+	if((a.coord[0] == this->coord[0]) && (a.coord[1] == this->coord[1]))
+		return true;
+	else
+		return false;
+}
+
+void ChessCase::setType(int t){
+	type = t;
+}
+
+int ChessCase::getType(){
+	return type;
+}
+/*void ChessCase::setChessPiece(void *p){
+	piece = p;
+	if(p == NULL)
+		empty = true;
+	else
+		empty = false;
+}*/

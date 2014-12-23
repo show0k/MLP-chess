@@ -1,8 +1,9 @@
 #ifndef GRAPHICS
 #define GRAPHICS
 
-#define BLANC 100
-#define NOIR 101
+#define BLANC 101
+#define NOIR 102
+#define VIDE 104
 
 #define MARGE_H 40
 #define MARGE_W 230 
