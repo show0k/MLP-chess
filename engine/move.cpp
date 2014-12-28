@@ -1,11 +1,20 @@
 #include "move.h"
 
 
-string pieceToStr(uint8_t piece)
-{
+ostream &operator<<(ostream &out, const Move &m) {
 
-    switch(piece)
-    {
+    if (m._pieceCaptured == _)
+        out << '('<< pieceToStr(m._piece) << ':'<< m._squareFrom << ';' << m._squareTo <<')' ;
+    else {
+        out << '('<< m._squareFrom << ';' << m._squareTo <<')' ;
+    }
+    return out ;
+}
+
+
+string pieceToStr(uint8_t piece) {
+
+    switch (piece) {
         case  0:
             return ".";
             break;
@@ -66,19 +75,17 @@ string pieceToStr(uint8_t piece)
 
         default :
             return pieceToStr(X) ;
-    
+
     }
 
 }
 
-string pieceToStr(uint8_t piece,bool color)
-{
-    if(!color)
+string pieceToStr(uint8_t piece, bool color) {
+    if (!color)
         return pieceToStr(piece) ;
     BgColors bg = BgColors();
 
-    switch(piece)
-    {
+    switch (piece) {
         case  0:
             return bg.GREEN + "." + bg.ENDC;
             break;
@@ -139,7 +146,7 @@ string pieceToStr(uint8_t piece,bool color)
 
         default :
             return pieceToStr(X) ;
-    
+
     }
 
 

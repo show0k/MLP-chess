@@ -1,9 +1,9 @@
 #ifndef _SQUARE_H_
 #define _SQUARE_H_
 
-#include <string.h> 
-#include <stdio.h> 
-#include <iostream> 
+#include <string.h>
+#include <stdio.h>
+#include <iostream>
 #include <stdint.h>
 
 using namespace std;
@@ -38,31 +38,47 @@ typedef enum {
 
 
 
-class Square
-{
-        public:
-                // Constructeurs
-                Square(int aSquare = 0) : _square(aSquare) {};
-                Square(string aSquare) {fromString(aSquare);};
+class Square {
+public:
+    // Constructeurs
+    Square(int aSquare = 0) : _square(aSquare) {};
+    Square(string aSquare) {
+        fromString(aSquare);
+    };
 
-                //Conversion implicite vers int
-                operator int() { return _square; } 
+    //Conversion implicite vers int
+    operator int() {
+        return _square;
+    }
+
+    //display
+    friend std::ostream &operator <<(std::ostream &out, const Square &s) {
+        char c = (s._square % 10) + 'a' - 1;
+        char r = (s._square / 10) + '1' - 2;
+        return out << c << r;
+    }
+    
+    // Square operator + {A const &first, A const &second)
+    //     return _square;
+    // }
 
 
-                // methode
-                bool fromString(string aSquare) {
-                        aSquare[0] = tolower(aSquare[0]);
-                        int col = aSquare[0] - 'a';
-                        int row = aSquare[1] - '1';
+    // methode
+    bool fromString(string aSquare) {
+        aSquare[0] = tolower(aSquare[0]);
+        int col = aSquare[0] - 'a';
+        int row = aSquare[1] - '1';
 
-                        _square = row*10 + col + 21;
-                        return (col >= 8 || row >= 8);
-                };
-                uint8_t get(void) {return _square ;} ;
+        _square = row * 10 + col + 21;
+        return (col >= 8 || row >= 8);
+    };
+    uint8_t get(void) {
+        return _square ;
+    } ;
 
-        private:
-                uint8_t  _square; // 0 - 119.   
-}; 
+private:
+    uint8_t  _square; // 0 - 119.
+};
 
 
 
