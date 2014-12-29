@@ -9,6 +9,7 @@ ChessCase *caseSelect;
 ChessPiece *pieceSelect;
 std::vector<GraphicElement*> objGraphiques ;
 std::vector<GraphicElement*> interface ;
+
 void GUI(){
 	srand (time(NULL));
     	
@@ -216,11 +217,13 @@ void addDeadPony(std::vector<GraphicElement*> &vect, char color){
 	switch(color){
 		case NOIR:vect.push_back(new GraphicElement("noir-mort.png"));
 			vect[vect.size()-1]->setRotation(rand()%360);
-			vect[vect.size()-1]->setPosition(Point2I(1100-MARGE_W/2-20+rand()%40,360-20+rand()%40));
+			vect[vect.size()-1]->setScale(1.5);
+			vect[vect.size()-1]->setPosition(Point2I(1100-MARGE_W/2-40+rand()%80,360-40+rand()%80));
 			break;
 		case BLANC:vect.push_back(new GraphicElement("blanc-mort.png"));
-			//vect[vect.size()-1]->setRotation(rand()%360);
-			//vect[vect.size()-1]->setPosition(Point2I(MARGE_W/2-20+rand()%40,360-20+rand()%40));
+			vect[vect.size()-1]->setRotation(rand()%360);
+			vect[vect.size()-1]->setScale(1.5);
+			vect[vect.size()-1]->setPosition(Point2I(MARGE_W/2-40+rand()%80,360-40+rand()%80));
 			break;
 	}
 }
