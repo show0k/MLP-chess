@@ -11,8 +11,8 @@ class ChessBoard: public GraphicElement	{
 	public:
 		ChessBoard();
 		~ChessBoard();
-		ChessCase notifyCases(sf::Event event);
-		ChessCase& caseAt(int i, int j);
+		ChessCase* notifyCases(sf::Event event);
+		ChessCase* caseAt(int i, int j);
 };
 
 #endif

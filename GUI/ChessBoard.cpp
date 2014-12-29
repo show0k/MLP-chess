@@ -12,18 +12,18 @@ ChessBoard::ChessBoard(){
 ChessBoard::~ChessBoard(){
 }
 
-ChessCase ChessBoard::notifyCases(sf::Event event){
+ChessCase* ChessBoard::notifyCases(sf::Event event){
 	for(int i = 0;i<8;i++){
 		for(int j = 0;j<8;j++){
 			if(cases[i][j]->isInside(event)){
 				//cases[i][j]->pressed();
-				return *cases[i][j];
+				return cases[i][j];
 			}
 		}
 	}
-	return ChessCase(0,0);
+	return cases[0][0];
 }
 
-ChessCase& ChessBoard::caseAt(int i, int j){
-	return *cases[i][j];
+ChessCase* ChessBoard::caseAt(int i, int j){
+	return cases[i][j];
 }

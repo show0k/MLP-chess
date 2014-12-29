@@ -6,5 +6,6 @@ void stringSplit(string s, char c, std::vector<string> &splited);
 void parseAction(string action);
 void addBloodSpot(std::vector<GraphicElement*> &vect, int x, int y);
 char convertCharToArrayIndex(char lettre);
+void addDeadPony(std::vector<GraphicElement*> &vect, char color);
 
 
