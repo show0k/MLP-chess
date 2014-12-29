@@ -18,16 +18,19 @@ void testSquare (void)
 
 int main()
 {
+    vector<Move> moveLst = vector<Move>() ;
     Board b = Board();
     b.newGame();
     cout << b ;
-    vector<Move> moveLst = b.getLegalMoves(E7) ;
+    b.getAllLegalMoves(moveLst) ;
+    b.getLegalMoves(moveLst,Square("b2")) ;
 
     for (Move move : moveLst) {
 
         cout << move << " " ;
 
     }
+
 
 
 

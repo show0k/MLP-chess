@@ -13,7 +13,7 @@ using namespace std;
 
 
 typedef enum {
-    _  = 0,   // Empty
+    _  = 7,   // Empty
     P = 1,   // White Pawn
     N = 2,   // White Knight
     B = 3,   // White Bishop
@@ -21,12 +21,12 @@ typedef enum {
     Q = 5,   // White Queen
     K = 6,   // White King
 
-    p = 7,   // Black Pawn
-    n = 8,   // Black Knight
-    b = 9,   // Black Bishop
-    r = 10,   // Black Rook
-    q = 11,   // Black Queen
-    k = 12,   // Black King
+    p = 8,   // Black Pawn
+    n = 9,   // Black Knight
+    b = 10,   // Black Bishop
+    r = 11,   // Black Rook
+    q = 12,   // Black Queen
+    k = 13,   // Black King
     X = 99   // INVALID
 
 } EPieceCode;

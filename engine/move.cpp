@@ -15,7 +15,7 @@ ostream &operator<<(ostream &out, const Move &m) {
 string pieceToStr(uint8_t piece) {
 
     switch (piece) {
-        case  0:
+        case  7:
             return ".";
             break;
 
@@ -45,27 +45,27 @@ string pieceToStr(uint8_t piece) {
 
 
 
-        case 7:
+        case 8:
             return "p";
             break;
 
-        case 8:
+        case 9:
             return "n";
             break;
 
-        case 9:
+        case 10:
             return "b";
             break;
 
-        case 10:
+        case 11:
             return "r";
             break;
 
-        case 11:
+        case 12:
             return "q";
             break;
 
-        case 12:
+        case 13:
             return "k";
             break;
 
@@ -86,7 +86,7 @@ string pieceToStr(uint8_t piece, bool color) {
     BgColors bg = BgColors();
 
     switch (piece) {
-        case  0:
+        case  7:
             return bg.GREEN + "." + bg.ENDC;
             break;
 
@@ -116,27 +116,27 @@ string pieceToStr(uint8_t piece, bool color) {
 
 
 
-        case 7:
+        case 8:
             return bg.BLUE + "p" + bg.ENDC;
             break;
 
-        case 8:
+        case 9:
             return bg.BLUE + "n" + bg.ENDC;
             break;
 
-        case 9:
+        case 10:
             return bg.BLUE + "b" + bg.ENDC;
             break;
 
-        case 10:
+        case 11:
             return bg.BLUE + "r" + bg.ENDC;
             break;
 
-        case 11:
+        case 12:
             return bg.BLUE + "q" + bg.ENDC;
             break;
 
-        case 12:
+        case 13:
             return bg.BLUE + "k" + bg.ENDC;
             break;
 

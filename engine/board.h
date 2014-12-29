@@ -11,8 +11,9 @@
 #include "move.h"
 #include "utils.h"
 
-#define WHITE true
-#define BLACK false
+#define WHITE 1
+#define BLACK 0
+#define BLACKANDWHITE 2
 
 typedef enum { // Directions
     // Idea from http://chessprogramming.wikispaces.com/Direction
@@ -38,10 +39,10 @@ public:
     friend ostream &operator<<(ostream &out, const Board &b);
 
     // Trouve les déplacements possibles pour une pièce donnée
-    std::vector<Move> getLegalMoves(Square sq) ;
+    void getLegalMoves(vector<Move> &moveLst, Square sq, char player = BLACKANDWHITE) ;
 
     // Trouve les déplacements possibles pour toutes les pièces
-    std::vector<Move> getAllLegalMoves();
+    void getAllLegalMoves(vector<Move> &moveLst, char player = BLACKANDWHITE);
 
     //Fonction d'évaluation
     int getValue() ;
@@ -49,11 +50,15 @@ public:
     // A déplacer dans Move
     bool IsMoveValid(Move &move);
 
+    void swapPlayers() {
+        if (_playerToMove == WHITE)
+            _playerToMove = BLACK;
+        else
+            _playerToMove = WHITE ;
+
+    };
 private:
 
-    void swapPlayer() {
-        _playerToMove = !_playerToMove;
-    }
 
     // plateau de jeu
     std::vector<uint8_t> _board;
@@ -62,7 +67,7 @@ private:
     std::vector<Move> _moveList ;
 
     // Blanc ou noir
-    bool _playerToMove ;
+    char _playerToMove ;
 
 
 };
