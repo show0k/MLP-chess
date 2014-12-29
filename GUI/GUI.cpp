@@ -149,11 +149,11 @@ void parseAction(string action){	// move A3 B9
 			cout << " va en "<< pieceSelect->toString();
 			if(pieceActu != NULL){
 				cout<<"et mange "<<s<<" \n";
-				pieceActu->slain();
 				int x = (caseActu->getCoord()[0]-97) *SPRITE_SIZE +MARGE_W+ SPRITE_SIZE/2;
 				int y = (8-caseActu->getCoord()[1]) *SPRITE_SIZE+MARGE_H + SPRITE_SIZE/2;
 				addBloodSpot(objGraphiques, x, y);
-				addDeadPony(objGraphiques, pieceActu->getType());
+				addDeadPony(objGraphiques, pieceActu->getColor());
+				pieceActu->slain();
 			}
 			if(!(pieceSelect->getCase()==caseActu))
 				cout<<"Ca na pas marché\n";
@@ -162,7 +162,7 @@ void parseAction(string action){	// move A3 B9
 			cout<<"Aucune pièce selectionnée\n";
 		}
 	}
-	else if(stringContains(action, "goto")){
+	else if(stringContains(action, "goto")){ // INCOMPLET CAR INUTILE: UTILISER MOVE
 		char lettre = convertCharToArrayIndex(action.at(5)), chiffre = 8- (action.at(6)-40);
 		caseActu = plateau.caseAt(lettre, chiffre);
 		if(pieceSelect->notNull()){
@@ -213,11 +213,10 @@ char convertCharToArrayIndex(char lettre){
 }
 
 void addDeadPony(std::vector<GraphicElement*> &vect, char color){
-	cout<<(int)(color);
 	switch(color){
 		case NOIR:vect.push_back(new GraphicElement("noir-mort.png"));
-			//vect[vect.size()-1]->setRotation(rand()%360);
-			//vect[vect.size()-1]->setPosition(Point2I(720-MARGE_W/2-20+rand()%40,360-20+rand()%40));
+			vect[vect.size()-1]->setRotation(rand()%360);
+			vect[vect.size()-1]->setPosition(Point2I(1100-MARGE_W/2-20+rand()%40,360-20+rand()%40));
 			break;
 		case BLANC:vect.push_back(new GraphicElement("blanc-mort.png"));
 			//vect[vect.size()-1]->setRotation(rand()%360);
