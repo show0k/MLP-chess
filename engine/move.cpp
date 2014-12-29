@@ -3,12 +3,17 @@
 
 ostream &operator<<(ostream &out, const Move &m) {
 
-    if (m._pieceCaptured == _)
-        out << '('<< pieceToStr(m._piece) << ':'<< m._squareFrom << ';' << m._squareTo <<')' ;
+    if (m._piecePromoted == _)
+        out  << m._squareFrom << m._squareTo ;
     else {
-        out << '('<< m._squareFrom << ';' << m._squareTo <<')' ;
+        out  << m._squareFrom << m._squareTo << m._piecePromoted;
     }
     return out ;
+}
+
+void Move::fromString(string& move) {
+    _squareFrom.fromString(move.substr(0, 2)) ;
+    _squareTo.fromString(move.substr(2, 2)) ;
 }
 
 

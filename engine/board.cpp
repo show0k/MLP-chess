@@ -53,7 +53,7 @@ void Board::newGame(vector<uint8_t> &backupGame) {
 
 
 
-void Board::DoMove(Move &move) {
+void Board::doMove(Move &move) {
 
     _board[move.getSquareTo()] = _board[move.getSquareFrom()];
     _board[move.getSquareFrom()] = _ ;
@@ -70,7 +70,7 @@ void Board::DoMove(Move &move) {
 
 }
 
-void Board::UndoMove(Move &move) {
+void Board::undoMove(Move &move) {
 
 
     _board[move.getSquareFrom()] = move.getPiece();
@@ -489,6 +489,8 @@ void Board::getAllLegalMoves(vector<Move> &moveLst, int8_t player) {
 
     Square sq ;
     moveLst.clear();
+    if (player == PLAYERTOMOVE)
+        player = _playerToMove ;
     for (int i = 8 ; i > 0 ; i-- ) {
         for (int j = 0; j < 8; j++) {
             sq = 10 * (i + 1) + j + 1 ;

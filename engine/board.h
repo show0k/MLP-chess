@@ -1,7 +1,7 @@
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
-#include <string.h>
+#include <string>
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -14,6 +14,7 @@
 #define WHITE 1
 #define BLACK -1
 #define BLACKANDWHITE 2
+#define PLAYERTOMOVE 3
 
 
 typedef enum { // Directions
@@ -32,29 +33,33 @@ int materialWt(int8_t pieceCode) ;
 class Board {
 
 public:
-    Board() {};
+    Board() :_playerToMove(WHITE) {};
 
 
     void newGame(void);
     void newGame(vector<uint8_t> &backupGame);
-    void DoMove(Move &move);
-    void UndoMove(Move &move);
+    void doMove(Move &move);
+    void undoMove(Move &move);
 
 
     // display
     friend ostream &operator<<(ostream &out, const Board &b);
 
     // fin all legal move for a Square (player input is only use for getAllLegalMoves)
-    void getLegalMoves(vector<Move> &moveLst, Square sq, int8_t player = BLACKANDWHITE) ;
+    void getLegalMoves(vector<Move> &moveLst, Square sq, int8_t player = BLACKANDWHITE) ;    
 
     // find all legal moves for all squares
-    void getAllLegalMoves(vector<Move> &moveLst, int8_t player = BLACKANDWHITE);
+    void getAllLegalMoves(vector<Move> &moveLst, int8_t player = PLAYERTOMOVE);
 
     //Fonction d'évaluation
     int32_t getEvaluation() ;
 
     // A déplacer dans Move
     bool IsMoveValid(Move &move);
+
+    int8_t getPlayer() {
+        return _playerToMove ;
+    }
 
     const vector<uint8_t> INIT_GAME {
         X, X, X, X, X, X, X, X, X, X,

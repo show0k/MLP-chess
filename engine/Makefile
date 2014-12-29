@@ -1,6 +1,8 @@
 sources  = main.cpp
 sources += board.cpp
 sources += move.cpp
+sources += ia.cpp
+sources += api.cpp
 
 program = chessEngine
 

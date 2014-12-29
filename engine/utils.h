@@ -1,6 +1,6 @@
 #ifndef _UTILS_H_
 #define  _UTILS_H_
-#include <string.h> 
+#include <string> 
 #include <stdio.h> 
 
 using namespace std;
