@@ -12,8 +12,9 @@
 #include "utils.h"
 
 #define WHITE 1
-#define BLACK 0
+#define BLACK -1
 #define BLACKANDWHITE 2
+
 
 typedef enum { // Directions
     // Idea from http://chessprogramming.wikispaces.com/Direction
@@ -25,30 +26,52 @@ typedef enum { // Directions
     soSoWe = -19, soSoEa = -21, soWeWe = -8, soEaEa = -12
 } EDirections;
 
+// return weight of each piece (usefull for evaluation)
+int materialWt(int8_t pieceCode) ;
 
 class Board {
 
 public:
     Board() {};
+
+
     void newGame(void);
-    bool DoMove(Move &mouve);
-    bool UndoMove(Move &mouve);
+    void newGame(vector<uint8_t> &backupGame);
+    void DoMove(Move &move);
+    void UndoMove(Move &move);
 
 
     // display
     friend ostream &operator<<(ostream &out, const Board &b);
 
-    // Trouve les déplacements possibles pour une pièce donnée
-    void getLegalMoves(vector<Move> &moveLst, Square sq, char player = BLACKANDWHITE) ;
+    // fin all legal move for a Square (player input is only use for getAllLegalMoves)
+    void getLegalMoves(vector<Move> &moveLst, Square sq, int8_t player = BLACKANDWHITE) ;
 
-    // Trouve les déplacements possibles pour toutes les pièces
-    void getAllLegalMoves(vector<Move> &moveLst, char player = BLACKANDWHITE);
+    // find all legal moves for all squares
+    void getAllLegalMoves(vector<Move> &moveLst, int8_t player = BLACKANDWHITE);
 
     //Fonction d'évaluation
-    int getValue() ;
+    int32_t getEvaluation() ;
 
     // A déplacer dans Move
     bool IsMoveValid(Move &move);
+
+    const vector<uint8_t> INIT_GAME {
+        X, X, X, X, X, X, X, X, X, X,
+        X, X, X, X, X, X, X, X, X, X,
+        X, R, N, B, Q, K, B, N, R, X,
+        X, P, P, P, P, P, P, P, P, X,
+        X, _, _, _, _, _, _, _, _, X,
+        X, _, _, _, _, _, _, _, _, X,
+        X, _, _, _, _, _, _, _, _, X,
+        X, _, _, _, _, _, _, _, _, X,
+        X, p, p, p, p, p, p, p, p, X,
+        X, r, n, b, q, k, b, n, r, X,
+        X, X, X, X, X, X, X, X, X, X,
+        X, X, X, X, X, X, X, X, X, X
+    } ;
+private:
+
 
     void swapPlayers() {
         if (_playerToMove == WHITE)
@@ -57,17 +80,18 @@ public:
             _playerToMove = WHITE ;
 
     };
-private:
-
-
     // plateau de jeu
     std::vector<uint8_t> _board;
 
     // Liste de tous les déplacements effectués
     std::vector<Move> _moveList ;
 
-    // Blanc ou noir
-    char _playerToMove ;
+    // Black or white
+    int8_t _playerToMove ;
+
+    // count the occurenceof each piece on the board
+    // usefull for evaluation
+    vector<int> _pieceCounter ;
 
 
 };

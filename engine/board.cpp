@@ -15,32 +15,118 @@ ostream &operator<<(ostream &out, const Board &b) { // output
     return out;
 }
 
-void Board::newGame() {
-    uint8_t initial[120] = {
-        X, X, X, X, X, X, X, X, X, X,
-        X, X, X, X, X, X, X, X, X, X,
-        X, R, N, B, Q, K, B, N, R, X,
-        X, P, P, P, P, P, P, P, P, X,
-        X, _, _, _, _, _, _, _, _, X,
-        X, _, _, _, _, _, _, _, _, X,
-        X, _, _, _, _, _, _, _, _, X,
-        X, _, _, _, _, _, _, _, _, X,
-        X, p, p, p, p, p, p, p, p, X,
-        X, r, n, b, q, k, b, n, r, X,
-        X, X, X, X, X, X, X, X, X, X,
-        X, X, X, X, X, X, X, X, X, X
-    } ;
+int materialWt(int8_t pieceCode) {
 
+    switch (pieceCode) {
+        case p: case P: return 1; break;
+        case b: case B: case n: case N: return 3; break;
+        case r: case R: return 5; break;
+        case q: case Q: return 9; break;
+        case k: case K: return 200; break;
+        default : return 0 ;
+    }
+
+}
+
+void Board::newGame(void) {
+
+    _pieceCounter.clear();
+    _pieceCounter.reserve(100);
     _board.reserve(120);
     for (int i = 0; i < 120; i++) {
-        _board[i] = initial[i];
-        //cout << _board[i] <<" ";
+        _pieceCounter[INIT_GAME[i]] += 1 ;
+        _board[i] = INIT_GAME[i];
+    }
+}
+
+void Board::newGame(vector<uint8_t> &backupGame) {
+
+    _pieceCounter.clear();
+    _pieceCounter.reserve(100);
+    _board.reserve(120);
+    for (int i = 0; i < 120; i++) {
+        _pieceCounter[backupGame[i]] += 1 ;
+        _board[i] = backupGame[i];
     }
 }
 
 
 
-void Board::getLegalMoves(std::vector<Move> &moveLst, Square sq, char player) {
+
+void Board::DoMove(Move &move) {
+
+    _board[move.getSquareTo()] = _board[move.getSquareFrom()];
+    _board[move.getSquareFrom()] = _ ;
+    if (move.getPiecePromoted() != _) {
+        _board[move.getSquareTo()] = move.getPiecePromoted();
+        _pieceCounter[move.getPiecePromoted()] += 1 ;
+        _pieceCounter[move.getPiece()] -= 1 ;
+    }
+    if (move.getPieceCaptured() != _) {
+        _pieceCounter[move.getPieceCaptured()] -= 1 ;
+    }
+
+    swapPlayers() ;
+
+}
+
+void Board::UndoMove(Move &move) {
+
+
+    _board[move.getSquareFrom()] = move.getPiece();
+    _board[move.getSquareTo()] = move.getPieceCaptured();
+
+    //for evaluation
+    if (move.getPieceCaptured() != _) {
+        _pieceCounter[move.getPieceCaptured()] += 1 ;
+    }
+    if (move.getPiecePromoted() != _) {
+         _pieceCounter[move.getPiecePromoted()] -= 1 ;
+        _pieceCounter[move.getPiece()] += 1 ;
+    }
+
+    swapPlayers();
+}
+/**
+* inspired from http://chessprogramming.wikispaces.com/Evaluation
+* material score depending on the piece value
+* mobility score depending on the number of legal values
+*
+*/
+
+int32_t Board::getEvaluation() {
+
+    vector<Move> moveLst = vector<Move>() ;
+
+    // weight from Larry Kaufman
+    int32_t materialScore =
+        10000 * (_pieceCounter[K] - _pieceCounter[k])
+        + 1000 * (_pieceCounter[Q] - _pieceCounter[q])
+        + 525 * (_pieceCounter[R] - _pieceCounter[r])
+        + 350 * (_pieceCounter[B] - _pieceCounter[b])
+        + 350 * (_pieceCounter[N] - _pieceCounter[n])
+        + 100 * (_pieceCounter[P] - _pieceCounter[p]) ;
+
+    // TODO :
+    // add piece Sqaure table : https://chessprogramming.wikispaces.com/Simplified+evaluation+function
+    // add bonus for bishops complementarity
+    // add Penalty for the rook pair
+
+
+    getAllLegalMoves(moveLst, WHITE) ;
+    int32_t wMobility = moveLst.size() ;
+    moveLst.clear();
+    getAllLegalMoves(moveLst, BLACK);
+    int32_t bMobility = moveLst.size() ;
+
+    int32_t mobilityScore = 5 * (wMobility - bMobility) ;
+
+
+    return (materialScore + mobilityScore) * _playerToMove ;
+}
+
+
+void Board::getLegalMoves(std::vector<Move> &moveLst, Square sq, int8_t player) {
     // vector<Move> moveLst = vector<Move>();
     int8_t piece = _board[sq];
     Square sqDest ;
@@ -399,7 +485,7 @@ void Board::getLegalMoves(std::vector<Move> &moveLst, Square sq, char player) {
 
 }
 
-void Board::getAllLegalMoves(vector<Move> &moveLst, char player) {
+void Board::getAllLegalMoves(vector<Move> &moveLst, int8_t player) {
 
     Square sq ;
     moveLst.clear();

@@ -56,12 +56,25 @@ public:
     // methods
     bool fromString(string move);
     bool fromInt(int from, int to);
+
+    uint8_t getPiece(void) {
+        return _piece ;
+    };
+
     Square getSquareFrom(void) {
         return _squareFrom;
     };
     Square getSquareTo(void) {
         return _squareTo ;
     };
+    int8_t getPieceCaptured() {
+        return _pieceCaptured;
+    };
+    int8_t getPiecePromoted() {
+        return _piecePromoted;
+    };
+
+
     bool isValid(void);
     bool isItACapture(void);
 
