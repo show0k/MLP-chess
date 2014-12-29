@@ -78,10 +78,10 @@ void Board::UndoMove(Move &move) {
 
     //for evaluation
     if (move.getPieceCaptured() != _) {
-        _pieceCounter[move.getPieceCaptured()] += 1 ;
+        _pieceCounter[move.getPieceCaptured()] += 1;
     }
     if (move.getPiecePromoted() != _) {
-         _pieceCounter[move.getPiecePromoted()] -= 1 ;
+        _pieceCounter[move.getPiecePromoted()] -= 1 ;
         _pieceCounter[move.getPiece()] += 1 ;
     }
 
