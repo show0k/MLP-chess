@@ -19,6 +19,7 @@ class ChessCase : public ClickableELement {
 		void setEmpty(bool c);
 		void setType(int t);
 		int getType();
+		char* getCoord();
 		//void setChessPiece(void *p);
 		
 

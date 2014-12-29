@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
+#include <time.h>
 
 using namespace std; 
 
@@ -31,12 +32,15 @@ class GraphicElement/*: public sf::Drawable*/{
 	public:
 		GraphicElement();
 		~GraphicElement();
-		GraphicElement(const string &);
+		GraphicElement(const string s);
 		void draw(sf::RenderWindow & window);
 		void setSprite(string fileName, int lvl);
 		void setSprite(sf::Sprite sp, int lvl);
 		sf::Sprite& getSprite(char state);
 		void putIntoVector(std::vector<GraphicElement> v);
+		void setPosition(Point2I p);
+		void setRotation(float angle);
+		void setScale(float size);
 };
 
 #endif

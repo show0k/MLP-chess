@@ -1,9 +1,9 @@
 #include "GraphicElement.h"
 
-GraphicElement::GraphicElement(const string &){
+GraphicElement::GraphicElement(const string s){
 	nbState = 1;
 	state = 0;
-	//imgs = (sf::Sprite*)malloc(sizeof(sf::Sprite));
+	setSprite(s, 0);
 }
 
 GraphicElement::GraphicElement(){
@@ -39,3 +39,18 @@ sf::Sprite& GraphicElement::getSprite(char state){
 void GraphicElement::putIntoVector(std::vector<GraphicElement> v){
     //v.push_back(this);
 }
+
+void GraphicElement::setPosition(Point2I p){
+	img.setPosition(p.getX(), p.getY());
+}
+
+void GraphicElement::setRotation(float angle){
+	img.setOrigin(SPRITE_SIZE/2, SPRITE_SIZE/2);
+	img.setRotation(angle);
+}
+
+void GraphicElement::setScale(float size){
+	img.setOrigin(SPRITE_SIZE/2, SPRITE_SIZE/2);
+	img.setScale(size, size);
+}
+

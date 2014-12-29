@@ -15,6 +15,10 @@ ChessCase::ChessCase(){
 	coord[1] = 0;
 }
 
+char* ChessCase::getCoord(){
+	return coord;
+}
+
 string ChessCase::toString(){
 	string info = "(";
 	info = info.append(1u,coord[0]) + ",";
