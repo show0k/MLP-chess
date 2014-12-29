@@ -15,7 +15,6 @@ class BgColors
         string WARNING = "\033[93m" ;
         string FAIL = "\033[91m" ;
         string ENDC = "\033[0m" ;
-
 } ;
 
 #endif  // _UTILS_H_

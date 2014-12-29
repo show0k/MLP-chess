@@ -70,7 +70,7 @@ string pieceToStr(uint8_t piece) {
             break;
 
         case 99:
-            return "\u2422";
+            return "X";
             break;
 
         default :
@@ -141,7 +141,7 @@ string pieceToStr(uint8_t piece, bool color) {
             break;
 
         case 99:
-            return "\u2422";
+            return "X";
             break;
 
         default :
