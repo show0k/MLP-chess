@@ -13,6 +13,22 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 
+    // Parse input to start the api
+    int8_t api_state = GUI ;
+    if (argc > 1) {
+        if (strcmp(argv[1],"--terminal") == 0 || strcmp(argv[1],"-t") == 0 ) {
+            api_state = TERMINAL;
+            argc = 1;
+        }
+    }
+
+    API api = API(api_state) ;
+    api.loop(argc, argv);
+
+
+
+
+
     // vector<Move> moveLst = vector<Move>() ;
     // Board b = Board();
     // b.newGame();
@@ -47,9 +63,8 @@ int main(int argc, char *argv[]) {
     //     api.loop(argc, argv);
     // }
 
-    API api = API(TERMINAL) ;
-    api.loop(argc, argv);
-    
+
+
 
 }
 

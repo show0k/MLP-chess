@@ -11,7 +11,7 @@ ostream &operator<<(ostream &out, const Move &m) {
     return out ;
 }
 
-void Move::fromString(string& move) {
+void Move::fromString(string &move) {
     _squareFrom.fromString(move.substr(0, 2)) ;
     _squareTo.fromString(move.substr(2, 2)) ;
 }
@@ -122,27 +122,27 @@ string pieceToStr(uint8_t piece, bool color) {
 
 
         case 8:
-            return bg.INVERSE_GREY+ "p" + bg.ENDC;
+            return bg.INVERSE_GREY + "p" + bg.ENDC;
             break;
 
         case 9:
-            return bg.INVERSE_GREY+ "n" + bg.ENDC;
+            return bg.INVERSE_GREY + "n" + bg.ENDC;
             break;
 
         case 10:
-            return bg.INVERSE_GREY+ "b" + bg.ENDC;
+            return bg.INVERSE_GREY + "b" + bg.ENDC;
             break;
 
         case 11:
-            return bg.INVERSE_GREY+ "r" + bg.ENDC;
+            return bg.INVERSE_GREY + "r" + bg.ENDC;
             break;
 
         case 12:
-            return bg.INVERSE_GREY+ "q" + bg.ENDC;
+            return bg.INVERSE_GREY + "q" + bg.ENDC;
             break;
 
         case 13:
-            return bg.INVERSE_GREY+ "k" + bg.ENDC;
+            return bg.INVERSE_GREY + "k" + bg.ENDC;
             break;
 
         case 99:
@@ -153,7 +153,24 @@ string pieceToStr(uint8_t piece, bool color) {
             return pieceToStr(X) ;
 
     }
+}
 
-
-
+uint8_t pieceFromStr(const char pieceStr) {
+    switch (pieceStr) {
+        case '_' : return _; break;   // Empty
+        case 'P' : return P; break;  // White Pawn
+        case 'N' : return N; break;  // White Knight
+        case 'B' : return B; break;  // White Bishop
+        case 'R' : return R; break;  // White Rook
+        case 'Q' : return Q; break;  // White Queen
+        case 'K' : return K; break;  // White King
+        case 'p' : return p; break;  // Black Pawn
+        case 'n' : return n; break;  // Black Knight
+        case 'b' : return b; break;   // Black Bishop
+        case 'r' : return r; break;  // Black Rook
+        case 'q' : return q; break;  // Black Queen
+        case 'k' : return k; break;  // Black King
+        case 'X' : return X; break; // INVALID
+    }
+    return X ;
 }

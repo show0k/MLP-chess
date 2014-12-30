@@ -34,6 +34,7 @@ typedef enum {
 //Fonctions
 string pieceToStr(uint8_t piece);
 string pieceToStr(uint8_t piece, bool color) ;
+uint8_t pieceFromStr(const char pieceStr) ;
 
 
 class Move {
@@ -96,15 +97,6 @@ public:
     int8_t getPiecePromoted() {
         return _piecePromoted;
     };
-
-    int compare(Move &move) {
-        if (move._squareFrom == _squareFrom && move._squareTo == _squareTo)
-            return 0 ;
-        else return 1 ;
-
-    }
-    bool isValid(void);
-    bool isItACapture(void);
 
 private :
 
