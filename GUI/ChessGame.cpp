@@ -9,15 +9,18 @@ ChessPieceSet michelNoir = ChessPieceSet(NOIR);
 ChessBoard plateau;
 int nbMouvementsAffiches = 0;
 std::vector<ChessCase*> casesAutorisees;
-int joueurActu;
+int joueurActu = 0;
 
 extern std::vector<GraphicElement*> interface ;
+extern std::vector<ClickableElement*> boutons ;
+
 void gameInitialisation(){
 	michelBlanc = ChessPieceSet(BLANC);
 	michelNoir = ChessPieceSet(NOIR);
 	michelBlanc.addPiecesToBoard(plateau);
 	michelNoir.addPiecesToBoard(plateau);
 	joueurActu = BLANC;
+	displayPlayer(joueurActu);
 }
 
 void displayGameIn(sf::RenderWindow &window){
@@ -128,6 +131,7 @@ void notifyGame(sf::Event event){
 		if(caseSelect->isInVector(casesAutorisees)){
 			makePieceMove(caseSelect);
 			resetPossibleMove();
+			changePlayer();
 		}
 	}
 	switch(caseSelect->getType()){
@@ -186,10 +190,56 @@ void makePieceMove(ChessCase *c){
 			pieceActu->slain();
 		}else
 			cout<<"\n";
-		if(!(pieceSelect->getCase()==c))
-			cout<<"Ca na pas marché\n";
+		string cmd = "move ";
+		char l = pieceSelect->getCase()->getCoord()[0];
+		char ch = 8-pieceSelect->getCase()->getCoord()[1] + 48;
+		cmd = cmd.append(1u,l);
+		cmd = cmd.append(1u,ch);
+		l = c->getCoord()[0];
+		ch = c->getCoord()[1] + 48;
+		cmd = cmd.append(1u,l);
+		cmd = cmd.append(1u,ch);
+		sendCommand(cmd);
 	}
 	else{
 		cout<<"Aucune pièce selectionnée\n";
+	}
+}
+
+void changePlayer(){
+	interface.pop_back();
+	boutons.pop_back();
+	if(joueurActu == BLANC)
+		joueurActu = NOIR;
+	else
+		joueurActu = BLANC;
+	displayPlayer(joueurActu);
+}
+
+void displayPlayer(int color){
+	sf::Vector2u v;
+	Point2I p1;
+	Point2I p2;
+	if(joueurActu == NOIR){
+		interface.push_back(new GraphicElement("blackIsPlaying.png"));
+
+		v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
+		p1 =  Point2I(WINDOW_W - v.x - 20, 50);
+		p2 =  Point2I(WINDOW_W + 20 , v.y + 50);
+
+		interface[interface.size()-1]->setPosition(p1);
+		boutons.push_back(new ClickableElement(p1, p2, &playerNumberSetTo2));
+		//cout<<"Joueur noir joue\n";
+	}else{
+		interface.push_back(new GraphicElement("whiteIsPlaying.png"));
+
+		v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
+		
+		p1 =  Point2I(20, 50);
+		p2 =  Point2I(20 + v.x, v.y + 50);
+
+		interface[interface.size()-1]->setPosition(p1);
+		boutons.push_back(new ClickableElement(p1, p2, &playerNumberSetTo2));
+		//cout<<"Joueur blanc joue\n";
 	}
 }

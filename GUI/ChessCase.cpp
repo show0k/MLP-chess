@@ -61,7 +61,7 @@ int ChessCase::getType(){
 }
 
 void ChessCase::baseAction(){
-	cout<<"Case"<<toString()<<" envoi la commande:"<<sendShow()<<"\n";
+	sendShow();
 }
 
 bool ChessCase::isInVector(std::vector<ChessCase*> v){
