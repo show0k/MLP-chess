@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
     //     api.loop(argc, argv);
     // }
 
-    API api = API(GUI) ;
+    API api = API(TERMINAL) ;
     api.loop(argc, argv);
     
 

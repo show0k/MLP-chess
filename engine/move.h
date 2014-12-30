@@ -47,23 +47,32 @@ public:
         _piece(piece), _squareFrom(from), _squareTo(to), _pieceCaptured(pieceCaptured), _piecePromoted(piecePromoted) {}
 
 
+    //Copy constructor
+    Move(const Move &m) {
+        _piece = m._piece;
+        _squareFrom = m._squareFrom;
+        _pieceCaptured = m._pieceCaptured;
+        _piecePromoted = m._piecePromoted;
+    } ;
+
     // display
     friend ostream &operator<<(ostream &out, const Move &m);
 
-    // operator string() {
-    //     ostringstream os;
-    //     os << _squareFrom << _squareTo ;
-    //     return os.str();
-    // }
+    // overload operator
+    friend bool operator==(Move &lhs, Move &rhs) {
+        return lhs._squareFrom == rhs._squareFrom && lhs._squareTo == rhs._squareTo;
+    }
+    friend bool operator!=(Move &lhs, Move &rhs) {
+        return lhs._squareFrom != rhs._squareFrom || lhs._squareTo != rhs._squareTo;
+    }
 
-    // operator string() {
-    //     // return str(_squareFrom) + str(_squareTo);
-    // }
 
     // methods
-    void fromString(string& move);
+    void fromString(string &move);
     bool fromInt(int from, int to);
 
+
+    //  Getter and setter
     uint8_t getPiece(void) {
         return _piece ;
     };
@@ -77,12 +86,18 @@ public:
     int8_t getPieceCaptured() {
         return _pieceCaptured;
     };
+    void setPieceCaptured(int8_t piece) {
+        _pieceCaptured = piece ;
+    };
+    void setPiecePromoted(int8_t piece) {
+        _piecePromoted = piece ;
+    };
     int8_t getPiecePromoted() {
         return _piecePromoted;
     };
 
     int compare(Move &move) {
-        if(move._squareFrom == _squareFrom && move._squareTo == _squareTo)
+        if (move._squareFrom == _squareFrom && move._squareTo == _squareTo)
             return 0 ;
         else return 1 ;
 

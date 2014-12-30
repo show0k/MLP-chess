@@ -96,53 +96,53 @@ string pieceToStr(uint8_t piece, bool color) {
             break;
 
         case  1:
-            return bg.YELLOW + "P" + bg.ENDC;
+            return bg.INVERSE_WHITE + "P" + bg.ENDC;
             break;
 
         case 2:
-            return bg.YELLOW + "N" + bg.ENDC;
+            return bg.INVERSE_WHITE + "N" + bg.ENDC;
             break;
 
         case 3:
-            return bg.YELLOW + "B" + bg.ENDC;
+            return bg.INVERSE_WHITE + "B" + bg.ENDC;
             break;
 
         case 4:
-            return bg.YELLOW + "R" + bg.ENDC;
+            return bg.INVERSE_WHITE + "R" + bg.ENDC;
             break;
 
         case 5:
-            return bg.YELLOW + "Q" + bg.ENDC;
+            return bg.INVERSE_WHITE + "Q" + bg.ENDC;
             break;
 
         case 6:
-            return bg.YELLOW + "K" + bg.ENDC;
+            return bg.INVERSE_WHITE + "K" + bg.ENDC;
             break;
 
 
 
         case 8:
-            return bg.BLUE + "p" + bg.ENDC;
+            return bg.INVERSE_GREY+ "p" + bg.ENDC;
             break;
 
         case 9:
-            return bg.BLUE + "n" + bg.ENDC;
+            return bg.INVERSE_GREY+ "n" + bg.ENDC;
             break;
 
         case 10:
-            return bg.BLUE + "b" + bg.ENDC;
+            return bg.INVERSE_GREY+ "b" + bg.ENDC;
             break;
 
         case 11:
-            return bg.BLUE + "r" + bg.ENDC;
+            return bg.INVERSE_GREY+ "r" + bg.ENDC;
             break;
 
         case 12:
-            return bg.BLUE + "q" + bg.ENDC;
+            return bg.INVERSE_GREY+ "q" + bg.ENDC;
             break;
 
         case 13:
-            return bg.BLUE + "k" + bg.ENDC;
+            return bg.INVERSE_GREY+ "k" + bg.ENDC;
             break;
 
         case 99:

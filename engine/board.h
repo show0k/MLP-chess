@@ -33,7 +33,7 @@ int materialWt(int8_t pieceCode) ;
 class Board {
 
 public:
-    Board() :_playerToMove(WHITE) {};
+    Board() : _playerToMove(WHITE) {};
 
 
     void newGame(void);
@@ -45,8 +45,18 @@ public:
     // display
     friend ostream &operator<<(ostream &out, const Board &b);
 
+    //Copy constructor
+    Board(const Board &b) {
+        _board = b._board;
+        _moveList = b._moveList;
+        _playerToMove = b._playerToMove;
+        _pieceCounter = b. _pieceCounter;
+    } ;
+
+
+
     // fin all legal move for a Square (player input is only use for getAllLegalMoves)
-    void getLegalMoves(vector<Move> &moveLst, Square sq, int8_t player = BLACKANDWHITE) ;    
+    void getLegalMoves(vector<Move> &moveLst, Square sq, int8_t player = BLACKANDWHITE) ;
 
     // find all legal moves for all squares
     void getAllLegalMoves(vector<Move> &moveLst, int8_t player = PLAYERTOMOVE);
@@ -55,7 +65,9 @@ public:
     int32_t getEvaluation() ;
 
     // A déplacer dans Move
-    bool IsMoveValid(Move &move);
+    bool isMoveValid(Move &move);
+
+    bool isKingInCheck(void);
 
     int8_t getPlayer() {
         return _playerToMove ;

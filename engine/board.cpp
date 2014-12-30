@@ -4,7 +4,7 @@
 
 ostream &operator<<(ostream &out, const Board &b) { // output
 
-    for (int i = 8 ; i > 0 ; i-- ) {
+    for (int i = 8 ; i > 0 ; i--) {
         out << "\n" << i << "  ";
         for (int j = 0; j < 8; j++) {
             out  << pieceToStr(b._board[10 * (i + 1) + j + 1], 1) << " ";
@@ -87,6 +87,40 @@ void Board::undoMove(Move &move) {
 
     swapPlayers();
 }
+
+
+bool Board::isKingInCheck(void) {
+    EPieceCode king ;
+    vector<Move> moveLst ;
+    if (_playerToMove == WHITE) {
+        king = K ;
+        getAllLegalMoves(moveLst, BLACK);
+    } else if (_playerToMove == BLACK) {
+        king = k ;
+        getAllLegalMoves(moveLst, WHITE);
+    }
+
+    for (Move m : moveLst) {
+        if (_board[m.getSquareTo()] == king) return true ;
+    }
+    return false ;
+}
+
+bool Board::isMoveValid(Move &move) {
+    vector<Move> moveLst ;
+    getAllLegalMoves(moveLst) ;
+    for (Move m : moveLst) {
+        if (m == move) {
+            // l'égalité ne prend pas en compte les pieces promu et capturées
+            move.setPieceCaptured(m.getPieceCaptured()) ;
+            move.setPiecePromoted(m.getPiecePromoted()) ;
+            return true ;
+        }
+    }
+    return false ;
+}
+
+
 /**
 * inspired from http://chessprogramming.wikispaces.com/Evaluation
 * material score depending on the piece value
@@ -214,7 +248,7 @@ void Board::getLegalMoves(std::vector<Move> &moveLst, Square sq, int8_t player) 
                             // if invalid
                             if (_board[sqDest] == X) break;
                             //if empty
-                            if (_board[sqDest] == _ ) {
+                            if (_board[sqDest] == _) {
                                 Move move(piece, sq, sqDest, _board[sqDest]);
                                 moveLst.push_back(move);
 
@@ -242,7 +276,7 @@ void Board::getLegalMoves(std::vector<Move> &moveLst, Square sq, int8_t player) 
                             // if invalid
                             if (_board[sqDest] == X) break;
                             //if empty
-                            if (_board[sqDest] == _ ) {
+                            if (_board[sqDest] == _) {
                                 Move move(piece, sq, sqDest, _board[sqDest]);
                                 moveLst.push_back(move);
 
@@ -270,7 +304,7 @@ void Board::getLegalMoves(std::vector<Move> &moveLst, Square sq, int8_t player) 
                             // if invalid
                             if (_board[sqDest] == X) break;
                             //if empty
-                            if (_board[sqDest] == _ ) {
+                            if (_board[sqDest] == _) {
                                 Move move(piece, sq, sqDest, _board[sqDest]);
                                 moveLst.push_back(move);
 
@@ -389,7 +423,7 @@ void Board::getLegalMoves(std::vector<Move> &moveLst, Square sq, int8_t player) 
                             // if invalid
                             if (_board[sqDest] == X) break;
                             //if empty
-                            if (_board[sqDest] == _ ) {
+                            if (_board[sqDest] == _) {
                                 Move move(piece, sq, sqDest, _board[sqDest]);
                                 moveLst.push_back(move);
 
@@ -418,7 +452,7 @@ void Board::getLegalMoves(std::vector<Move> &moveLst, Square sq, int8_t player) 
                             // if invalid
                             if (_board[sqDest] == X) break;
                             //if empty
-                            if (_board[sqDest] == _ ) {
+                            if (_board[sqDest] == _) {
                                 Move move(piece, sq, sqDest, _board[sqDest]);
                                 moveLst.push_back(move);
 
@@ -446,7 +480,7 @@ void Board::getLegalMoves(std::vector<Move> &moveLst, Square sq, int8_t player) 
                             // if invalid
                             if (_board[sqDest] == X) break;
                             //if empty
-                            if (_board[sqDest] == _ ) {
+                            if (_board[sqDest] == _) {
                                 Move move(piece, sq, sqDest, _board[sqDest]);
                                 moveLst.push_back(move);
 
@@ -491,7 +525,7 @@ void Board::getAllLegalMoves(vector<Move> &moveLst, int8_t player) {
     moveLst.clear();
     if (player == PLAYERTOMOVE)
         player = _playerToMove ;
-    for (int i = 8 ; i > 0 ; i-- ) {
+    for (int i = 8 ; i > 0 ; i--) {
         for (int j = 0; j < 8; j++) {
             sq = 10 * (i + 1) + j + 1 ;
             getLegalMoves(moveLst, sq, player) ;
