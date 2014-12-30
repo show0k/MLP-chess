@@ -95,7 +95,7 @@ void interfaceInitialisation(int step){
 			boutons.push_back(new ClickableElement(p1, p2, &newGame));
 			break;
 
-		case 1:	//interface.push_back(new GraphicElement("accueil.png"));
+		case 1:	interface.push_back(new GraphicElement("accueil.png"));
 			interface.push_back(new GraphicElement("bouton-2Players.png"));
 
 			v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();

@@ -2,6 +2,7 @@
 
 ClickableElement::ClickableElement(){
 	action = NULL;
+	useBaseAction = false;
 }
 
 void ClickableElement::setStartPoint(Point2I p){
@@ -16,12 +17,14 @@ ClickableElement::ClickableElement(Point2I d, Point2I f){
 	pointFin = f;
 	pointDebut = d;
 	action = NULL;
+	useBaseAction = false;
 }
 
 ClickableElement::ClickableElement(Point2I d, Point2I f, void (*fonction)()){
 	pointFin = f;
 	pointDebut = d;
 	action = fonction;
+	useBaseAction = false;
 }
 
 ClickableElement::~ClickableElement(){
@@ -49,10 +52,14 @@ void ClickableElement::released(){
 void ClickableElement::wheeled(){
 }
 void ClickableElement::pressed(){
-	if(action != NULL)
-		(*action)();
-	else
-		cout<<"Pas d'action asscociée\n";
+	if(useBaseAction){
+		baseAction();
+	}else{
+		if(action != NULL)
+			(*action)();
+		else
+			cout<<"Pas d'action asscociée\n";
+	}
 }
 
 Point2I ClickableElement::getEndPoint(){
@@ -70,12 +77,14 @@ bool ClickableElement::checkPosition(int x, int y){
 		return false;
 }
 
-/*template<typename t>
-void ClickableElement::setAction(void (*t::function)()){
-	action = function;	
-}*/
-
 void ClickableElement::resetAction(){
 	action = NULL;
+}
+
+void ClickableElement::setBaseAction(){
+	useBaseAction = true;
+}
+
+void ClickableElement::baseAction(){
 }
 

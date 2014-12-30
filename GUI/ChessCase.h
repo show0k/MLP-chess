@@ -10,7 +10,6 @@ class ChessCase : public ClickableElement {
 		char type; //Couleur de la piece qui est dessus
 		char coord[2]; //coord[0] = lettre || coord[1] = chiffre
 	public:
-		//void *piece; // pointeur sur la piece -> a  caster!!
 		ChessCase(char a, char b);// EXEMPLE (A,1)
 		ChessCase();
 		string toString();
@@ -20,7 +19,7 @@ class ChessCase : public ClickableElement {
 		void setType(int t);
 		int getType();
 		char* getCoord();
-		//void setChessPiece(void *p);
+		void baseAction();
 		
 
 		bool operator==(ChessCase const& a);

@@ -13,11 +13,12 @@ class ClickableElement{
 	private:
 		Point2I pointDebut, pointFin;
 		void (*action)();
+		bool useBaseAction;
 	
 	public:
 		~ClickableElement();
 		ClickableElement();
-		virtual void setStartPoint(Point2I p);
+		void setStartPoint(Point2I p);
 		void setEndPoint(Point2I p);
 		Point2I getEndPoint();
 		Point2I getStartPoint();
@@ -28,8 +29,8 @@ class ClickableElement{
 		bool checkPosition(int x, int y);
 		ClickableElement(Point2I d, Point2I f);
 		ClickableElement(Point2I d, Point2I f, void (*fonction)());
-		/*template<typename t>
-		void setAction(void (*t::fonction)());*/
+		void setBaseAction();
+		virtual void baseAction();
 		void resetAction();
 };
 
