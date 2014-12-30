@@ -41,6 +41,9 @@ void ChessCase::setEmpty(bool c){
 	empty = c;
 }
 
+bool ChessCase::isEmpty(){
+	return empty;
+}
 
 bool ChessCase::operator==(ChessCase const& a){
 	if((a.coord[0] == this->coord[0]) && (a.coord[1] == this->coord[1]))
@@ -58,5 +61,23 @@ int ChessCase::getType(){
 }
 
 void ChessCase::baseAction(){
-	cout<<"Demande des mouvements possibles pour la cas"<<toString()<<"\n";
+	cout<<"Case"<<toString()<<" envoi la commande:"<<sendShow()<<"\n";
+}
+
+bool ChessCase::isInVector(std::vector<ChessCase*> v){
+	int l = v.size();
+	for(int i = 0;i<l;i++){
+		if(v[i]==this)
+			return true;
+	}
+	return false;
+}
+string ChessCase::sendShow(){
+	string s = "show ";
+	s = s.append(1u, coord[0]);
+	s = s.append(1u, coord[1]+48);
+
+	sendCommand(s);
+
+	return s;
 }

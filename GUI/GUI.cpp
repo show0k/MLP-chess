@@ -7,6 +7,7 @@ int nbJoueurs;
 bool gameGoesOn = false;
 
 void GUI(){
+	srand (time(NULL));
 	interfaceInitialisation(0);
 	while (window.isOpen())
 	{
@@ -17,7 +18,8 @@ void GUI(){
 				window.close();
 			else if (event.type == sf::Event::MouseButtonPressed ){
 				notifyInterface(event);
-				notifyGame(event);
+				if(gameGoesOn)
+					notifyGame(event);
 			}
 		}
 		window.clear();

@@ -7,12 +7,17 @@ std::vector<GraphicElement*> objGraphiques ;
 ChessPieceSet michelBlanc = ChessPieceSet(BLANC);
 ChessPieceSet michelNoir = ChessPieceSet(NOIR);
 ChessBoard plateau;
+int nbMouvementsAffiches = 0;
+std::vector<ChessCase*> casesAutorisees;
+int joueurActu;
+
 extern std::vector<GraphicElement*> interface ;
 void gameInitialisation(){
 	michelBlanc = ChessPieceSet(BLANC);
 	michelNoir = ChessPieceSet(NOIR);
 	michelBlanc.addPiecesToBoard(plateau);
 	michelNoir.addPiecesToBoard(plateau);
+	joueurActu = BLANC;
 }
 
 void displayGameIn(sf::RenderWindow &window){
@@ -31,15 +36,12 @@ void displayGameIn(sf::RenderWindow &window){
 }
 
 void parseAction(string action){	// move A3 B9, show B1
-	ChessCase *caseActu = NULL;
-	ChessPiece *pieceActu = NULL;
 	if(stringContains(action, "move")){
+		ChessCase *caseActu = NULL;
 		string piece = action.substr(5,2);
 		string destination = action.substr(8,2);
 		
 		char lettre = convertCharToArrayIndex(piece.at(0)), chiffre = 8- (piece.at(1)-40);
-		caseActu = plateau.caseAt(lettre, chiffre);
-		
 		switch(caseActu->getType()){
 			case BLANC:	pieceSelect = michelBlanc.getPieceAt(*caseActu);
 					cout<<pieceSelect->toString();
@@ -54,50 +56,9 @@ void parseAction(string action){	// move A3 B9, show B1
 		lettre = convertCharToArrayIndex(destination.at(0));
 		chiffre = 8- (destination.at(1)-40);
 		
-		
 		caseActu = plateau.caseAt(lettre, chiffre);
-		string s = "";
-		switch(caseActu->getType()){
-			case BLANC:	pieceActu = michelBlanc.getPieceAt(*caseActu);
-					s = pieceActu->toString();
-					break;
-			case NOIR:	pieceActu = michelNoir.getPieceAt(*caseActu);
-					s = pieceActu->toString();
-					break;
-			case VIDE: 	//cout<<caseSelect.toString()<<" est vide\n";
-					break;
-		}
+		makePieceMove(caseActu);
 		
-		if(pieceSelect != NULL){
-			pieceSelect->setCase(caseActu);
-			cout << " va en "<< pieceSelect->toString();
-			if(pieceActu != NULL){
-				cout<<"et mange "<<s<<" \n";
-				int x = (caseActu->getCoord()[0]-97) *SPRITE_SIZE +MARGE_W+ SPRITE_SIZE/2;
-				int y = (8-caseActu->getCoord()[1]) *SPRITE_SIZE+MARGE_H + SPRITE_SIZE/2;
-				addBloodSpot(objGraphiques, x, y);
-				addDeadPony(objGraphiques, pieceActu->getColor());
-				pieceActu->slain();
-			}
-			if(!(pieceSelect->getCase()==caseActu))
-				cout<<"Ca na pas marché\n";
-		}
-		else{
-			cout<<"Aucune pièce selectionnée\n";
-		}
-	}
-	else if(stringContains(action, "goto")){ // INCOMPLET CAR INUTILE: UTILISER MOVE
-		char lettre = convertCharToArrayIndex(action.at(5)), chiffre = 8- (action.at(6)-40);
-		caseActu = plateau.caseAt(lettre, chiffre);
-		if(pieceSelect->notNull()){
-			pieceSelect->setCase(caseActu);
-			cout << "va en "<< caseActu->toString()<<"\n";
-			if(!(pieceSelect->getCase()==caseActu))
-				cout<<"Ca na pas marché\n";
-		}
-		else{
-			cout<<"Aucune pièce selectionnée\n";
-		}
 	}else if(stringContains(action, "victoire")){
 		std::vector<string> splited;
 		stringSplit(action, ' ',splited);
@@ -114,6 +75,25 @@ void parseAction(string action){	// move A3 B9, show B1
 		else
 			cout<<"De qui??\n";
 		
+	}else if(stringContains(action, "show")){
+		std::vector<string> splited;
+		stringSplit(action, ' ',splited);
+		int l = splited.size();
+		for(int i = 1;i<l;i++){
+			addPossibleMove(plateau.caseAt(splited[i].at(0)-97,8-(splited[i].at(1)-48)));
+			casesAutorisees.push_back(plateau.caseAt(splited[i].at(0)-97,8-(splited[i].at(1)-48)));
+			nbMouvementsAffiches ++;
+		}
+	}else if(stringContains(action, "player playing")){
+		std::vector<string> splited;
+		stringSplit(action, ' ',splited);
+		if(splited[2] == "blanc"){
+			joueurActu = BLANC;
+		}else if (splited[2] == "noir"){
+			joueurActu = NOIR;
+		}
+		else
+			cout<<"C'est pas une couleur!\n";
 	}
 	else{
 		cout<<"Commande non reconnue\n";
@@ -144,19 +124,72 @@ void addDeadPony(std::vector<GraphicElement*> &vect, char color){
 
 void notifyGame(sf::Event event){
 	caseSelect = plateau.notifyCases(event);
+	if((nbMouvementsAffiches != 0) && pieceSelect->notNull()){
+		if(caseSelect->isInVector(casesAutorisees)){
+			makePieceMove(caseSelect);
+			resetPossibleMove();
+		}
+	}
 	switch(caseSelect->getType()){
-		case BLANC:	pieceSelect = michelBlanc.getPieceAt(*caseSelect);
-				//pieceSelect = michelNoir.TESTgetRandomPiece();
-				cout<<pieceSelect->toString()<<"\n";
+		case BLANC:	if(joueurActu ==caseSelect->getType()){
+					pieceSelect = michelBlanc.getPieceAt(*caseSelect);
+					cout<<pieceSelect->toString()<<"\n";
+				}
 				break;
-		case NOIR:	pieceSelect = michelNoir.getPieceAt(*caseSelect);
-				cout<<pieceSelect->toString()<<"\n";
+		case NOIR:	if(joueurActu ==caseSelect->getType()){
+					pieceSelect = michelNoir.getPieceAt(*caseSelect);
+					cout<<pieceSelect->toString()<<"\n";
+				}
 				break;
-		case VIDE: 	//cout<<caseSelect.toString()<<" est vide\n";
+		case VIDE: 	pieceSelect = new ChessPiece();
+				resetPossibleMove();
 				break;
 	}
 	int x = (caseSelect->getCoord()[0]-97) *SPRITE_SIZE +MARGE_W+ SPRITE_SIZE/2;
 	int y = (8-caseSelect->getCoord()[1]) *SPRITE_SIZE+MARGE_H + SPRITE_SIZE/2;
 }
 
+void addPossibleMove(ChessCase *c){
+	if(c->isEmpty())
+		interface.push_back(new GraphicElement("mouvement-caseVide.png"));
+	else
+		interface.push_back(new GraphicElement("mouvement-prendrePiece.png"));
+	interface[interface.size()-1]->setPosition(c->getStartPoint());
+}
 
+void resetPossibleMove(){
+	while(nbMouvementsAffiches>0){
+		nbMouvementsAffiches --;
+		interface.pop_back();
+	}
+	casesAutorisees.clear();
+}
+
+void makePieceMove(ChessCase *c){
+	ChessPiece *pieceActu = NULL;
+	string s = "";
+	switch(c->getType()){
+		case BLANC:	pieceActu = michelBlanc.getPieceAt(*c);
+				break;
+		case NOIR:	pieceActu = michelNoir.getPieceAt(*c);
+				break;
+	}	
+	if(pieceSelect != NULL){
+		pieceSelect->setCase(c);
+		cout << pieceSelect->toString()<<" va en "<< c->toString();
+		if(pieceActu != NULL){
+			cout<<"et mange "<<pieceActu->toString()<<" \n";
+			int x = (c->getCoord()[0]-97) *SPRITE_SIZE +MARGE_W+ SPRITE_SIZE/2;
+			int y = (8-c->getCoord()[1]) *SPRITE_SIZE+MARGE_H + SPRITE_SIZE/2;
+			addBloodSpot(objGraphiques, x, y);
+			addDeadPony(objGraphiques, pieceActu->getColor());
+			pieceActu->slain();
+		}else
+			cout<<"\n";
+		if(!(pieceSelect->getCase()==c))
+			cout<<"Ca na pas marché\n";
+	}
+	else{
+		cout<<"Aucune pièce selectionnée\n";
+	}
+}

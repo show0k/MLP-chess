@@ -3,7 +3,7 @@
 
 ChessPiece::ChessPiece(){
 	type = 'v';
-	alive = true;
+	alive = false;
 	color = VIDE;
 	caseActu = new ChessCase(0,0);
 }

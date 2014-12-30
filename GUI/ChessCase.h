@@ -20,7 +20,9 @@ class ChessCase : public ClickableElement {
 		int getType();
 		char* getCoord();
 		void baseAction();
-		
+		string sendShow();
+		bool isEmpty();
+		bool isInVector(std::vector<ChessCase*> v);
 
 		bool operator==(ChessCase const& a);
 };
