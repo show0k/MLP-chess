@@ -69,10 +69,12 @@ void ChessPiece::setCase(char a, char b){// EXEMPLE (A,1);
 
 void ChessPiece::setCase(ChessCase *c){// EXEMPLE (A,2);
 	caseActu->setEmpty(true);
-	caseActu->setType(VIDE);	
+	caseActu->setType(VIDE);
+	caseActu->resetAction();
 	caseActu = c;
 	c->setEmpty(false);
 	c->setType(color);
+	//c->setAction(&ChessPiece::showMoves);
 	p = c->getStartPoint();
 	setPosition(p);
 }
@@ -127,4 +129,8 @@ bool ChessPiece::notNull(){
 
 char ChessPiece::getColor(){
 	return color;
+}
+
+void ChessPiece::showMoves(){
+	cout<<"Que puis-je faire?\n";
 }

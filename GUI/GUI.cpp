@@ -1,48 +1,32 @@
 #include "GUI.h"
 
-sf::RenderWindow window(sf::VideoMode(1100, 720), "GUI chess");
+sf::RenderWindow window(sf::VideoMode(WINDOW_W, WINDOW_H), "GUI chess");
 std::vector<GraphicElement*> interface ;
+std::vector<ClickableElement*> boutons ;
+int nbJoueurs;
+bool gameGoesOn = false;
 
 void GUI(){
-	srand (time(NULL));
-    	gameInitialisation();
-
-	int  nb2 = interface.size();
-	
-	sf::Sprite test;
+	interfaceInitialisation(0);
 	while (window.isOpen())
 	{
-		// Process events
 		sf::Event event;
 		while (window.pollEvent(event)){
 		
 			if (event.type == sf::Event::Closed)
 				window.close();
 			else if (event.type == sf::Event::MouseButtonPressed ){
-				/*caseSelect = plateau.notifyCases(event);
-				switch(caseSelect->getType()){
-					case BLANC:	pieceSelect = michelBlanc.getPieceAt(*caseSelect);
-							//pieceSelect = michelNoir.TESTgetRandomPiece();
-							cout<<pieceSelect->toString()<<"\n";
-							break;
-					case NOIR:	pieceSelect = michelNoir.getPieceAt(*caseSelect);
-							cout<<pieceSelect->toString()<<"\n";
-							break;
-					case VIDE: 	//cout<<caseSelect.toString()<<" est vide\n";
-							break;
-				}
-				int x = (caseSelect->getCoord()[0]-97) *SPRITE_SIZE +MARGE_W+ SPRITE_SIZE/2;
-				int y = (8-caseSelect->getCoord()[1]) *SPRITE_SIZE+MARGE_H + SPRITE_SIZE/2;*/
+				notifyInterface(event);
+				notifyGame(event);
 			}
 		}
 		window.clear();
-        	displayGameIn(window);
+		
+		if(gameGoesOn)
+			displayGameIn(window);
+		
+		displayInterfaceIn(window);
 
-		nb2 = interface.size();
-		// Dans cette boucle, on affiche l'ensemble des objets graphiques du jeu (hors pieces)
-		for(int i=0;i<nb2;i++){
-			interface.at(i)->draw(window);
-		}
 		window.display();
 	}
 }
@@ -86,3 +70,77 @@ char convertCharToArrayIndex(char lettre){
 	}
 }
 
+void displayInterfaceIn(sf::RenderWindow &window){
+	int  nb2 = interface.size();
+	// Dans cette boucle, on affiche l'ensemble des objets graphiques du jeu (hors pieces)
+	for(int i=0;i<nb2;i++)
+		interface.at(i)->draw(window);
+}
+
+void interfaceInitialisation(int step){
+	interface.clear();
+	boutons.clear();
+	Point2I p1;
+	Point2I p2;
+	sf::Vector2u v;
+	switch(step){
+		case 0:	interface.push_back(new GraphicElement("accueil.png"));
+			interface.push_back(new GraphicElement("bouton-newGame.png"));
+
+			v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
+			p1 =  Point2I(WINDOW_W/2 - v.x/2, WINDOW_H - v.y - 100);
+			p2 =  Point2I(WINDOW_W/2 + v.x/2, WINDOW_H - 100);
+
+			interface[interface.size()-1]->setPosition(p1);
+			boutons.push_back(new ClickableElement(p1, p2, &newGame));
+			break;
+
+		case 1:	//interface.push_back(new GraphicElement("accueil.png"));
+			interface.push_back(new GraphicElement("bouton-2Players.png"));
+
+			v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
+			p1 =  Point2I(WINDOW_W/2 - v.x/2, WINDOW_H - v.y - 200);
+			p2 =  Point2I(WINDOW_W/2 + v.x/2, WINDOW_H - 200);
+
+			interface[interface.size()-1]->setPosition(p1);
+			boutons.push_back(new ClickableElement(p1, p2, &playerNumberSetTo2));
+
+			interface.push_back(new GraphicElement("bouton-1Players.png"));
+
+			v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
+			p1 =  Point2I(WINDOW_W/2 - v.x/2, WINDOW_H - v.y - 500);
+			p2 =  Point2I(WINDOW_W/2 + v.x/2, WINDOW_H - 500);
+
+			interface[interface.size()-1]->setPosition(p1);
+			boutons.push_back(new ClickableElement(p1, p2, &playerNumberSetTo1));
+			break;
+		case 2:	cout<<"Début du jeu\n";
+			gameInitialisation();
+			gameGoesOn = true;
+			break;
+	}
+}
+
+void notifyInterface(sf::Event event){
+	int l = boutons.size();
+	for(int i = 0;i<l;i++){
+		boutons[i]->isInside(event);
+	}
+}
+
+void newGame(){
+	interfaceInitialisation(1);
+	cout<<"New Game\n";
+}
+
+void playerNumberSetTo1(){
+	nbJoueurs = 1;
+	interfaceInitialisation(2);
+	cout<<"Players set to 1\n";
+}
+
+void playerNumberSetTo2(){
+	nbJoueurs = 2;
+	interfaceInitialisation(2);
+	cout<<"Players set to 2\n";
+}

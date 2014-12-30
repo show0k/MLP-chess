@@ -8,6 +8,8 @@
 #define MARGE_H 40
 #define MARGE_W 230 
 #define SPRITE_SIZE 80
+#define WINDOW_W 1100
+#define WINDOW_H 720
 
 #include "Point2I.h"
 #include <SFML/System.hpp>
@@ -27,6 +29,7 @@ class GraphicElement/*: public sf::Drawable*/{
 		Point2I p;
 		char nbState;
 		char state;
+		void *action;
 		
 
 	public:

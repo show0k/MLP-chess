@@ -9,13 +9,14 @@
 #include <stdio.h>
 #include <iostream>
 
-class ClickableELement{
+class ClickableElement{
 	private:
 		Point2I pointDebut, pointFin;
+		void (*action)();
 	
 	public:
-		~ClickableELement();
-		ClickableELement();
+		~ClickableElement();
+		ClickableElement();
 		virtual void setStartPoint(Point2I p);
 		void setEndPoint(Point2I p);
 		Point2I getEndPoint();
@@ -25,6 +26,11 @@ class ClickableELement{
 		void wheeled();
 		bool isInside(sf::Event event);
 		bool checkPosition(int x, int y);
+		ClickableElement(Point2I d, Point2I f);
+		ClickableElement(Point2I d, Point2I f, void (*fonction)());
+		/*template<typename t>
+		void setAction(void (*t::fonction)());*/
+		void resetAction();
 };
 
 #endif

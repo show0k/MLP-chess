@@ -31,6 +31,21 @@ Point2I::~Point2I(){
 }
 
 string Point2I::toString(){
-	return "Pas encore implementé!!";
+	stringstream ss;
+	ss << "("<<x<<","<<y<<")";
+	return	ss.str();
+}
+
+string intToString(int x){
+	int i = 1;
+	string s ="";
+	while((x%(10*i))>0){
+		
+		char c = x%(10*i) + 40;
+		s = s.append(1u,c);
+		i++;
+		
+	}
+	return s;
 }
 

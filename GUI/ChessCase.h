@@ -4,7 +4,7 @@
 #include "ClickableElement.h"
 //#include "ChessPiece.h"
 
-class ChessCase : public ClickableELement {
+class ChessCase : public ClickableElement {
 	private:
 		bool empty;
 		char type; //Couleur de la piece qui est dessus

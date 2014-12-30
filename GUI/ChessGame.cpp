@@ -104,12 +104,12 @@ void parseAction(string action){	// move A3 B9, show B1
 		if(splited[1] == "blanc"){
 			interface.push_back(new GraphicElement("victoire-blanc.png"));
 			sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
-			interface[interface.size()-1]->setPosition(Point2I((int)(1100/2 - v.x/2 ),(int)(720/2 - v.y/2)));
+			interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
 		}
 		else if (splited[1] == "noir"){
 			interface.push_back(new GraphicElement("victoire-noir.png"));
 			sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
-			interface[interface.size()-1]->setPosition(Point2I((int)(1100/2 - v.x/2 ),(int)(720/2 - v.y/2)));
+			interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
 		}
 		else
 			cout<<"De qui??\n";
@@ -132,12 +132,29 @@ void addDeadPony(std::vector<GraphicElement*> &vect, char color){
 		case NOIR:vect.push_back(new GraphicElement("noir-mort.png"));
 			vect[vect.size()-1]->setRotation(rand()%360);
 			vect[vect.size()-1]->setScale(1.5);
-			vect[vect.size()-1]->setPosition(Point2I(1100-MARGE_W/2-40+rand()%80,360-40+rand()%80));
+			vect[vect.size()-1]->setPosition(Point2I(WINDOW_W-MARGE_W/2-40+rand()%80,WINDOW_H/2-40+rand()%80));
 			break;
 		case BLANC:vect.push_back(new GraphicElement("blanc-mort.png"));
 			vect[vect.size()-1]->setRotation(rand()%360);
 			vect[vect.size()-1]->setScale(1.5);
-			vect[vect.size()-1]->setPosition(Point2I(MARGE_W/2-40+rand()%80,360-40+rand()%80));
+			vect[vect.size()-1]->setPosition(Point2I(MARGE_W/2-40+rand()%80,WINDOW_H/2 -40+rand()%80));
 			break;
 	}
+}
+
+void notifyGame(sf::Event event){
+	caseSelect = plateau.notifyCases(event);
+	switch(caseSelect->getType()){
+		case BLANC:	pieceSelect = michelBlanc.getPieceAt(*caseSelect);
+				//pieceSelect = michelNoir.TESTgetRandomPiece();
+				cout<<pieceSelect->toString()<<"\n";
+				break;
+		case NOIR:	pieceSelect = michelNoir.getPieceAt(*caseSelect);
+				cout<<pieceSelect->toString()<<"\n";
+				break;
+		case VIDE: 	//cout<<caseSelect.toString()<<" est vide\n";
+				break;
+	}
+	int x = (caseSelect->getCoord()[0]-97) *SPRITE_SIZE +MARGE_W+ SPRITE_SIZE/2;
+	int y = (8-caseSelect->getCoord()[1]) *SPRITE_SIZE+MARGE_H + SPRITE_SIZE/2;
 }

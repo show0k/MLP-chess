@@ -2,9 +2,10 @@
 #define includeIO 1
 
 #include <iostream>
+#include <sstream>
 
 using namespace std;
-
+string intToString(int x);
 class Point2I{
 	private:
 		int x;

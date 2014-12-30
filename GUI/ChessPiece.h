@@ -26,6 +26,7 @@ class ChessPiece : public GraphicElement{
 		void setCase(ChessCase *c);
 		bool notNull();
 		char getColor();
+		void showMoves();
 };
 
 #endif
