@@ -37,14 +37,13 @@ void API::loop(int argc, char *argv[]) {
 
         } else if (token == "newgame") {
 
-            if (cmd.size() > 7) {
-                string input = cmd.substr(7) ;
+            if (cmd.size() > 8) {
+                string input = cmd.substr(8) ;
                 _board.newGame(input);
-            }
-            else {
+            } else {
                 _board.newGame();
             }
-            
+
             _gameStarted = 1 ;
             cout << "ok" << endl;
 
@@ -73,7 +72,16 @@ void API::loop(int argc, char *argv[]) {
 
             // Is this move valid ?
             if (_board.isValidMove(move)) {
-                _board.doMove(move) ;
+                _board.doMove(move);
+                bool check = _board.isKingInCheck();
+                _board.undoMove(move);
+                if (check)
+                {
+                    std::cout << "You are in CHECK. Play another move." << std::endl;
+                    continue;
+                }
+
+
                 cout << "ok" << endl;
             } else {
                 invalid(cmd) ;
@@ -108,5 +116,7 @@ void displayMoveLst(vector<Move> &moves) {
 
 void help(void) {
 
-    cout << "Command examples : " << "\n" << "\"move a2a3\"" << "\n" << "\"show\"" << endl << "\"show f2\"" << endl << "\"go\"" << endl;
+    cout << "Some examples : " << "\n" << "\"move a2a3\"" << "\n" << "\"show\"" << endl
+     << "\"show f2\"" << endl << "\"go\"" << endl 
+     << "\"newgame RNBQKBNR/1PPPPPPP/P7/8/8/p7/1ppppppp/rnbqkbnr \"" << endl;
 }

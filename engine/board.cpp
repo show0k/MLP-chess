@@ -50,56 +50,56 @@ void Board::newGame(string &input) {
     _pieceCounter.clear();
     _pieceCounter.reserve(100);
     _board.reserve(120);
+
+    assert(backupGame.size() == 120 && "la sauvegarde n'est pas correcte !") ;   
+
     for (int i = 0; i < 120; i++) {
         _pieceCounter[backupGame[i]] += 1 ;
         _board[i] = backupGame[i];
     }
 }
 
-// Usefull to load an old game configuration 
+// Usefull to load an old game configuration
 bool Board::parseNewGame(string &input, vector<uint8_t> &backupGame) {
 
 
-/*
-*
-*  TODOOOOOOOOOOOOOOOOO
-*
-*
-*/
+    /*
+    *
+    *  TODOOOOOOOOOOOOOOOOO
+    *
+    *
+    */
 
-    // backupGame.clear();
-    // backupGame.reserve(120);
-    // int k = 0;
-    // int numberOfSpaces = 0 ;
-    // cout << "string : " << input ;
-    // // rempli les endroits invalides
-    // for (int i = 0; i < 120; i++) {
-    //     backupGame[i] = INIT_GAME[i];
-    // }
+    vector<uint8_t> tmp_board ;
+    // tmp_board.reserve(120) ;
+    int spaceNumber = 0 ;
+    bool first = true ;
+    for (char &c : input) {
 
-    // char *in = new char[input.length() + 1];
-    cout << "taille :"  << input.length() ;
+        if (!isdigit(c) && c != '/') {
+            if(first) {
+                first = 0; 
+            }
+            tmp_board.push_back(pieceFromStr(c));
+        } else if (isdigit(c) && c != '/') {
+            spaceNumber =  int(c) - 48 ;
 
-
-    int line = 1, col = 0 ;
-    for (int k = 0; k < input.length() ; k++) {
-        if (input[k] == '/') {
-            line ++;
-            cout << endl ;
-        } else if (!isdigit(input[k])) {
-            cout << "Not a digit " << input[k] << " ";
-            // backupGame[10 * (line + 1) + col + 1] = pieceFromStr(input[k]);
-            //cout << 10 * (i + 1) + j + 1 << " " ; //DEBUG
-            col ++ ;
-        } else {
-             cout << "digit" ; 
-
-            // char a = input[k];
-            // for (int l = 0 ; l < strtol(in+k,&pEnd,10) ; l++) {
-            //     cout << "digit :" <<  l << " ";
-            // }
+            for (int k = 0; k < spaceNumber ; k++) {
+                tmp_board.push_back(_);
+            }
         }
     }
+    assert(tmp_board.size() == 64 && "la sauvegarde n'est pas correcte !") ;
+
+    // arrange the vector with the invalid position
+    int i = 0, k = 0 ;
+    for (uint8_t piece : INIT_GAME) {
+        backupGame.push_back(piece);
+        if (backupGame[i] != X)
+            backupGame[i] = tmp_board[k++];
+        i++ ;
+    }
+
     return 1 ;
 }
 

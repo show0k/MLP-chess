@@ -11,61 +11,50 @@
 using namespace std;
 
 
+void testPasUnitaireDuTout() ;
+
 int main(int argc, char *argv[]) {
 
     // Parse input to start the api
     int8_t api_state = GUI ;
+    bool debug = false;
     if (argc > 1) {
-        if (strcmp(argv[1],"--terminal") == 0 || strcmp(argv[1],"-t") == 0 ) {
+        if (strcmp(argv[1], "--terminal") == 0 || strcmp(argv[1], "-t") == 0) {
             api_state = TERMINAL;
             argc = 1;
+        } else if (strcmp(argv[1], "--debug") == 0 || strcmp(argv[1], "-d") == 0) {
+            debug = true ;
         }
     }
 
-    API api = API(api_state) ;
-    api.loop(argc, argv);
-
-
-
-
-
-    // vector<Move> moveLst = vector<Move>() ;
-    // Board b = Board();
-    // b.newGame();
-    // cout << b;
-    // b.getAllLegalMoves(moveLst,PLAYERTOMOVE) ;
-
-    // for (Move move : moveLst) {
-
-    //     cout << move << " " ;
-
-    // }
-    // Move move = Move("a2a3");
-    // b.doMove(move) ;
-
-    // cout << endl;
-    // b.getAllLegalMoves(moveLst,PLAYERTOMOVE) ;
-
-    // for (Move move : moveLst) {
-
-    //     cout << move << " " ;
-
-    // }
-
-    // cout << b;
-    // if (argv[2] == "-gui") {
-    //     cout << "GUI" ;
-    //     API api = API(GUI) ;
-    //     api.loop(argc, argv);
-    // }
-    // else {
-    //     API api = API(TERMINAL) ;
-    //     api.loop(argc, argv);
-    // }
-
-
-
-
+    if (!debug) {
+        API api = API(api_state) ;
+        api.loop(argc, argv);
+    } else testPasUnitaireDuTout();
 }
 
 
+
+void testPasUnitaireDuTout() {
+    vector<Move> moveLst = vector<Move>() ;
+    Board b = Board();
+    b.newGame();
+    cout << b;
+    b.getAllLegalMoves(moveLst, PLAYERTOMOVE) ;
+
+    for (Move move : moveLst) {
+
+        cout << move << " " ;
+    }
+    Move move = Move("a2a3");
+    b.doMove(move) ;
+
+    cout << b << endl;
+    b.getAllLegalMoves(moveLst, PLAYERTOMOVE) ;
+
+    for (Move move : moveLst) {
+
+        cout << move << " " ;
+
+    }
+}
