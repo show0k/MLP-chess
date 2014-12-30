@@ -2,6 +2,7 @@
 
 
 int main(int argc,char  **argv){
+	srand (time(NULL));
 	sf::Thread thread(&GUI);
 	thread.launch();
 	string s ="";

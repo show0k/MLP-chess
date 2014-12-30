@@ -1,4 +1,5 @@
 #include "ChessBoard.h"
+#include "ClickableElement.h"
 
 void GUI(void);
 bool stringContains(string s1, string s2);
@@ -10,3 +11,11 @@ void addDeadPony(std::vector<GraphicElement*> &vect, char color);
 void gameInitialisation();
 
 void displayGameIn(sf::RenderWindow &window);
+void displayInterfaceIn(sf::RenderWindow &window);
+void interfaceInitialisation(int step);
+void notifyInterface(sf::Event event);
+void notifyGame(sf::Event event);
+
+void newGame();
+void playerNumberSetTo1();
+void playerNumberSetTo2();

@@ -1,22 +1,37 @@
 #include "ClickableElement.h"
 
-ClickableELement::ClickableELement(){
-
+ClickableElement::ClickableElement(){
+	action = NULL;
+	useBaseAction = false;
 }
 
-void ClickableELement::setStartPoint(Point2I p){
+void ClickableElement::setStartPoint(Point2I p){
 	pointDebut = p;
 }
 
-void ClickableELement::setEndPoint(Point2I p){
+void ClickableElement::setEndPoint(Point2I p){
 	pointFin = p;
 }
 
-ClickableELement::~ClickableELement(){
+ClickableElement::ClickableElement(Point2I d, Point2I f){
+	pointFin = f;
+	pointDebut = d;
+	action = NULL;
+	useBaseAction = false;
+}
+
+ClickableElement::ClickableElement(Point2I d, Point2I f, void (*fonction)()){
+	pointFin = f;
+	pointDebut = d;
+	action = fonction;
+	useBaseAction = false;
+}
+
+ClickableElement::~ClickableElement(){
 
 }
 
-bool ClickableELement::isInside(sf::Event event){
+bool ClickableElement::isInside(sf::Event event){
 	if(event.type == sf::Event::MouseButtonPressed ){
 		if(checkPosition(event.mouseButton.x, event.mouseButton.y)){
 			pressed();
@@ -32,25 +47,44 @@ bool ClickableELement::isInside(sf::Event event){
 	return false;
 }
 
-void ClickableELement::released(){
+void ClickableElement::released(){
 }
-void ClickableELement::wheeled(){
+void ClickableElement::wheeled(){
 }
-void ClickableELement::pressed(){
+void ClickableElement::pressed(){
+	if(useBaseAction){
+		baseAction();
+	}else{
+		if(action != NULL)
+			(*action)();
+		else
+			cout<<"Pas d'action asscociée\n";
+	}
 }
 
-Point2I ClickableELement::getEndPoint(){
+Point2I ClickableElement::getEndPoint(){
 	return pointFin;
 }
 
-Point2I ClickableELement::getStartPoint(){
+Point2I ClickableElement::getStartPoint(){
 	return pointDebut;
 }
 
-bool ClickableELement::checkPosition(int x, int y){
+bool ClickableElement::checkPosition(int x, int y){
 	if( x>pointDebut.getX() && y>pointDebut.getY() && x<pointFin.getX() && y<pointFin.getY() )
 		return true;
 	else 
 		return false;
+}
+
+void ClickableElement::resetAction(){
+	action = NULL;
+}
+
+void ClickableElement::setBaseAction(){
+	useBaseAction = true;
+}
+
+void ClickableElement::baseAction(){
 }
 

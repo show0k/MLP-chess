@@ -69,10 +69,12 @@ void ChessPiece::setCase(char a, char b){// EXEMPLE (A,1);
 
 void ChessPiece::setCase(ChessCase *c){// EXEMPLE (A,2);
 	caseActu->setEmpty(true);
-	caseActu->setType(VIDE);	
+	caseActu->setType(VIDE);
+	caseActu->resetAction();
 	caseActu = c;
 	c->setEmpty(false);
 	c->setType(color);
+	c->setBaseAction();
 	p = c->getStartPoint();
 	setPosition(p);
 }

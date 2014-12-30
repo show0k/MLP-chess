@@ -56,10 +56,7 @@ void ChessCase::setType(int t){
 int ChessCase::getType(){
 	return type;
 }
-/*void ChessCase::setChessPiece(void *p){
-	piece = p;
-	if(p == NULL)
-		empty = true;
-	else
-		empty = false;
-}*/
+
+void ChessCase::baseAction(){
+	cout<<"Demande des mouvements possibles pour la cas"<<toString()<<"\n";
+}
