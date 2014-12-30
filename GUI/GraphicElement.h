@@ -12,6 +12,7 @@
 #define WINDOW_H 720
 
 #include "Point2I.h"
+#include "API.h"
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>

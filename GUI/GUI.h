@@ -19,3 +19,8 @@ void notifyGame(sf::Event event);
 void newGame();
 void playerNumberSetTo1();
 void playerNumberSetTo2();
+void addPossibleMove(ChessCase *c);
+void resetPossibleMove();
+void makePieceMove(ChessCase *c);
+void changePlayer();
+void displayPlayer(int color);
