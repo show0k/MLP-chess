@@ -39,13 +39,9 @@ string pieceToStr(uint8_t piece, bool color) ;
 class Move {
 public:
     // Constructors
-    // Move(string fromTo) {
-    //     fromString(fromTo);
-    // };
-    // Move(Square &from, Square &to) {};
-    // Move(uint8_t piece, Square &from, Square &to, uint8_t pieceCaptured):
-    //     _piece(piece), _squareFrom(from), _squareTo(to), _pieceCaptured(pieceCaptured) {}
-
+    Move(string fromTo) {
+        fromString(fromTo);
+    };
 
     Move(uint8_t piece, Square &from, Square &to, uint8_t pieceCaptured = _, uint8_t piecePromoted = _):
         _piece(piece), _squareFrom(from), _squareTo(to), _pieceCaptured(pieceCaptured), _piecePromoted(piecePromoted) {}
@@ -53,8 +49,19 @@ public:
 
     // display
     friend ostream &operator<<(ostream &out, const Move &m);
+
+    // operator string() {
+    //     ostringstream os;
+    //     os << _squareFrom << _squareTo ;
+    //     return os.str();
+    // }
+
+    // operator string() {
+    //     // return str(_squareFrom) + str(_squareTo);
+    // }
+
     // methods
-    bool fromString(string move);
+    void fromString(string& move);
     bool fromInt(int from, int to);
 
     uint8_t getPiece(void) {
@@ -74,12 +81,14 @@ public:
         return _piecePromoted;
     };
 
+    int compare(Move &move) {
+        if(move._squareFrom == _squareFrom && move._squareTo == _squareTo)
+            return 0 ;
+        else return 1 ;
 
+    }
     bool isValid(void);
     bool isItACapture(void);
-
-
-
 
 private :
 
@@ -91,9 +100,6 @@ private :
 
 
 };
-
-
-
 
 #endif // _MOVE_H_
 

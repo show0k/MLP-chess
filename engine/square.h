@@ -1,9 +1,11 @@
 #ifndef _SQUARE_H_
 #define _SQUARE_H_
 
-#include <string.h>
+#include <string>
 #include <stdio.h>
+#include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <stdint.h>
 
 using namespace std;
@@ -51,30 +53,34 @@ public:
         return _square;
     }
 
+
     //display
     friend std::ostream &operator <<(std::ostream &out, const Square &s) {
         char c = (s._square % 10) + 'a' - 1;
         char r = (s._square / 10) + '1' - 2;
         return out << c << r;
     }
-    
+
+    operator string() {
+        ostringstream os;
+        os << _square ;
+        return os.str();
+    }
     // Square operator + {A const &first, A const &second)
     //     return _square;
     // }
 
 
     // methode
-    bool fromString(string aSquare) {
-        aSquare[0] = tolower(aSquare[0]);
-        int col = aSquare[0] - 'a';
-        int row = aSquare[1] - '1';
+    bool fromString(string sq) {
+        sq[0] = tolower(sq[0]);
+        int col = sq[0] - 'a';
+        int row = sq[1] - '1';
 
         _square = row * 10 + col + 21;
         return (col >= 8 || row >= 8);
     };
-    uint8_t get(void) {
-        return _square ;
-    } ;
+
 
 private:
     uint8_t  _square; // 0 - 119.
