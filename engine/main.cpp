@@ -4,6 +4,7 @@
 
 
 #include "board.h"
+#include "move.h"
 #include "square.h"
 #include "api.h"
 
@@ -23,8 +24,8 @@ int main(int argc, char *argv[]) {
     //     cout << move << " " ;
 
     // }
-
-    // b.doMove(moveLst[1]) ;
+    // Move move = Move("a2a3");
+    // b.doMove(move) ;
 
     // cout << endl;
     // b.getAllLegalMoves(moveLst,PLAYERTOMOVE) ;
@@ -46,7 +47,7 @@ int main(int argc, char *argv[]) {
     //     api.loop(argc, argv);
     // }
 
-    API api = API(GUI) ;
+    API api = API(TERMINAL) ;
     api.loop(argc, argv);
     
 
