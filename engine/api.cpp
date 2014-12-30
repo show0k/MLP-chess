@@ -5,8 +5,9 @@ void API::loop(int argc, char *argv[]) {
 
     string token, cmd;
 
+    argv = NULL;
     for (int i = 1; i < argc; ++i)
-        cmd += std::string(argv[i]) + " ";
+        cmd += string(argv[i]) + " ";
 
     do {
         if (_state == TERMINAL && _gameStarted) {
@@ -36,8 +37,14 @@ void API::loop(int argc, char *argv[]) {
 
         } else if (token == "newgame") {
 
-            _moveLst = vector<Move>();
-            _board.newGame();
+            if (cmd.size() > 7) {
+                string input = cmd.substr(7) ;
+                _board.newGame(input);
+            }
+            else {
+                _board.newGame();
+            }
+            
             _gameStarted = 1 ;
             cout << "ok" << endl;
 
@@ -62,10 +69,7 @@ void API::loop(int argc, char *argv[]) {
 
 
         } else if (token == "move" && _gameStarted)  {
-            bool moveAllowed = 0 ;
             Move move = Move(cmd.substr(5, 4));
-
-           // cout << cmd.substr(5, 4) << endl ;
 
             // Is this move valid ?
             if (_board.isValidMove(move)) {
@@ -73,12 +77,14 @@ void API::loop(int argc, char *argv[]) {
                 cout << "ok" << endl;
             } else {
                 invalid(cmd) ;
-
             }
 
 
         } //position(pos, is);
         else if (token == "isready")    cout << "readyok" << endl;
+        else if (token == "getbackup") cout << _board.getBackupGame() << endl;
+
+
         else if (_state == TERMINAL)
             help();
         else

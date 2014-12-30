@@ -30,17 +30,23 @@ int materialWt(int8_t pieceCode) {
 
 void Board::newGame(void) {
 
+    _playerToMove = WHITE ;
     _pieceCounter.clear();
     _pieceCounter.reserve(100);
+    _board.clear();
     _board.reserve(120);
+
     for (int i = 0; i < 120; i++) {
         _pieceCounter[INIT_GAME[i]] += 1 ;
         _board[i] = INIT_GAME[i];
     }
 }
 
-void Board::newGame(vector<uint8_t> &backupGame) {
+void Board::newGame(string &input) {
+    vector<uint8_t> backupGame = vector<uint8_t> ();
+    parseNewGame(input, backupGame) ;
 
+    _playerToMove = WHITE ;
     _pieceCounter.clear();
     _pieceCounter.reserve(100);
     _board.reserve(120);
@@ -50,7 +56,77 @@ void Board::newGame(vector<uint8_t> &backupGame) {
     }
 }
 
+// Usefull to load an old game configuration 
+bool Board::parseNewGame(string &input, vector<uint8_t> &backupGame) {
 
+
+/*
+*
+*  TODOOOOOOOOOOOOOOOOO
+*
+*
+*/
+
+    // backupGame.clear();
+    // backupGame.reserve(120);
+    // int k = 0;
+    // int numberOfSpaces = 0 ;
+    // cout << "string : " << input ;
+    // // rempli les endroits invalides
+    // for (int i = 0; i < 120; i++) {
+    //     backupGame[i] = INIT_GAME[i];
+    // }
+
+    // char *in = new char[input.length() + 1];
+    cout << "taille :"  << input.length() ;
+
+
+    int line = 1, col = 0 ;
+    for (int k = 0; k < input.length() ; k++) {
+        if (input[k] == '/') {
+            line ++;
+            cout << endl ;
+        } else if (!isdigit(input[k])) {
+            cout << "Not a digit " << input[k] << " ";
+            // backupGame[10 * (line + 1) + col + 1] = pieceFromStr(input[k]);
+            //cout << 10 * (i + 1) + j + 1 << " " ; //DEBUG
+            col ++ ;
+        } else {
+             cout << "digit" ; 
+
+            // char a = input[k];
+            // for (int l = 0 ; l < strtol(in+k,&pEnd,10) ; l++) {
+            //     cout << "digit :" <<  l << " ";
+            // }
+        }
+    }
+    return 1 ;
+}
+
+string Board::getBackupGame() {
+
+    string output ;
+    int8_t piece ;
+    int counter = 0 ;
+    for (int line = 1 ; line < 9 ; line++) {
+        for (int col = 0; col < 8; col++) {
+            piece = _board[10 * (line + 1) + col + 1] ;
+            if (piece != _ && counter == 0) {
+                output += pieceToStr(piece)  ;
+            } else if (piece != _ && counter != 0) {
+                output += to_string(counter) + pieceToStr(piece) ;
+                counter = 0;
+            } else if (piece == _) {
+                counter ++ ;
+            }
+        }
+        if (counter != 0)
+            output += to_string(counter);
+        counter = 0 ;
+        output += "/" ;
+    }
+    return output ;
+}
 
 
 void Board::doMove(Move &move) {
@@ -104,14 +180,14 @@ bool Board::isKingInCheck(void) {
         if (_board[m.getSquareTo()] == king) return true ;
     }
     return false ;
+
 }
 
 bool Board::isValidMove(Move &move) {
 
-    vector<Move> moveLst  = vector<Move>() ;
+    vector<Move> moveLst = vector<Move>() ;
     getAllLegalMoves(moveLst) ;
     for (Move m : moveLst) {
-        cout << m << " " ;
         if (m == move) {
             // l'égalité ne prend pas en compte les pieces promu et capturées
             move.setPieceCaptured(m.getPieceCaptured()) ;

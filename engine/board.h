@@ -5,8 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <iomanip>
+#include <sstream>
+
 #include <stdint.h>
 #include <vector>
+#include <assert.h> 
 
 #include "move.h"
 #include "utils.h"
@@ -33,11 +37,11 @@ int materialWt(int8_t pieceCode) ;
 class Board {
 
 public:
-    Board() : _playerToMove(WHITE) {};
+    Board()  {};
 
 
-    void newGame(void);
-    void newGame(vector<uint8_t> &backupGame);
+    void newGame(void) ;
+    void newGame(string &input);
     void doMove(Move &move);
     void undoMove(Move &move);
 
@@ -67,11 +71,19 @@ public:
     // A déplacer dans Move
     bool isValidMove(Move &move);
 
+
+
     bool isKingInCheck(void);
 
     int8_t getPlayer() {
         return _playerToMove ;
     }
+
+    // Print the current board as in UCI specification (ex : rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR)
+    string getBackupGame() ;
+
+
+
 
     const vector<uint8_t> INIT_GAME {
         X, X, X, X, X, X, X, X, X, X,
@@ -89,7 +101,7 @@ public:
     } ;
 private:
 
-
+    bool parseNewGame(string &input, vector<uint8_t> &backupGame) ;
     void swapPlayers() {
         if (_playerToMove == WHITE)
             _playerToMove = BLACK;

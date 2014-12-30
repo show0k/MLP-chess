@@ -8,6 +8,7 @@
 #include <string>
 #include <stdio.h>
 #include <stdint.h>
+#include <ctype.h>
 
 #include "board.h"
 
@@ -21,7 +22,7 @@ void help(void);
 
 class API {
 public :
-    API(int8_t state = GUI): _state(state), _gameStarted(0) {}
+    API(int8_t state = GUI): _state(state), _gameStarted(0) {_moveLst.reserve(500) ;}
 
     void loop(int argc, char *argv[]);
     void invalid(string cmd) ;
