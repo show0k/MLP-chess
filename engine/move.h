@@ -48,12 +48,13 @@ public:
 
 
     //Copy constructor
-    Move(const Move &m) {
-        _piece = m._piece;
-        _squareFrom = m._squareFrom;
-        _pieceCaptured = m._pieceCaptured;
-        _piecePromoted = m._piecePromoted;
-    } ;
+        // BUGGGGGG ??????????????????????????????????
+    // Move(const Move &m) {
+    //     _piece = m._piece;
+    //     _squareFrom = m._squareFrom;
+    //     _pieceCaptured = m._pieceCaptured;
+    //     _piecePromoted = m._piecePromoted;
+    // } ;
 
     // display
     friend ostream &operator<<(ostream &out, const Move &m);
