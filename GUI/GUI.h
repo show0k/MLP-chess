@@ -7,5 +7,6 @@ void parseAction(string action);
 void addBloodSpot(std::vector<GraphicElement*> &vect, int x, int y);
 char convertCharToArrayIndex(char lettre);
 void addDeadPony(std::vector<GraphicElement*> &vect, char color);
+void gameInitialisation();
 
-
+void displayGameIn(sf::RenderWindow &window);
