@@ -90,8 +90,8 @@ void Board::undoMove(Move &move) {
 
 
 bool Board::isKingInCheck(void) {
-    EPieceCode king ;
-    vector<Move> moveLst ;
+    uint8_t king ;
+    vector<Move> moveLst  = vector<Move>() ;
     if (_playerToMove == WHITE) {
         king = K ;
         getAllLegalMoves(moveLst, BLACK);
@@ -106,10 +106,12 @@ bool Board::isKingInCheck(void) {
     return false ;
 }
 
-bool Board::isMoveValid(Move &move) {
-    vector<Move> moveLst ;
+bool Board::isValidMove(Move &move) {
+
+    vector<Move> moveLst  = vector<Move>() ;
     getAllLegalMoves(moveLst) ;
     for (Move m : moveLst) {
+        cout << m << " " ;
         if (m == move) {
             // l'égalité ne prend pas en compte les pieces promu et capturées
             move.setPieceCaptured(m.getPieceCaptured()) ;

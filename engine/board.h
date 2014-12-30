@@ -46,12 +46,12 @@ public:
     friend ostream &operator<<(ostream &out, const Board &b);
 
     //Copy constructor
-    Board(const Board &b) {
-        _board = b._board;
-        _moveList = b._moveList;
-        _playerToMove = b._playerToMove;
-        _pieceCounter = b. _pieceCounter;
-    } ;
+    // Board(const Board &b) {
+    //     _board = b._board;
+    //     _moveList = b._moveList;
+    //     _playerToMove = b._playerToMove;
+    //     _pieceCounter = b. _pieceCounter;
+    // } ;
 
 
 
@@ -65,7 +65,7 @@ public:
     int32_t getEvaluation() ;
 
     // A déplacer dans Move
-    bool isMoveValid(Move &move);
+    bool isValidMove(Move &move);
 
     bool isKingInCheck(void);
 
