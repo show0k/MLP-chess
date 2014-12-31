@@ -134,9 +134,11 @@ void notifyGame(sf::Event event){
 	if((nbMouvementsAffiches != 0) && pieceSelect->notNull() && (pieceSelect->getColor() == joueurActu)){
 		if(caseSelect->isInVector(casesAutorisees)){
 			makePieceMove(caseSelect);
+			resetPossibleMove();
 			changePlayer();
+		}else{
+			resetPossibleMove();
 		}
-		resetPossibleMove();
 	}
 	switch(caseSelect->getType()){
 		case BLANC:	if(joueurActu ==caseSelect->getType()){
