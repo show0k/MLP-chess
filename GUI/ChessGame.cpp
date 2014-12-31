@@ -100,7 +100,8 @@ void parseAction(string action){	// move A3 B9, show B1
 			cout<<"C'est pas une couleur!\n";
 	}
 	else{
-		cout<<"Commande non reconnue\n";
+	    /* By Théo /*
+		//cout<<"Commande non reconnue\n";
 	}
 }
 
