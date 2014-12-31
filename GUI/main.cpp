@@ -6,7 +6,7 @@ int main(int argc,char  **argv){
 	thread.launch(); 
 	string s ="";
 	while(s != "exit"){
-		getline(cin,s);
+		s = getResult();
 		parseAction(s);
 	}
 

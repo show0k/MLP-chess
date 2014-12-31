@@ -57,8 +57,8 @@ void ClickableElement::pressed(){
 	}else{
 		if(action != NULL)
 			(*action)();
-		else
-			cout<<"Pas d'action asscociée\n";
+		//else
+			//cout<<"Pas d'action asscociée\n";
 	}
 }
 

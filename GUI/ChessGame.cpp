@@ -48,10 +48,10 @@ void parseAction(string action){	// move A3 B9, show B1
 		char lettre = convertCharToArrayIndex(piece.at(0)), chiffre = 8- (piece.at(1)-40);
 		switch(caseActu->getType()){
 			case BLANC:	pieceSelect = michelBlanc.getPieceAt(*caseActu);
-					cout<<pieceSelect->toString();
+					//cout<<pieceSelect->toString();
 					break;
 			case NOIR:	pieceSelect = michelNoir.getPieceAt(*caseActu);
-					cout<<pieceSelect->toString();
+					//cout<<pieceSelect->toString();
 					break;
 			case VIDE: 	//cout<<caseSelect.toString()<<" est vide\n";
 					break;
@@ -131,7 +131,7 @@ void addDeadPony(std::vector<GraphicElement*> &vect, char color){
 
 void notifyGame(sf::Event event){
 	caseSelect = plateau.notifyCases(event);
-	if((nbMouvementsAffiches != 0) && pieceSelect->notNull()){
+	if((nbMouvementsAffiches != 0) && pieceSelect->notNull() && (pieceSelect->getColor() == joueurActu)){
 		if(caseSelect->isInVector(casesAutorisees)){
 			makePieceMove(caseSelect);
 			resetPossibleMove();
@@ -141,12 +141,12 @@ void notifyGame(sf::Event event){
 	switch(caseSelect->getType()){
 		case BLANC:	if(joueurActu ==caseSelect->getType()){
 					pieceSelect = michelBlanc.getPieceAt(*caseSelect);
-					cout<<pieceSelect->toString()<<"\n";
+					//cout<<pieceSelect->toString()<<"\n";
 				}
 				break;
 		case NOIR:	if(joueurActu ==caseSelect->getType()){
 					pieceSelect = michelNoir.getPieceAt(*caseSelect);
-					cout<<pieceSelect->toString()<<"\n";
+					//cout<<pieceSelect->toString()<<"\n";
 				}
 				break;
 		case VIDE: 	pieceSelect = new ChessPiece();
@@ -184,9 +184,9 @@ void makePieceMove(ChessCase *c){
 	}	
 	if(pieceSelect != NULL){
 		pieceSelect->setCase(c);
-		cout << pieceSelect->toString()<<" va en "<< c->toString();
+		//cout << pieceSelect->toString()<<" va en "<< c->toString();
 		if(pieceActu != NULL){
-			cout<<"et mange "<<pieceActu->toString()<<" \n";
+			//cout<<"et mange "<<pieceActu->toString()<<" \n";
 			int x = (c->getCoord()[0]-97) *SPRITE_SIZE +MARGE_W+ SPRITE_SIZE/2;
 			int y = (8-c->getCoord()[1]) *SPRITE_SIZE+MARGE_H + SPRITE_SIZE/2;
 			addBloodSpot(objGraphiques, x, y);

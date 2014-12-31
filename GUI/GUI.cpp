@@ -129,8 +129,7 @@ void interfaceInitialisation(int step){
 			interface[interface.size()-1]->setPosition(p1);
 			boutons.push_back(new ClickableElement(p1, p2, &playerNumberSetTo1));
 			break;
-		case 2:	cout<<"Début du jeu\n";
-			interface.push_back(graphicMusic);
+		case 2:	interface.push_back(graphicMusic);
 			boutons.push_back(musicClickable);
 			gameInitialisation();
 			gameGoesOn = true;
@@ -147,19 +146,19 @@ void notifyInterface(sf::Event event){
 
 void newGame(){
 	interfaceInitialisation(1);
-	cout<<"New Game\n";
+	//cout<<"New Game\n";
 }
 
 void playerNumberSetTo1(){
 	nbJoueurs = 1;
 	interfaceInitialisation(2);
-	cout<<"Players set to 1\n";
+	//cout<<"Players set to 1\n";
 }
 
 void playerNumberSetTo2(){
 	nbJoueurs = 2;
 	interfaceInitialisation(2);
-	cout<<"Players set to 2\n";
+	//cout<<"Players set to 2\n";
 }
 
 void setMusicEnable(){
