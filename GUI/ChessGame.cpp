@@ -108,6 +108,8 @@ void parseAction(string action){	// move A3 B9, show B1
 		else
 			cout<<"C'est pas une couleur!\n";
 	}
+
+
 	/* By Théo */
 	/*else{
 
