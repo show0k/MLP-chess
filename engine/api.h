@@ -43,7 +43,7 @@ public :
     void newgame(string cmd) ;
     void displayTerminalInfo(void) ;
     void setDificulty(string cmd);
-    void displayVictoryOrDoNothing(void) ;
+    bool displayVictoryOrDoNothing(void) ;
 
 
 private :

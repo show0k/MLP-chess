@@ -51,7 +51,7 @@ void API::loop() {
 void API::show(string cmd) {
 
 
-    displayVictoryOrDoNothing() ; // DEBUG
+    // displayVictoryOrDoNothing() ; // DEBUG
 
     if (cmd.size() > 5) {
         string sqStr = cmd.substr(5, 2) ;
@@ -95,8 +95,7 @@ void API::move(string cmd) {
         else {
             _board.doMove(move) ;
             engine_cout << "move> ok" << endl;
-
-
+            displayVictoryOrDoNothing() ;
         }
     } else {
         invalid(cmd) ;
@@ -106,18 +105,18 @@ void API::move(string cmd) {
 }
 
 void API::go(void) {
-    displayVictoryOrDoNothing();
+    if (!displayVictoryOrDoNothing()) {
 
-    IA ia = IA(_board) ;
-    Move bestMove = ia.findBestMove(_negamaxLevel);
+        IA ia = IA(_board) ;
+        Move bestMove = ia.findBestMove(_negamaxLevel);
 
-    std::cout << "bestmove " << bestMove << std::endl;
+        std::cout << "bestmove " << bestMove << std::endl;
 
-    _board.doMove(bestMove);
-    displayVictoryOrDoNothing();
+        _board.doMove(bestMove);
+        displayVictoryOrDoNothing();
 
 
-
+    }
 }
 
 void API::newgame(string cmd) {
@@ -163,7 +162,7 @@ void API::invalid(string cmd, string other) {
     // if(_state == TERMINAL)
     //     help();
 }
-void API::displayVictoryOrDoNothing(void) {
+bool API::displayVictoryOrDoNothing(void) {
     int result = _board.getStateOfChessBoard() ;
     if (result == WHITE_WIN) {
         engine_cout << "victory WHITE" << endl ;
@@ -176,6 +175,8 @@ void API::displayVictoryOrDoNothing(void) {
         engine_cout << "victory MATE" << endl ;
         _gameStarted = false ;
     }
+    show("show") ;
+    return  !_gameStarted ;
 }
 void displayMoveLst(vector<Move> &moves) {
     for (Move m : moves)
