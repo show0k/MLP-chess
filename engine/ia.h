@@ -15,7 +15,7 @@ public:
 
 private:
     int _level ;
-    int search(int alpha, int beta, int level);
+    int32_t search(int alpha, int beta, int depthleft);
     Board &_board;
 }; 
 

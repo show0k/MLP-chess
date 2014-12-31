@@ -62,6 +62,7 @@ void API::show(string cmd) {
         if (sqStr.size() >= 2) {
             _moveLst.clear();
             _board.getLegalMoves(_moveLst, Square(sqStr), _board.getPlayer());
+            engine_cout << "debug string " << _board.getPieceStringFromSquare(Square(sqStr)) << endl ;
         } else {
             invalid(cmd);
         }
@@ -76,6 +77,7 @@ void API::show(string cmd) {
     if (_moveLst.size() != 0) {
         engine_cout << "show>" ;
         displayMoveLst(_moveLst);
+
     }
 
 
