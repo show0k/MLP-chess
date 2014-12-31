@@ -64,11 +64,13 @@ void stringSplit(string s, char c, std::vector<string> &splited){
 		if(s.at(i) != c)
 			stringActu.append(1u, s.at(i));
 		else{
-			splited.push_back(string(stringActu));
+			if(stringActu.size() != 0)
+				splited.push_back(string(stringActu));
 			stringActu = "";
 		}
 	}
-	splited.push_back(string(stringActu));
+	if(stringActu.size() != 0)
+		splited.push_back(string(stringActu));
 }
 
 

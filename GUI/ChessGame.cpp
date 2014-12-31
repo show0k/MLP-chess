@@ -88,6 +88,10 @@ void parseAction(string action){	// move A3 B9, show B1
 		std::vector<string> splited;
 		stringSplit(action, ' ',splited);
 		int l = splited.size();
+		cout<<l<<endl;
+		for(int i =0;i<l;i++){
+			cout<<"''"<<splited[i]<<"''"<<endl;
+		}
 		for(int i = 1;i<l;i++){
 			addPossibleMove(plateau.caseAt(splited[i].at(2)-97,8-(splited[i].at(3)-48)));
 			casesAutorisees.push_back(plateau.caseAt(splited[i].at(2)-97,8-(splited[i].at(3)-48)));
