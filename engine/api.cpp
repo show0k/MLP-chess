@@ -6,7 +6,6 @@ void API::loop() {
     string token, cmd;
 
     do {
-
         displayTerminalInfo();
 
         if (!getline(engine_cin, cmd)) // Block here waiting for input
@@ -19,19 +18,17 @@ void API::loop() {
             exit(EXIT_SUCCESS);
 
         } else if (token == "newgame") newgame(cmd);
-        else if (token == "go")   engine_cout << cmd << endl ;
-
-
+        else if (token == "go")  go() ;
         else if (token == "show" && _gameStarted) show(cmd) ;
-
         else if (token == "move" && _gameStarted) move(cmd);
+
         else if (token == "setdifficulty") setDificulty(cmd) ;
         else if (token == "isready")    engine_cout << "readyok" << endl;
-        else if (token == "getbackup") engine_cout << "getbackup> " << _board.getBackupGame() << endl;
-        else if (token == "undo") {
+        else if (token == "getbackup" && _gameStarted) engine_cout << "getbackup> " << _board.getBackupGame() << endl;
+        else if (token == "undo" && _gameStarted) {
             if (_board.undoLastMove()) engine_cout << "undo> ok" << endl ;
             else engine_cout << "undo> invalid : no last move" << endl ;
-        } else if (token == "getevaluation") engine_cout << "getevaluation> " <<  _board.getEvaluation() << endl ;
+        } else if (token == "getevaluation" && _gameStarted ) engine_cout << "getevaluation> " <<  _board.getEvaluation() << endl ;
         else if (_state == TERMINAL)
             help();
         else
@@ -87,21 +84,25 @@ void API::move(string cmd) {
 
             int result = _board.getStateOfChessBoard() ;
             if (result == WHITE_WIN)
-                engine_cout << "victoire BLANC" << endl ;
+                engine_cout << "victory WHITE" << endl ;
             else if (result == BLACK_WIN)
-                engine_cout << "victoire NOIR" << endl ;
-            else if (result == MATE) engine_cout << "MATE" << endl ;
+                engine_cout << "victory BLACK" << endl ;
+            else if (result == MATE) engine_cout << "victory MATE" << endl ;
         }
     } else {
         invalid(cmd) ;
     }
-
 }
 
-void API::go(string cmd) {
+void API::go(void) {
+    IA ia = IA(_board, _negamaxLevel) ;
+    Move bestMove = ia.findBestMove();
+
+    std::cout << "bestmove " << bestMove << std::endl;
+
+    _board.doMove(bestMove);
 
 }
-
 
 void API::newgame(string cmd) {
 
@@ -130,7 +131,6 @@ void API::displayTerminalInfo(void) {
         engine_cout << "To begin the game, you must type \"newgame\" " << endl;
         help();
     }
-
 }
 
 void API::setDificulty(string cmd) {
@@ -150,8 +150,6 @@ void displayMoveLst(vector<Move> &moves) {
 
 
 //todebug : newgame k7/8/8/KQ6/8/8/8/8
-
-
 void help(void) {
 
     engine_cout << "Some examples : " << "\n" << "\"move a2a3\"" << "\n" << "\"show\"" << endl

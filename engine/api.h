@@ -11,6 +11,7 @@
 #include <ctype.h>
 
 #include "board.h"
+#include "ia.h"
 
 
 #define engine_cin std::cin
@@ -36,7 +37,7 @@ public :
     void invalid(string cmd) ;
     void move(string cmd) ;
     void show(string cmd) ;
-    void go(string cmd) ;
+    void go(void) ;
     void newgame(string cmd) ;
     void displayTerminalInfo(void) ;
     void setDificulty(string cmd);

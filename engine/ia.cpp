@@ -13,7 +13,7 @@ int IA::search(int alpha, int beta, int level) {
     int best_val = -999; // Assume the worst
 
     // Search through all legal moveLst
-    for (unsigned int i = 0; i < moveLst.size(); ++i) {
+    for (Move move : moveLst) {
         if (best_val >= beta) {
             // This is the alpha-beta pruning.
             // Stop searching, if we already have found a "killer" move.
@@ -24,12 +24,12 @@ int IA::search(int alpha, int beta, int level) {
             // Tighten the search window.
             alpha = best_val;
         }
-
-        Move &move = moveLst[i];
+        // cout << "DEBUG search1 " ;
         if (move.isCapturedAKing()) {
             return 900 + level; // Opponent's king can be captured. That means he is check-mated.
         }
 
+        // cout << "DEBUG search2 " ;
         // Do a recursive search
         _board.doMove(move);
         int num = -search(-beta, -alpha, level - 1);
@@ -56,17 +56,19 @@ Move IA::findBestMove() {
     vector<Move> moveLst = vector<Move>();
     _board.getAllLegalMoves(moveLst);
 
-    engine_cout << "info string " << moveLst.size() << " legal moveLst." << std::endl;
+    engine_cout << "info " << moveLst.size() << " legal moveLst." << std::endl;
 
     vector<Move> bestMoveLst = vector<Move>(); // Array of the (one or more) best moveLst so far
     int best_val = -999;
 
     // Search through all legal moveLst
-    for (unsigned int i = 0; i < moveLst.size(); ++i) {
-        Move move = moveLst[i];
+    // for (uint i = 0; i < moveLst.size(); i++) {
+    for (Move move : moveLst) {
+        // Move move = moveLst[i];
 
         // Get value of current move
         _board.doMove(move);
+        cout << "DEBUG findBestMove level=" << _level<< " " ;
         int val = -search(-999, 999, _level);
         _board.undoMove(move);
 
