@@ -10,13 +10,12 @@
 using namespace std;
 class IA {
 public:
-    IA(Board &board, int level = 4) : _level(level), _board(board) {}
-    Move findBestMove();
+    IA(Board &board) : _board(board) {}
+    Move findBestMove(int depth = 4);
 
 private:
-    int _level ;
-    int32_t search(int alpha, int beta, int depthleft);
-    Board &_board;
+    int32_t alphabeta(int alpha, int beta, int depth);
+    Board& _board;
 }; 
 
 #endif // _IA_H_

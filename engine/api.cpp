@@ -79,8 +79,7 @@ void API::show(string cmd) {
         displayMoveLst(_moveLst);
 
     }
-
-
+    engine_cout << "debug string  evaluation = " << _board.getEvaluation() << endl ;
 
 }
 
@@ -105,11 +104,13 @@ void API::move(string cmd) {
     } else {
         invalid(cmd) ;
     }
+
+    engine_cout << "debug string  evaluation = " << _board.getEvaluation() << endl ;
 }
 
 void API::go(void) {
-    IA ia = IA(_board, _negamaxLevel) ;
-    Move bestMove = ia.findBestMove();
+    IA ia = IA(_board) ;
+    Move bestMove = ia.findBestMove(_negamaxLevel);
 
     std::cout << "bestmove " << bestMove << std::endl;
 
