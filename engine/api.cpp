@@ -15,6 +15,7 @@ void API::loop() {
         istringstream is(cmd);
         is >> skipws >> token;
         logfile << token << endl ;
+        logfile.flush();
 
         if (token == "quit" || token == "stop" || token == "exit") {
              // close ofstream;
@@ -146,7 +147,6 @@ void API::setDificulty(string cmd) {
     string input = cmd.substr(14) ;
     _negamaxLevel = int(input[0]) - 48 + 2 ;
     engine_cout << "setdifficulty> ok" << endl;
-
 }
 
 
