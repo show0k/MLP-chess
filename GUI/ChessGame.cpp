@@ -15,6 +15,7 @@ extern std::vector<GraphicElement*> interface ;
 extern std::vector<ClickableElement*> boutons ;
 
 void gameInitialisation(){
+	sendCommand("newgame");
 	michelBlanc = ChessPieceSet(BLANC);
 	michelNoir = ChessPieceSet(NOIR);
 	michelBlanc.addPiecesToBoard(plateau);
