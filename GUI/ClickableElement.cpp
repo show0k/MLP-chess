@@ -79,6 +79,7 @@ bool ClickableElement::checkPosition(int x, int y){
 
 void ClickableElement::resetAction(){
 	action = NULL;
+	useBaseAction = true;
 }
 
 void ClickableElement::setBaseAction(){

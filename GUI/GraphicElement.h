@@ -14,6 +14,7 @@
 #include "Point2I.h"
 #include "API.h"
 //#include "GraphicEffect.h"
+//#include "libzippp.h"
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>
@@ -34,8 +35,7 @@ class GraphicElement/*: public sf::Drawable*/{
 		void *action;
 		
 
-	public:
-		GraphicElement();
+	public:	GraphicElement();
 		~GraphicElement();
 		GraphicElement(const string s);
 		void draw(sf::RenderWindow & window);
