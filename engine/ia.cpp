@@ -30,7 +30,7 @@ Move IA::findBestMove(int depth) {
     vector<Move> moveLst = vector<Move>();
     _board.getAllLegalMoves(moveLst);
 
-    engine_cout << "info " << moveLst.size() << " legal moves" << std::endl;
+    engine_cout << "debug string " << moveLst.size() << " legal moves" << std::endl;
 
     vector<Move> bestMoveLst = vector<Move>(); // Array of the (one or more) best moveLst so far
     int best_val = -999;
@@ -46,7 +46,7 @@ Move IA::findBestMove(int depth) {
         int val = -alphabeta(-999, 999, depth);
         _board.undoMove(move);
 
-        engine_cout << "info string " << val << " : " << move << std::endl;
+        engine_cout << "debug string " << val << " : " << move << std::endl;
 
         if (val > best_val) {
             best_val = val;
