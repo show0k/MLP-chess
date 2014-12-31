@@ -14,6 +14,9 @@ GraphicElement::GraphicElement(){
 
 void GraphicElement::setSprite(string fileName, int lvl){
 	t.loadFromFile(fileName);
+
+	
+	//loadFromMemory (const void *data, std::size_t size, const IntRect &area=IntRect());
 	img = sf::Sprite(t);
 }
 

@@ -7,12 +7,14 @@ ChessCase::ChessCase(char a, char b){
 	type = VIDE;
 	setStartPoint(Point2I(a*SPRITE_SIZE + MARGE_W,b*SPRITE_SIZE + MARGE_H));
 	setEndPoint(Point2I((a+1)*SPRITE_SIZE + MARGE_W,(b+1)*SPRITE_SIZE + MARGE_H));
+	setBaseAction();
 }
 ChessCase::ChessCase(){
 	empty  = true;
 	type = VIDE;
 	coord[0] = 0;
 	coord[1] = 0;
+	setBaseAction();
 }
 
 char* ChessCase::getCoord(){
