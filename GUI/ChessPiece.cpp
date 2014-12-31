@@ -42,7 +42,7 @@ void ChessPiece::setImage(int color){
 			setSprite(suffixe+"reine.png", 0);
 			break;
 		case 'n':	//cavalier
-			setSprite(suffixe+"pion.png", 0);
+			setSprite(suffixe+"chevalier.png", 0);
 			break;
 		case 'b':	//Fou
 			setSprite(suffixe+"fou.png", 0);
