@@ -63,7 +63,7 @@ void parseAction(string action){	// move A3 B9, show B1
 		caseActu = plateau.caseAt(lettre, chiffre);
 		makePieceMove(caseActu);
 		
-	}else if(stringContains(action, "victoire")){
+	}else if(stringContains(action, "victory")){
 		std::vector<string> splited;
 		stringSplit(action, ' ',splited);
 		if(splited[1] == "BLANC"){
