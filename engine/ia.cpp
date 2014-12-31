@@ -57,8 +57,6 @@ int32_t IA::alphabeta(int alpha, int beta, int depth) {
             score = num;
         }
     }
-
-
     return score;
 
 }
