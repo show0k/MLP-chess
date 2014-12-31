@@ -60,3 +60,8 @@ void GraphicElement::setScale(float size){
 Point2I GraphicElement::getPosition(){
 	return p;
 }
+
+void GraphicElement::checkPosition(){
+	if((p.getX() != img.getPosition().x) && (p.getY() != img.getPosition().y))
+		img.setPosition(p.getX(), p.getY());
+}	

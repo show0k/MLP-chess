@@ -12,6 +12,7 @@ bool musicEnable = true;
 string engineIP = "localhost";
 extern bool check ;
 void GUI(){
+	int cnt =0;
 	srand (time(NULL));
 	bool startGame = true;
 	musicInitialisation();
@@ -40,11 +41,11 @@ void GUI(){
 		displayInterfaceIn(window);
 		window.display();
 		
-		/*if(startGame &&gameGoesOn){
-			startGame = false;
-			sf::Thread thread(&checkFunctionnement);
-			thread.launch(); 
-		}*/
+		if(gameGoesOn){
+			if(cnt %100 == 0)
+				checkFunctionnement();
+			cnt++;
+		}
 	}
 }
 

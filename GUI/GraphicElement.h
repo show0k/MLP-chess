@@ -47,6 +47,7 @@ class GraphicElement/*: public sf::Drawable*/{
 		Point2I getPosition();
 		void setRotation(float angle);
 		void setScale(float size);
+		void checkPosition();
 };
 
 #endif

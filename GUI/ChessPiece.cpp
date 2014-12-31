@@ -113,6 +113,7 @@ bool ChessPiece::isAlive(){
 
 void ChessPiece::slain(){
 	alive = false;
+	caseActu = new ChessCase(0,0);
 }
 
 void ChessPiece::displayIn(sf::RenderWindow & window){

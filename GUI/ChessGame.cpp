@@ -226,8 +226,7 @@ void makePieceMove(ChessCase *c){
 			addBloodSpot(objGraphiques, x, y);
 			addDeadPony(objGraphiques, pieceActu->getColor());
 			pieceActu->slain();
-		}else
-			cout<<"\n";
+		}
 		l = c->getCoord()[0];
 		ch = c->getCoord()[1] + 48;
 		cmd = cmd.append(1u,l);
@@ -281,18 +280,11 @@ void displayPlayer(int color){
 }
 
 void checkFunctionnement(){
-	while(check){
-		for(int i=0;i<16;i++){
-			if(!(michelBlanc.pieces[i]->getCase()->getStartPoint() == michelBlanc.pieces[i]->getPosition())){
-				michelBlanc.pieces[i]->setPosition(michelBlanc.pieces[i]->getCase()->getStartPoint());
-			}
-		}
-		for(int i=0;i<16;i++){
-			if(!(michelNoir.pieces[i]->getCase()->getStartPoint() == michelNoir.pieces[i]->getPosition())){
-				michelNoir.pieces[i]->setPosition(michelNoir.pieces[i]->getCase()->getStartPoint());
-			}
-		}
-		sleep(2);
-		cout<<"Et tu shake"<<endl;
+	for(int i=0;i<16;i++){
+		michelBlanc.pieces[i]->checkPosition();
 	}
+	for(int i=0;i<16;i++){
+		michelNoir.pieces[i]->checkPosition();
+	}
+	//cout<<"Et tu shake"<<endl;
 }
