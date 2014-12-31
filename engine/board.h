@@ -39,14 +39,14 @@ typedef enum { // Directions
 const vector<uint8_t> INIT_GAME {
     X, X, X, X, X, X, X, X, X, X,
     X, X, X, X, X, X, X, X, X, X,
-    X, R, N, B, Q, K, B, N, R, X,
+    X, R, N, B, K, Q, B, N, R, X,
     X, P, P, P, P, P, P, P, P, X,
     X, _, _, _, _, _, _, _, _, X,
     X, _, _, _, _, _, _, _, _, X,
     X, _, _, _, _, _, _, _, _, X,
     X, _, _, _, _, _, _, _, _, X,
     X, p, p, p, p, p, p, p, p, X,
-    X, r, n, b, q, k, b, n, r, X,
+    X, r, n, b, k, q, b, n, r, X,
     X, X, X, X, X, X, X, X, X, X,
     X, X, X, X, X, X, X, X, X, X
 } ;
@@ -104,6 +104,10 @@ public:
     // 2 if BLACK win
     // 3 if mate
     int getStateOfChessBoard(void);
+
+    string getPieceStringFromSquare(Square sq) {
+        return  pieceToStr(_board[sq]) ;
+    } ;
 
     int8_t getPlayer() {
         return _playerToMove ;
