@@ -19,7 +19,7 @@ void API::loop(int argc, char *argv[]) {
             else cout << "Black to move" << endl;
 
         } else if (_state == TERMINAL && !_gameStarted) {
-            cout << "Avaible commands : quit, newgame, show, go, move" << endl;
+            cout << "Avaible commands : quit, newgame, show, go, move, getbackup, undo, getevaluation" << endl;
             cout << "To begin the game, you must type \"newgame\" " << endl;
             help();
         }
@@ -45,16 +45,15 @@ void API::loop(int argc, char *argv[]) {
 
         else if (token == "move" && _gameStarted) move(cmd);
         else if (token == "isready")    cout << "readyok" << endl;
-        else if (token == "getbackup") cout << _board.getBackupGame() << endl;
-        else if (token == "getbackup") cout << _board.getBackupGame() << endl;
+        else if (token == "getbackup") cout << "getbackup> " << _board.getBackupGame() << endl;
         else if (token == "undo") {
-            if (_board.undoLastMove()) cout << "ok" << endl ;
-            else cout << "invalid : no last move" << endl ;
-        } else if (token == "get_evaluation") cout << _board.getEvaluation() << endl ;
+            if (_board.undoLastMove()) cout << "undo> ok" << endl ;
+            else cout << "undo> invalid : no last move" << endl ;
+        } else if (token == "getevaluation") cout << "getevaluation> " <<  _board.getEvaluation() << endl ;
         else if (_state == TERMINAL)
             help();
         else
-            cout << "nknown command: " << cmd << endl;
+            cout << "unknown command: " << cmd << endl;
 
     } while (token != "quit" && argc == 1); // Passed args have one-shot behaviour
 }
@@ -82,13 +81,13 @@ void API::show(string cmd) {
     }
 
     // Sppression des mouvements de mise en echec
-    cout << "DEBUG avant taille = " << _moveLst.size();
-    displayMoveLst(_moveLst);
+    // cout << "DEBUG avant taille = " << _moveLst.size();
     _board.cleanChecksFromMoveLst(_moveLst);
-    cout << "DEBUG après taille = " << _moveLst.size();
-    displayMoveLst(_moveLst);
+    // cout << "DEBUG après taille = " << _moveLst.size();
+    cout << "show> " ;
+    if (_moveLst.size() != 0)
+        displayMoveLst(_moveLst);
 
-    cout << "show" << "> " ;
 
 
 }
@@ -99,21 +98,22 @@ void API::move(string cmd) {
     // Is this move valid ?
     if (_board.isValidMove(move)) {
         if (_board.isMoveGoToChess(move))
-            std::cout << "invalid : You are in CHECK. Play another move." << std::endl;
+            std::cout << "move> invalid : You are in CHECK. Play another move." << std::endl;
         else {
             _board.doMove(move) ;
-            cout << "ok" << endl;
+            cout << "move> ok" << endl;
 
             int result = _board.getStateOfChessBoard() ;
             if (result == WHITE_WIN)
                 cout << "victoire BLANC" << endl ;
             else if (result == BLACK_WIN)
                 cout << "victoire NOIR" << endl ;
-            else cout << "MATE" << endl ; 
+            else if (result == MATE) cout << "MATE" << endl ;
         }
     } else {
         invalid(cmd) ;
     }
+
 }
 
 void API::newgame(string cmd) {
@@ -126,7 +126,7 @@ void API::newgame(string cmd) {
     }
 
     _gameStarted = 1 ;
-    cout << "ok" << endl;
+    cout << "newgame> ok" << endl;
 
 }
 

@@ -214,7 +214,7 @@ int Board::getStateOfChessBoard() {
     std::vector<Move> moveList ;
 
     while (count++ < 2) {
-        cout << "DEBUG cout " ;
+        // cout << "DEBUG cout " ;
         switch (_playerToMove) {
             case  WHITE :
                 getAllLegalMoves(moveList, _playerToMove) ;
@@ -286,9 +286,9 @@ int32_t Board::getEvaluation() {
     getAllLegalMoves(moveLst, BLACK);
     int32_t bMobility = moveLst.size() ;
 
-    int32_t mobilityScore = 5 * (wMobility - bMobility) ;
+    int32_t mobilityScore =  (wMobility - bMobility) ;
 
-
+    // cout << "DEBUG , matérial = " << materialScore <<" mobility" << mobilityScore << endl;
     return (materialScore + mobilityScore) * _playerToMove ;
 }
 
