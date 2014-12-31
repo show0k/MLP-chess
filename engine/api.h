@@ -12,6 +12,10 @@
 
 #include "board.h"
 
+
+#define engine_cin std::cin
+#define engine_cout std::cout
+
 using namespace std;
 
 const int8_t TERMINAL = 0;
@@ -19,16 +23,16 @@ const int8_t GUI = 1;
 
 void displayMoveLst(vector<Move> &moves);
 void help(void);
-// supprime les echecs de la liste des mouvements
-void cleanChecksFromMoveLst(vector<Move> &moveLst, Board &board) ;
 
 class API {
 public :
     API(int8_t state = GUI): _state(state), _gameStarted(0) {
         _moveLst.reserve(500) ;
     }
+    // istream inputStream = cin, ostream outputStream = cout
+    // , inputStream(inputStream), outputStream(outputStream
 
-    void loop(int argc, char *argv[]);
+    void loop();//int argc, char *argv[]);
     void invalid(string cmd) ;
     void move(string cmd) ;
     void show(string cmd) ;
