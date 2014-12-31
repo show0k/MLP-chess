@@ -1,6 +1,7 @@
 #include "Chess.hpp"
 
 int main(int argc,char  **argv){
+
 	sf::Thread thread(&GUI);
 	thread.launch(); 
 	string s ="";
@@ -8,6 +9,7 @@ int main(int argc,char  **argv){
 		getline(cin,s);
 		parseAction(s);
 	}
+
 	return EXIT_SUCCESS;
 }
 

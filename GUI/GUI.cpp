@@ -3,12 +3,20 @@
 sf::RenderWindow window(sf::VideoMode(WINDOW_W, WINDOW_H), "GUI chess");
 std::vector<GraphicElement*> interface ;
 std::vector<ClickableElement*> boutons ;
+GraphicElement* graphicMusic  = new GraphicElement("music-on.png");;
+ClickableElement *musicClickable;
+sf::Music music;
 int nbJoueurs;
 bool gameGoesOn = false;
+bool musicEnable = true;
+string engineIP = "localhost";
 
 void GUI(){
 	srand (time(NULL));
+	initAPI(engineIP.c_str());
+	musicInitialisation();
 	interfaceInitialisation(0);
+	
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -85,8 +93,11 @@ void interfaceInitialisation(int step){
 	Point2I p1;
 	Point2I p2;
 	sf::Vector2u v;
+
 	switch(step){
 		case 0:	interface.push_back(new GraphicElement("accueil.png"));
+			interface.push_back(graphicMusic);
+			boutons.push_back(musicClickable);
 			interface.push_back(new GraphicElement("bouton-newGame.png"));
 
 			v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
@@ -98,6 +109,8 @@ void interfaceInitialisation(int step){
 			break;
 
 		case 1:	interface.push_back(new GraphicElement("accueil.png"));
+			interface.push_back(graphicMusic);
+			boutons.push_back(musicClickable);
 			interface.push_back(new GraphicElement("bouton-2Players.png"));
 
 			v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
@@ -117,6 +130,8 @@ void interfaceInitialisation(int step){
 			boutons.push_back(new ClickableElement(p1, p2, &playerNumberSetTo1));
 			break;
 		case 2:	cout<<"Début du jeu\n";
+			interface.push_back(graphicMusic);
+			boutons.push_back(musicClickable);
 			gameInitialisation();
 			gameGoesOn = true;
 			break;
@@ -145,4 +160,33 @@ void playerNumberSetTo2(){
 	nbJoueurs = 2;
 	interfaceInitialisation(2);
 	cout<<"Players set to 2\n";
+}
+
+void setMusicEnable(){
+	sf::Vector2u v = graphicMusic->getSprite(0).getTexture()->getSize();
+	Point2I p1 =  Point2I(WINDOW_W - v.x -10, WINDOW_H - v.y - 10);
+	if(musicEnable){
+		musicEnable = false;
+		music.pause();
+		graphicMusic->setSprite("music-off.png",0);
+		cout<<"Music off\n";
+	}else{
+		musicEnable = true;
+		music.play();
+		graphicMusic->setSprite("music-on.png",0);
+		cout<<"Music on\n";
+	}
+	graphicMusic->setPosition(p1);
+}
+
+void musicInitialisation(){
+	music.openFromFile("music.ogg");
+	music.setLoop(true);
+	music.play();
+	graphicMusic = new GraphicElement("music-on.png");
+	sf::Vector2u v = graphicMusic->getSprite(0).getTexture()->getSize();
+	Point2I p1 =  Point2I(WINDOW_W - v.x -10, WINDOW_H - v.y - 10);
+	Point2I p2 =  Point2I(WINDOW_W -10, WINDOW_H - 10);	
+	graphicMusic->setPosition(p1);
+	musicClickable = new ClickableElement(p1, p2, &setMusicEnable);
 }

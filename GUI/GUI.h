@@ -1,5 +1,6 @@
 #include "ChessBoard.h"
 #include "ClickableElement.h"
+#include <SFML/Audio.hpp>
 
 void GUI(void);
 bool stringContains(string s1, string s2);
@@ -15,6 +16,8 @@ void displayInterfaceIn(sf::RenderWindow &window);
 void interfaceInitialisation(int step);
 void notifyInterface(sf::Event event);
 void notifyGame(sf::Event event);
+void setMusicEnable();
+void musicInitialisation();
 
 void newGame();
 void playerNumberSetTo1();

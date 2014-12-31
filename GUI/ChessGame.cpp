@@ -108,6 +108,9 @@ void addBloodSpot(std::vector<GraphicElement*> &vect, int x, int y){
 	vect[vect.size()-1]->setRotation(rand()%360);
 	vect[vect.size()-1]->setScale(1+(rand()%800)/1000.);
 	vect[vect.size()-1]->setPosition(Point2I(x-20+rand()%40,y-20+rand()%40));
+	/*graphicEffect("grow", &vect[vect.size()-1]->getSprite(0), 3, 1.5);
+	sf::Thread thread(&growSprite);
+	thread.launch();*/
 }
 
 void addDeadPony(std::vector<GraphicElement*> &vect, char color){

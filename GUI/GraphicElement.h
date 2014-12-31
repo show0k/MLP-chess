@@ -13,6 +13,7 @@
 
 #include "Point2I.h"
 #include "API.h"
+//#include "GraphicEffect.h"
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>
