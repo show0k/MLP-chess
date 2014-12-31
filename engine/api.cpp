@@ -7,18 +7,7 @@ void API::loop() {
 
     do {
 
-
-        if (_state == TERMINAL && _gameStarted) {
-            engine_cout << _board ;
-            if (_board.getPlayer() == WHITE)
-                engine_cout << "White to move" << endl;
-            else engine_cout << "Black to move" << endl;
-
-        } else if (_state == TERMINAL && !_gameStarted) {
-            engine_cout << "Avaible commands : quit, newgame, show, go, move, getbackup, undo, getevaluation" << endl;
-            engine_cout << "To begin the game, you must type \"newgame\" " << endl;
-            help();
-        }
+        displayTerminalInfo();
 
         if (!getline(engine_cin, cmd)) // Block here waiting for input
             cmd = "quit";
@@ -36,6 +25,7 @@ void API::loop() {
         else if (token == "show" && _gameStarted) show(cmd) ;
 
         else if (token == "move" && _gameStarted) move(cmd);
+        else if (token == "setdifficulty") setDificulty(cmd) ;
         else if (token == "isready")    engine_cout << "readyok" << endl;
         else if (token == "getbackup") engine_cout << "getbackup> " << _board.getBackupGame() << endl;
         else if (token == "undo") {
@@ -108,6 +98,11 @@ void API::move(string cmd) {
 
 }
 
+void API::go(string cmd) {
+
+}
+
+
 void API::newgame(string cmd) {
 
     if (cmd.size() > 8) {
@@ -119,6 +114,29 @@ void API::newgame(string cmd) {
 
     _gameStarted = 1 ;
     engine_cout << "newgame> ok" << endl;
+
+}
+
+void API::displayTerminalInfo(void) {
+
+    if (_state == TERMINAL && _gameStarted) {
+        engine_cout << _board ;
+        if (_board.getPlayer() == WHITE)
+            engine_cout << "White to move" << endl;
+        else engine_cout << "Black to move" << endl;
+
+    } else if (_state == TERMINAL && !_gameStarted) {
+        engine_cout << "Avaible commands : quit, newgame, show, go, move, getbackup, undo, getevaluation" << endl;
+        engine_cout << "To begin the game, you must type \"newgame\" " << endl;
+        help();
+    }
+
+}
+
+void API::setDificulty(string cmd) {
+    string input = cmd.substr(14) ;
+    _negamaxLevel = int(input[0]) - 48 + 2 ;
+    engine_cout << "setdifficulty> ok" << endl;
 
 }
 
@@ -137,6 +155,6 @@ void displayMoveLst(vector<Move> &moves) {
 void help(void) {
 
     engine_cout << "Some examples : " << "\n" << "\"move a2a3\"" << "\n" << "\"show\"" << endl
-         << "\"show f2\"" << endl << "\"go\"" << endl
-         << "\"newgame RNBQKBNR/1PPPPPPP/P7/8/8/p7/1ppppppp/rnbqkbnr \"" << endl;
+                << "\"show f2\"" << endl << "\"go\"" << endl
+                << "\"newgame RNBQKBNR/1PPPPPPP/P7/8/8/p7/1ppppppp/rnbqkbnr \"" << endl;
 }

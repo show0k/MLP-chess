@@ -4,18 +4,19 @@
 #include <stdio.h>
 
 #include "board.h"
+#include "api.h"
+
+
 using namespace std;
 class IA {
 public:
-    IA(Board &board) : _board(board) {}
+    IA(Board &board, int level = 4) : _level(level), _board(board) {}
     Move findBestMove();
 
 private:
+    int _level ;
     int search(int alpha, int beta, int level);
     Board &_board;
-}; // end of class AI
-
-
-
+}; 
 
 #endif // _IA_H_

@@ -73,6 +73,9 @@ public:
     void fromString(string &move);
     bool fromInt(int from, int to);
 
+    bool isCapturedAKing() {
+        return _pieceCaptured == k || _pieceCaptured == K ;
+    } ;
 
     void setPiece(uint8_t piece) {
         _piece = piece ;

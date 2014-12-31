@@ -14,15 +14,16 @@ Fuck off UCI
     * [optional] "b1"
     engine answer move list for current player, orcurrent square for example : "b1c3 b1a3 d1e2 d1f3 d1g4 d1h5"
 
-* "set_difficulty" : an integer between 1 and 3 (3 is hardest) 
+* "setdifficulty" : an integer between 1 and 3 (3 is hardest) 
     engine answer : "ok"
 
 * "getbackup" 
     engine answer current game configuration
 * "undo" : pop the last move (lifo of moves)
     engine answer "ok"
-* "get_evaluation" : ask the result of the evaluation fonction
+* "getevaluation" : ask the result of the evaluation fonction
     engine answer a 32 bits signed integer
+
     
 # engine to GUI
 

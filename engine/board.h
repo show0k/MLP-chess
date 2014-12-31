@@ -86,10 +86,8 @@ public:
     //Fonction d'évaluation
     int32_t getEvaluation() ;
 
-    // A déplacer dans Move
+    // Check if move in getAllLegalMoves and complete it (if created from string)
     bool isValidMove(Move &move);
-
-
 
     bool isKingInCheck(void);
     bool isOtherKingInCheck(void);

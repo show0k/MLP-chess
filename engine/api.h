@@ -36,9 +36,14 @@ public :
     void invalid(string cmd) ;
     void move(string cmd) ;
     void show(string cmd) ;
+    void go(string cmd) ;
     void newgame(string cmd) ;
+    void displayTerminalInfo(void) ;
+    void setDificulty(string cmd);
+
 
 private :
+    int _negamaxLevel ;
     int8_t _state;
     Board _board;
     vector<Move> _moveLst;
