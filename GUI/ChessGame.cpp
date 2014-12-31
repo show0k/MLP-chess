@@ -41,81 +41,83 @@ void displayGameIn(sf::RenderWindow &window){
 }
 
 void parseAction(string action){	// move A3 B9, show B1
-	if(stringContains(action, "move")){
-		ChessCase *caseActu = NULL;
-		string piece = action.substr(5,2);
-		string destination = action.substr(8,2);
+	if(!stringContains(action, "invalid")){
+		if(stringContains(action, "move")){
+			ChessCase *caseActu = NULL;
+			string piece = action.substr(5,2);
+			string destination = action.substr(8,2);
 		
-		char lettre = convertCharToArrayIndex(piece.at(0)), chiffre = 8- (piece.at(1)-40);
-		switch(caseActu->getType()){
-			case BLANC:	pieceSelect = michelBlanc.getPieceAt(*caseActu);
-					//cout<<pieceSelect->toString();
-					break;
-			case NOIR:	pieceSelect = michelNoir.getPieceAt(*caseActu);
-					//cout<<pieceSelect->toString();
-					break;
-			case VIDE: 	//cout<<caseSelect.toString()<<" est vide\n";
-					break;
+			char lettre = convertCharToArrayIndex(piece.at(0)), chiffre = 8- (piece.at(1)-40);
+			switch(caseActu->getType()){
+				case BLANC:	pieceSelect = michelBlanc.getPieceAt(*caseActu);
+						//cout<<pieceSelect->toString();
+						break;
+				case NOIR:	pieceSelect = michelNoir.getPieceAt(*caseActu);
+						//cout<<pieceSelect->toString();
+						break;
+				case VIDE: 	//cout<<caseSelect.toString()<<" est vide\n";
+						break;
+			}
+
+			lettre = convertCharToArrayIndex(destination.at(0));
+			chiffre = 8- (destination.at(1)-40);
+		
+			caseActu = plateau.caseAt(lettre, chiffre);
+			makePieceMove(caseActu);
+		
+		}else if(stringContains(action, "victory")){
+			std::vector<string> splited;
+			stringSplit(action, ' ',splited);
+			if(splited[1] == "BLANC"){
+				interface.push_back(new GraphicElement("victoire-blanc.png"));
+				sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
+				interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
+			}
+			else if (splited[1] == "NOIR"){
+				interface.push_back(new GraphicElement("victoire-noir.png"));
+				sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
+				interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
+			}else if (splited[1] == "MATE"){
+				interface.push_back(new GraphicElement("victoire-noir.png"));
+				sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
+				interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
+			}
+			else
+				cout<<"De qui??\n";
+		
+		}else if(stringContains(action, "show")){
+			std::vector<string> splited;
+			stringSplit(action, ' ',splited);
+			int l = splited.size();
+			cout<<l<<endl;
+			for(int i =0;i<l;i++){
+				cout<<"''"<<splited[i]<<"''"<<endl;
+			}
+			for(int i = 1;i<l;i++){
+				addPossibleMove(plateau.caseAt(splited[i].at(2)-97,8-(splited[i].at(3)-48)));
+				casesAutorisees.push_back(plateau.caseAt(splited[i].at(2)-97,8-(splited[i].at(3)-48)));
+				nbMouvementsAffiches ++;
+			}
+		}else if(stringContains(action, "player playing")){
+			std::vector<string> splited;
+			stringSplit(action, ' ',splited);
+			if(splited[2] == "blanc"){
+				joueurActu = BLANC;
+			}else if (splited[2] == "noir"){
+				joueurActu = NOIR;
+			}
+			else
+				cout<<"C'est pas une couleur!\n";
 		}
 
-		lettre = convertCharToArrayIndex(destination.at(0));
-		chiffre = 8- (destination.at(1)-40);
-		
-		caseActu = plateau.caseAt(lettre, chiffre);
-		makePieceMove(caseActu);
-		
-	}else if(stringContains(action, "victory")){
-		std::vector<string> splited;
-		stringSplit(action, ' ',splited);
-		if(splited[1] == "BLANC"){
-			interface.push_back(new GraphicElement("victoire-blanc.png"));
-			sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
-			interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
-		}
-		else if (splited[1] == "NOIR"){
-			interface.push_back(new GraphicElement("victoire-noir.png"));
-			sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
-			interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
-		}else if (splited[1] == "MATE"){
-			interface.push_back(new GraphicElement("victoire-noir.png"));
-			sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
-			interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
-		}
-		else
-			cout<<"De qui??\n";
-		
-	}else if(stringContains(action, "show")){
-		std::vector<string> splited;
-		stringSplit(action, ' ',splited);
-		int l = splited.size();
-		cout<<l<<endl;
-		for(int i =0;i<l;i++){
-			cout<<"''"<<splited[i]<<"''"<<endl;
-		}
-		for(int i = 1;i<l;i++){
-			addPossibleMove(plateau.caseAt(splited[i].at(2)-97,8-(splited[i].at(3)-48)));
-			casesAutorisees.push_back(plateau.caseAt(splited[i].at(2)-97,8-(splited[i].at(3)-48)));
-			nbMouvementsAffiches ++;
-		}
-	}else if(stringContains(action, "player playing")){
-		std::vector<string> splited;
-		stringSplit(action, ' ',splited);
-		if(splited[2] == "blanc"){
-			joueurActu = BLANC;
-		}else if (splited[2] == "noir"){
-			joueurActu = NOIR;
-		}
-		else
-			cout<<"C'est pas une couleur!\n";
+
+		/* By Théo */
+		/*else{
+
+		    
+			//cout<<"Commande non reconnue\n";
+		}*/
 	}
-
-
-	/* By Théo */
-	/*else{
-
-	    
-		//cout<<"Commande non reconnue\n";
-	}*/
 }
 
 void addBloodSpot(std::vector<GraphicElement*> &vect, int x, int y){
@@ -199,6 +201,11 @@ void makePieceMove(ChessCase *c){
 				break;
 	}	
 	if(pieceSelect != NULL){
+		string cmd = "move ";
+		char l = pieceSelect->getCase()->getCoord()[0];
+		char ch = pieceSelect->getCase()->getCoord()[1] + 48;
+		cmd = cmd.append(1u,l);
+		cmd = cmd.append(1u,ch);
 		pieceSelect->setCase(c);
 		//cout << pieceSelect->toString()<<" va en "<< c->toString();
 		if(pieceActu != NULL){
@@ -210,11 +217,6 @@ void makePieceMove(ChessCase *c){
 			pieceActu->slain();
 		}else
 			cout<<"\n";
-		string cmd = "move ";
-		char l = pieceSelect->getCase()->getCoord()[0];
-		char ch = 8-pieceSelect->getCase()->getCoord()[1] + 48;
-		cmd = cmd.append(1u,l);
-		cmd = cmd.append(1u,ch);
 		l = c->getCoord()[0];
 		ch = c->getCoord()[1] + 48;
 		cmd = cmd.append(1u,l);
