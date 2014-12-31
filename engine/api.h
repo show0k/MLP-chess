@@ -30,7 +30,7 @@ class API {
 public :
     API(int8_t state = GUI): _state(state), _gameStarted(0) {
         _moveLst.reserve(500) ;
-        _negamaxLevel = 4;
+        _negamaxLevel = 3;
     }
     // istream inputStream = cin, ostream outputStream = cout
     // , inputStream(inputStream), outputStream(outputStream
@@ -43,6 +43,7 @@ public :
     void newgame(string cmd) ;
     void displayTerminalInfo(void) ;
     void setDificulty(string cmd);
+    void displayVictoryOrDoNothing(void) ;
 
 
 private :

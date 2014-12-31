@@ -50,6 +50,9 @@ void API::loop() {
 
 void API::show(string cmd) {
 
+    
+    displayVictoryOrDoNothing() ; // DEBUG
+    
     if (cmd.size() > 5) {
         string sqStr = cmd.substr(5, 2) ;
         if (sqStr.size() >= 2) {
@@ -79,7 +82,7 @@ void API::show(string cmd) {
 void API::move(string cmd) {
 
     if (cmd.size() < 9) {
-        invalid(cmd," example : move a2a3") ;
+        invalid(cmd, " example : move a2a3") ;
         return ;
 
     }
@@ -93,12 +96,7 @@ void API::move(string cmd) {
             _board.doMove(move) ;
             engine_cout << "move> ok" << endl;
 
-            int result = _board.getStateOfChessBoard() ;
-            if (result == WHITE_WIN)
-                engine_cout << "victory WHITE" << endl ;
-            else if (result == BLACK_WIN)
-                engine_cout << "victory BLACK" << endl ;
-            else if (result == MATE) engine_cout << "victory MATE" << endl ;
+
         }
     } else {
         invalid(cmd) ;
@@ -108,12 +106,17 @@ void API::move(string cmd) {
 }
 
 void API::go(void) {
+    displayVictoryOrDoNothing();
+
     IA ia = IA(_board) ;
     Move bestMove = ia.findBestMove(_negamaxLevel);
 
     std::cout << "bestmove " << bestMove << std::endl;
 
     _board.doMove(bestMove);
+   displayVictoryOrDoNothing();
+
+
 
 }
 
@@ -154,19 +157,27 @@ void API::setDificulty(string cmd) {
 
 
 
-void displayMoveLst(vector<Move> &moves) {
-    for (Move m : moves)
-        engine_cout << " " << m ;
-    engine_cout << endl ;
-}
-
 void API::invalid(string cmd, string other) {
 
     engine_cout << "invalid command :" << cmd << " " << other << endl;
     // if(_state == TERMINAL)
     //     help();
 }
+void API::displayVictoryOrDoNothing(void) {
+    int result = _board.getStateOfChessBoard() ;
+    if (result == WHITE_WIN)
+        engine_cout << "victory WHITE" << endl ;
+    else if (result == BLACK_WIN)
+        engine_cout << "victory BLACK" << endl ;
+    else if (result == MATE) engine_cout << "victory MATE" << endl ;
+}
+void displayMoveLst(vector<Move> &moves) {
+    for (Move m : moves)
+        engine_cout << " " << m ;
+    engine_cout << endl ;
+}
 //todebug : newgame k7/8/8/KQ6/8/8/8/8
+//todebug : newgame kppppppp/8/8/1QQ5/8/8/8/K7
 void help(void) {
 
     engine_cout << "Some examples : " << "\n" << "\"move a2a3\"" << "\n" << "\"show\"" << endl

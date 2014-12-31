@@ -42,14 +42,17 @@ public:
     // Constructors
     Move(string fromTo) : _piece(X), _pieceCaptured(X), _piecePromoted(X) {
         fromString(fromTo);
-    };
+    }
+
+    Move(void) : _piece(X), _squareFrom(0), _squareTo(0), _pieceCaptured(X), _piecePromoted(X) {}
 
     Move(uint8_t piece, Square &from, Square &to, uint8_t pieceCaptured = _, uint8_t piecePromoted = _):
-        _piece(piece), _squareFrom(from), _squareTo(to), _pieceCaptured(pieceCaptured), _piecePromoted(piecePromoted) {}
+        _piece(piece), _squareFrom(from), _squareTo(to), _pieceCaptured(pieceCaptured),
+        _piecePromoted(piecePromoted) {}
 
 
     //Copy constructor
-        // BUGGGGGG ??????????????????????????????????
+    // BUGGGGGG ??????????????????????????????????
     // Move(const Move &m) {
     //     _piece = m._piece;
     //     _squareFrom = m._squareFrom;

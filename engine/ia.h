@@ -14,7 +14,7 @@ public:
     Move findBestMove(int depth = 4);
 
 private:
-    int32_t alphabeta(int alpha, int beta, int depth);
+    int32_t alphabeta(int32_t alpha, int32_t beta, int32_t depth);
     Board& _board;
 }; 
 
