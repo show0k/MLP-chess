@@ -44,6 +44,7 @@ class GraphicElement/*: public sf::Drawable*/{
 		sf::Sprite& getSprite(char state);
 		void putIntoVector(std::vector<GraphicElement> v);
 		void setPosition(Point2I p);
+		Point2I getPosition();
 		void setRotation(float angle);
 		void setScale(float size);
 };

@@ -49,3 +49,9 @@ string intToString(int x){
 	return s;
 }
 
+bool Point2I::operator==(Point2I const& p){
+	if(x == p.x && y == p.y)
+		return true;
+	else
+		return false;
+}

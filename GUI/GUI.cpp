@@ -10,10 +10,10 @@ int nbJoueurs;
 bool gameGoesOn = false;
 bool musicEnable = true;
 string engineIP = "localhost";
-
+extern bool check ;
 void GUI(){
 	srand (time(NULL));
-	//initAPI(engineIP.c_str());
+	bool startGame = true;
 	musicInitialisation();
 	interfaceInitialisation(0);
 	
@@ -24,6 +24,7 @@ void GUI(){
 		
 			if (event.type == sf::Event::Closed){
 				window.close();
+				check = false;
 				exit(0);
 			}
 			else if (event.type == sf::Event::MouseButtonPressed ){
@@ -36,10 +37,14 @@ void GUI(){
 		
 		if(gameGoesOn)
 			displayGameIn(window);
-		
 		displayInterfaceIn(window);
-
 		window.display();
+		
+		/*if(startGame &&gameGoesOn){
+			startGame = false;
+			sf::Thread thread(&checkFunctionnement);
+			thread.launch(); 
+		}*/
 	}
 }
 
@@ -80,7 +85,7 @@ char convertCharToArrayIndex(char lettre){
 		return lettre%97 +1;		
 	}
 	else{
-		return lettre%63 - 1;
+		return lettre%48 - 1;
 	}
 }
 

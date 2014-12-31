@@ -48,7 +48,7 @@ void ChessPiece::setImage(int color){
 			setSprite(suffixe+"fou.png", 0);
 			break;
 		case 'r':	//Tour
-			setSprite(suffixe+"pion.png", 0);
+			setSprite(suffixe+"tour.png", 0);
 			break;
 	}
 }

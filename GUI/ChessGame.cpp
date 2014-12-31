@@ -12,6 +12,8 @@ std::vector<ChessCase*> casesAutorisees;
 int joueurActu = 0;
 extern int nbJoueurs;
 
+bool check = true;
+
 extern std::vector<GraphicElement*> interface ;
 extern std::vector<ClickableElement*> boutons ;
 
@@ -54,9 +56,8 @@ void parseAction(string action){	// move A3 B9, show B1
 				destination = action.substr(7,2);
 			}
 			
-			char lettre = convertCharToArrayIndex(piece.at(0)), chiffre = 8 - (piece.at(1)-48);
-			cout<<"("<<convertCharToArrayIndex(piece.at(0))<<","<<8 - (piece.at(1)-48)<<")";
-
+			int lettre = piece.at(0)-97, chiffre = 8 - (piece.at(1)-48);
+			caseActu = plateau.caseAt(lettre, chiffre);
 			switch(caseActu->getType()){
 				case BLANC:	pieceSelect = michelBlanc.getPieceAt(*caseActu);
 						//cout<<pieceSelect->toString();
@@ -67,9 +68,10 @@ void parseAction(string action){	// move A3 B9, show B1
 				case VIDE: 	//cout<<caseSelect.toString()<<" est vide\n";
 						break;
 			}
-
-			lettre = convertCharToArrayIndex(destination.at(0));
-			chiffre = 8- (destination.at(1)-40);
+			cout<<"("<<lettre<<","<< chiffre<<")"<<endl;
+			lettre = destination.at(0) -97;
+			chiffre = 8- (destination.at(1)-48);
+			
 		
 			caseActu = plateau.caseAt(lettre, chiffre);
 			makePieceMove(caseActu);
@@ -275,5 +277,22 @@ void displayPlayer(int color){
 		interface[interface.size()-1]->setPosition(p1);
 		boutons.push_back(new ClickableElement(p1, p2, &playerNumberSetTo2));
 		//cout<<"Joueur blanc joue\n";
+	}
+}
+
+void checkFunctionnement(){
+	while(check){
+		for(int i=0;i<16;i++){
+			if(!(michelBlanc.pieces[i]->getCase()->getStartPoint() == michelBlanc.pieces[i]->getPosition())){
+				michelBlanc.pieces[i]->setPosition(michelBlanc.pieces[i]->getCase()->getStartPoint());
+			}
+		}
+		for(int i=0;i<16;i++){
+			if(!(michelNoir.pieces[i]->getCase()->getStartPoint() == michelNoir.pieces[i]->getPosition())){
+				michelNoir.pieces[i]->setPosition(michelNoir.pieces[i]->getCase()->getStartPoint());
+			}
+		}
+		sleep(2);
+		cout<<"Et tu shake"<<endl;
 	}
 }

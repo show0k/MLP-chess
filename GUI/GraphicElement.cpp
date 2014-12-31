@@ -57,3 +57,6 @@ void GraphicElement::setScale(float size){
 	img.setScale(size, size);
 }
 
+Point2I GraphicElement::getPosition(){
+	return p;
+}

@@ -1,6 +1,7 @@
 #include "ChessBoard.h"
 #include "ClickableElement.h"
 #include <SFML/Audio.hpp>
+#include <unistd.h>
 
 void GUI(void);
 bool stringContains(string s1, string s2);
@@ -27,3 +28,4 @@ void resetPossibleMove();
 void makePieceMove(ChessCase *c);
 void changePlayer();
 void displayPlayer(int color);
+void checkFunctionnement();

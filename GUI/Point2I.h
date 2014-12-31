@@ -20,6 +20,7 @@ class Point2I{
 		void setX(int);
 		void setY(int);
 		string toString();
+		bool operator==(Point2I const& p);
 };
 
 #endif
