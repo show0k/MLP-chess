@@ -19,6 +19,12 @@ Fuck off UCI
     engine answer ok
 * "get_evaluation" : ask the result of the evaluation fonction
     engine answer a 32 bits signed integer
+    
+# engine to GUI
+
+* "victoire NOIR"
+* "victoire BLANC"
+* "MATE"
 
 
 dup2 et pipe ? http://forum.rue-montgallet.com/ruemontgallet/Programmation/aide-pipe-dup2-sujet_20276_1.htm

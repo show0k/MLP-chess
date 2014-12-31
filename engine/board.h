@@ -20,6 +20,10 @@
 #define BLACKANDWHITE 2
 #define PLAYERTOMOVE 3
 
+#define WHITE_WIN 1
+#define BLACK_WIN 2
+#define MATE 3
+
 
 typedef enum { // Directions
     // Idea from http://chessprogramming.wikispaces.com/Direction
@@ -93,6 +97,16 @@ public:
     // return true if this move make a chess (assume is it a valid move)
     bool isMoveGoToChess(Move move) ;
 
+    // delete checks move from move liste
+    // return number of move deleted
+    int cleanChecksFromMoveLst(vector<Move> &moveLst) ;
+
+    //return 0 if nothing
+    // 1 if WHITE win
+    // 2 if BLACK win
+    // 3 if mate
+    int getStateOfChessBoard(void);
+
     int8_t getPlayer() {
         return _playerToMove ;
     }
@@ -110,6 +124,7 @@ public:
             return true ;
         }
     }
+
 
 private:
 

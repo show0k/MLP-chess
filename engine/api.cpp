@@ -54,7 +54,7 @@ void API::loop(int argc, char *argv[]) {
         else if (_state == TERMINAL)
             help();
         else
-            cout << "Unknown command: " << cmd << endl;
+            cout << "nknown command: " << cmd << endl;
 
     } while (token != "quit" && argc == 1); // Passed args have one-shot behaviour
 }
@@ -84,7 +84,7 @@ void API::show(string cmd) {
     // Sppression des mouvements de mise en echec
     cout << "DEBUG avant taille = " << _moveLst.size();
     displayMoveLst(_moveLst);
-    cleanMoveLstFromChecks(_moveLst, _board);
+    _board.cleanChecksFromMoveLst(_moveLst);
     cout << "DEBUG après taille = " << _moveLst.size();
     displayMoveLst(_moveLst);
 
@@ -104,13 +104,12 @@ void API::move(string cmd) {
             _board.doMove(move) ;
             cout << "ok" << endl;
 
-            if (_board.isKingInCheck()) {
-                if (_board.getPlayer() == WHITE)
-                    cout << "victore BLANC" << endl ;
-                else
-                    cout << "victore NOIR" << endl ;
-
-            }
+            int result = _board.getStateOfChessBoard() ;
+            if (result == WHITE_WIN)
+                cout << "victoire BLANC" << endl ;
+            else if (result == BLACK_WIN)
+                cout << "victoire NOIR" << endl ;
+            else cout << "MATE" << endl ; 
         }
     } else {
         invalid(cmd) ;
@@ -139,18 +138,9 @@ void displayMoveLst(vector<Move> &moves) {
     cout << endl ;
 }
 
-void cleanMoveLstFromChecks(vector<Move> &moveLst, Board &board) {
 
-    vector<Move> tmpLst = moveLst ; // copy
-    moveLst.clear();
-    for (uint8_t i = 0 ; i < tmpLst.size() ; i++) {
-        if (!board.isMoveGoToChess(moveLst[i]))
-            moveLst.push_back(tmpLst[i]);
-    }
+//todebug : newgame k7/8/8/KQ6/8/8/8/8
 
-
-    //todebug : newgame k7/8/8/KQ6/8/8/8/8
-}
 
 void help(void) {
 

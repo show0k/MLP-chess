@@ -20,7 +20,7 @@ const int8_t GUI = 1;
 void displayMoveLst(vector<Move> &moves);
 void help(void);
 // supprime les echecs de la liste des mouvements
-void cleanMoveLstFromChecks(vector<Move> &moveLst, Board &board) ;
+void cleanChecksFromMoveLst(vector<Move> &moveLst, Board &board) ;
 
 class API {
 public :

@@ -65,7 +65,6 @@ bool Board::parseNewGame(string &input, vector<uint8_t> &backupGame) {
     vector<uint8_t> tmp_board ;
     // tmp_board.reserve(120) ;
     int spaceNumber = 0 ;
-    bool first = true ;
     for (char &c : input) {
         if (!isdigit(c) && c != '/') {
             tmp_board.push_back(pieceFromStr(c));
@@ -191,6 +190,51 @@ bool Board::isMoveGoToChess(Move move) {
     }
     undoMove(move);
     return out ;
+}
+
+int Board::cleanChecksFromMoveLst(vector<Move> &moveLst) {
+
+    int  out = moveLst.size() ;
+    vector<Move> tmpLst = moveLst ; // copy
+    moveLst.clear();
+    for (uint8_t i = 0 ; i < tmpLst.size() ; i++) {
+        if (!isMoveGoToChess(moveLst[i]))
+            moveLst.push_back(tmpLst[i]);
+    }
+    return out -  moveLst.size() ;
+
+}
+
+//return 0 if nothing
+// 1 if WHITE win
+// 2 if BLACK win
+// 3 if mate
+int Board::getStateOfChessBoard() {
+    int result = 0, count = 0;
+    std::vector<Move> moveList ;
+
+    while (count++ < 2) {
+        cout << "DEBUG cout " ;
+        switch (_playerToMove) {
+            case  WHITE :
+                getAllLegalMoves(moveList, _playerToMove) ;
+                cleanChecksFromMoveLst(moveList);
+                if (moveList.size() == 0)
+                    result += 2 ;
+                swapPlayers() ;
+                break ;
+            case BLACK :
+                getAllLegalMoves(moveList, _playerToMove) ;
+                cleanChecksFromMoveLst(moveList);
+                if (moveList.size() == 0)
+                    result += 1 ;
+                swapPlayers();
+                break ;
+        }
+    }
+    //debug
+    assert(result <= MATE) ;
+    return result ;
 }
 
 bool Board::isValidMove(Move &move) {
