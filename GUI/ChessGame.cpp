@@ -99,10 +99,12 @@ void parseAction(string action){	// move A3 B9, show B1
 		else
 			cout<<"C'est pas une couleur!\n";
 	}
-	else{
-	    /* By Théo /*
+	/* By Théo */
+	/*else{
+
+	    
 		//cout<<"Commande non reconnue\n";
-	}
+	}*/
 }
 
 void addBloodSpot(std::vector<GraphicElement*> &vect, int x, int y){
