@@ -15,18 +15,6 @@ ostream &operator<<(ostream &out, const Board &b) { // output
     return out;
 }
 
-int materialWt(int8_t pieceCode) {
-
-    switch (pieceCode) {
-        case p: case P: return 1; break;
-        case b: case B: case n: case N: return 3; break;
-        case r: case R: return 5; break;
-        case q: case Q: return 9; break;
-        case k: case K: return 200; break;
-        default : return 0 ;
-    }
-
-}
 
 void Board::newGame(void) {
 

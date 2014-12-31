@@ -46,6 +46,7 @@ public :
     bool displayVictoryOrDoNothing(void) ;
 
 
+
 private :
     int _negamaxLevel ;
     int8_t _state;
