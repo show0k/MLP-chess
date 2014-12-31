@@ -4,33 +4,106 @@
 // To have moreinfo, see http://chessprogramming.wikispaces.com/Alpha-Beta
 int32_t IA::alphabeta(int alpha, int beta, int depth) {
 
-    int depthleft = depth;
+    // int depthleft = depth;
+    // vector<Move> moveLst = vector<Move>();
+    // int32_t bestscore = -999;
+    // _board.getAllLegalMoves(moveLst);
+    // int32_t score ;
+    // if (depthleft == 0) return _board.getEvaluation(); // TODO : quiesce
+    // for (Move move : moveLst) {
+    //     score = -alphabeta(-beta, -alpha, depthleft - 1);
+    //     if (score >= beta)
+    //         return score;  // fail-soft beta-cutoff
+    //     if (score > bestscore) {
+    //         bestscore = score;
+    //         if (score > alpha)
+    //             alpha = score;
+    //     }
+    // }
+    // return bestscore;
+
+
+
+
     vector<Move> moveLst = vector<Move>();
-    int32_t bestscore = -999;
+    if (depth == 0)
+        return _board.getEvaluation(); // We are at leaf, just return the static evaluation.
+
     _board.getAllLegalMoves(moveLst);
-    int32_t score ;
-    if (depthleft == 0) return _board.getEvaluation(); // TODO : quiesce
+
+    int score = -999; // Assume the worst
+
     for (Move move : moveLst) {
-        score = -alphabeta(-beta, -alpha, depthleft - 1);
-        if (score >= beta)
-            return score;  // fail-soft beta-cutoff
-        if (score > bestscore) {
-            bestscore = score;
-            if (score > alpha)
-                alpha = score;
+        if (score >= beta) {
+            // This is the alpha-beta pruning.
+            // Stop alphabetaing, if we already have found a "killer" move.
+            break;
+        }
+        if (score > alpha) {
+            // This is part of the alpha-beta pruning too.
+            // Tighten the alphabeta window.
+            alpha = score;
+        }
+        // cout << "DEBUG alphabeta1 " ;
+        if (move.isCapturedAKing()) {
+            return 900 + depth; // Opponent's king can be captured. That means he is check-mated.
+        }
+
+        _board.doMove(move);
+        int num = -alphabeta(-beta, -alpha, depth - 1);
+        _board.undoMove(move);
+
+        if (num > score) {
+            score = num;
         }
     }
-    return bestscore;
+
+
+    // alphabeta through all legal moveLst
+    // for (Move move : moveLst) {
+    //     if (score >= beta) {
+    //         // This is the alpha-beta pruning.
+    //         // Stop alphabetaing, if we already have found a "killer" move.
+    //         break;
+    //     }
+    //     if (score > alpha) {
+    //         // This is part of the alpha-beta pruning too.
+    //         // Tighten the alphabeta window.
+    //         alpha = score;
+    //     }
+    //     // cout << "DEBUG alphabeta1 " ;
+    //     if (move.isCapturedAKing()) {
+    //         return 900 + depth; // Opponent's king can be captured. That means he is check-mated.
+    //     }
+
+    //     _board.doMove(move);
+    //     int num = -alphabeta(-beta, -alpha, depth - 1);
+    //     _board.undoMove(move);
+
+    //     if (num > score) {
+    //         score = num;
+    //     }
+    // }
+
+    return score;
+
+    //    return best_val;
 
 } // end of int alphabeta
 
-
+/***************************************************************
+ * find_best_move
+ *
+ * This is the main AI.
+ * It returns what it considers to be the best legal move in the
+ * current position.
+ ***************************************************************/
 Move IA::findBestMove(int depth) {
     // Make a list of all legal moveLst
     vector<Move> moveLst = vector<Move>();
     _board.getAllLegalMoves(moveLst);
 
-    engine_cout << "debug string " << moveLst.size() << " legal moves" << std::endl;
+    engine_cout << "info " << moveLst.size() << " legal moves" << std::endl;
 
     vector<Move> bestMoveLst = vector<Move>(); // Array of the (one or more) best moveLst so far
     int best_val = -999;
@@ -46,7 +119,7 @@ Move IA::findBestMove(int depth) {
         int val = -alphabeta(-999, 999, depth);
         _board.undoMove(move);
 
-        engine_cout << "debug string " << val << " : " << move << std::endl;
+        engine_cout << "info string " << val << " : " << move << std::endl;
 
         if (val > best_val) {
             best_val = val;
