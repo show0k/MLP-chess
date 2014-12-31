@@ -30,13 +30,13 @@ class API {
 public :
     API(int8_t state = GUI): _state(state), _gameStarted(0) {
         _moveLst.reserve(500) ;
-        _negamaxLevel = 3;
+        _negamaxLevel = 4;
     }
     // istream inputStream = cin, ostream outputStream = cout
     // , inputStream(inputStream), outputStream(outputStream
 
     void loop();//int argc, char *argv[]);
-    void invalid(string cmd) ;
+    void invalid(string cmd, string other = "") ;
     void move(string cmd) ;
     void show(string cmd) ;
     void go(void) ;

@@ -20,7 +20,7 @@ void API::loop() {
         if (token == "quit" || token == "stop" || token == "exit") {
             // close ofstream;
             logfile.close();
-            cout << "closing engine ..." << endl ;
+            cout << endl << "closing engine ..." << endl ;
             exit(EXIT_SUCCESS);
 
         } else if (token == "newgame") newgame(cmd);
@@ -45,13 +45,6 @@ void API::loop() {
     // close ofstream;
     logfile.close();
 
-}
-
-void API::invalid(string cmd) {
-
-    engine_cout << "invalid command :" << cmd << endl;
-    // if(_state == TERMINAL)
-    //     help();
 }
 
 
@@ -84,6 +77,12 @@ void API::show(string cmd) {
 }
 
 void API::move(string cmd) {
+
+    if (cmd.size() < 9) {
+        invalid(cmd," example : move a2a3") ;
+        return ;
+
+    }
     Move move = Move(cmd.substr(5, 4));
 
     // Is this move valid ?
@@ -105,7 +104,7 @@ void API::move(string cmd) {
         invalid(cmd) ;
     }
 
-    engine_cout << "debug string  evaluation = " << _board.getEvaluation() << endl ;
+    engine_cout << "debug string evaluation = " << _board.getEvaluation() << endl ;
 }
 
 void API::go(void) {
@@ -157,11 +156,16 @@ void API::setDificulty(string cmd) {
 
 void displayMoveLst(vector<Move> &moves) {
     for (Move m : moves)
-        engine_cout << " "<< m ;
+        engine_cout << " " << m ;
     engine_cout << endl ;
 }
 
+void API::invalid(string cmd, string other) {
 
+    engine_cout << "invalid command :" << cmd << " " << other << endl;
+    // if(_state == TERMINAL)
+    //     help();
+}
 //todebug : newgame k7/8/8/KQ6/8/8/8/8
 void help(void) {
 

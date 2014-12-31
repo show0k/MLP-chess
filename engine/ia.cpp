@@ -45,9 +45,9 @@ int32_t IA::alphabeta(int alpha, int beta, int depth) {
             alpha = score;
         }
         // cout << "DEBUG alphabeta1 " ;
-        if (move.isCapturedAKing()) {
-            return 900 + depth; // Opponent's king can be captured. That means he is check-mated.
-        }
+        // if (move.isCapturedAKing()) {
+        //     return 900 + depth; // Opponent's king can be captured. That means he is check-mated.
+        // }
 
         _board.doMove(move);
         int num = -alphabeta(-beta, -alpha, depth - 1);
@@ -68,6 +68,7 @@ Move IA::findBestMove(int depth) {
     _board.getAllLegalMoves(moveLst);
 
     engine_cout << "debug string " << moveLst.size() << " legal moves" << std::endl;
+    engine_cout << "debug string depth = " << depth << std::endl;
 
     vector<Move> bestMoveLst = vector<Move>(); // Array of the (one or more) best moveLst so far
     int best_val = -999;
