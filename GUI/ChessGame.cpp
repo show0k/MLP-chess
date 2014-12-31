@@ -41,7 +41,7 @@ void displayGameIn(sf::RenderWindow &window){
 }
 
 void parseAction(string action){	// move A3 B9, show B1
-	if(!stringContains(action, "invalid")){
+	if(!stringContains(action, "invalid") && !stringContains(action, "ok")){
 		if(stringContains(action, "move")){
 			ChessCase *caseActu = NULL;
 			string piece = action.substr(5,2);
