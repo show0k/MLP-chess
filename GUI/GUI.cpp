@@ -189,7 +189,7 @@ void setMusicEnable(){
 }
 
 void musicInitialisation(){
-	music.openFromFile("music.ogg");
+	music.openFromFile("ressources/music.ogg");
 	music.setLoop(true);
 	music.play();
 	graphicMusic = new GraphicElement("music-on.png");

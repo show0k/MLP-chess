@@ -13,7 +13,7 @@ GraphicElement::GraphicElement(){
 }
 
 void GraphicElement::setSprite(string fileName, int lvl){
-	t.loadFromFile(fileName);
+	t.loadFromFile("ressources/"+fileName);
 
 	
 	//loadFromMemory (const void *data, std::size_t size, const IntRect &area=IntRect());
