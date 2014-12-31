@@ -10,7 +10,7 @@ objects = $(sources:.cpp=.cpp)
 depends = $(sources:.cpp=.cpp)
 
 OPTIONS   = -W -Wall
-#OPTIONS  += -O3
+OPTIONS  += -O3
 #OPTIONS  += -g  # debug info
 OPTIONS  += -pg # profiling
 OPTIONS  +=-std=c++11
