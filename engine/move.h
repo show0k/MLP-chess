@@ -40,7 +40,7 @@ uint8_t pieceFromStr(const char pieceStr) ;
 class Move {
 public:
     // Constructors
-    Move(string fromTo) {
+    Move(string fromTo) : _piece(X), _pieceCaptured(X), _piecePromoted(X) {
         fromString(fromTo);
     };
 
@@ -73,7 +73,13 @@ public:
     void fromString(string &move);
     bool fromInt(int from, int to);
 
+    bool isCapturedAKing() {
+        return _pieceCaptured == k || _pieceCaptured == K ;
+    } ;
 
+    void setPiece(uint8_t piece) {
+        _piece = piece ;
+    }
     //  Getter and setter
     uint8_t getPiece(void) {
         return _piece ;
@@ -85,11 +91,11 @@ public:
     Square getSquareTo(void) {
         return _squareTo ;
     };
-    int8_t getPieceCaptured() {
-        return _pieceCaptured;
-    };
     void setPieceCaptured(int8_t piece) {
         _pieceCaptured = piece ;
+    };
+    int8_t getPieceCaptured() {
+        return _pieceCaptured;
     };
     void setPiecePromoted(int8_t piece) {
         _piecePromoted = piece ;

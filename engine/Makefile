@@ -18,7 +18,7 @@ OPTIONS  +=-std=c++11
 CC=g++
 
 all: 
-	$(CC) $(sources) $(OPTIONS) -o $(program)
+	$(CC) $(sources) $(OPTIONS) -o $(program).out
     
 
 clean:

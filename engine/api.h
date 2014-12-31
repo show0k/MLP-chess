@@ -12,6 +12,10 @@
 
 #include "board.h"
 
+
+#define engine_cin std::cin
+#define engine_cout std::cout
+
 using namespace std;
 
 const int8_t TERMINAL = 0;
@@ -22,12 +26,24 @@ void help(void);
 
 class API {
 public :
-    API(int8_t state = GUI): _state(state), _gameStarted(0) {_moveLst.reserve(500) ;}
+    API(int8_t state = GUI): _state(state), _gameStarted(0) {
+        _moveLst.reserve(500) ;
+    }
+    // istream inputStream = cin, ostream outputStream = cout
+    // , inputStream(inputStream), outputStream(outputStream
 
-    void loop(int argc, char *argv[]);
+    void loop();//int argc, char *argv[]);
     void invalid(string cmd) ;
+    void move(string cmd) ;
+    void show(string cmd) ;
+    void go(string cmd) ;
+    void newgame(string cmd) ;
+    void displayTerminalInfo(void) ;
+    void setDificulty(string cmd);
+
 
 private :
+    int _negamaxLevel ;
     int8_t _state;
     Board _board;
     vector<Move> _moveLst;
