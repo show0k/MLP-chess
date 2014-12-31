@@ -50,9 +50,9 @@ void API::loop() {
 
 void API::show(string cmd) {
 
-    
+
     displayVictoryOrDoNothing() ; // DEBUG
-    
+
     if (cmd.size() > 5) {
         string sqStr = cmd.substr(5, 2) ;
         if (sqStr.size() >= 2) {
@@ -114,7 +114,7 @@ void API::go(void) {
     std::cout << "bestmove " << bestMove << std::endl;
 
     _board.doMove(bestMove);
-   displayVictoryOrDoNothing();
+    displayVictoryOrDoNothing();
 
 
 
@@ -165,11 +165,17 @@ void API::invalid(string cmd, string other) {
 }
 void API::displayVictoryOrDoNothing(void) {
     int result = _board.getStateOfChessBoard() ;
-    if (result == WHITE_WIN)
+    if (result == WHITE_WIN) {
         engine_cout << "victory WHITE" << endl ;
-    else if (result == BLACK_WIN)
+        _gameStarted = false ;
+
+    } else if (result == BLACK_WIN) {
         engine_cout << "victory BLACK" << endl ;
-    else if (result == MATE) engine_cout << "victory MATE" << endl ;
+        _gameStarted = false ;
+    } else if (result == MATE) {
+        engine_cout << "victory MATE" << endl ;
+        _gameStarted = false ;
+    }
 }
 void displayMoveLst(vector<Move> &moves) {
     for (Move m : moves)

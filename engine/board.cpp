@@ -286,7 +286,7 @@ int32_t Board::getEvaluation() {
     getAllLegalMoves(moveLst, BLACK);
     int32_t bMobility = moveLst.size() ;
 
-    int32_t mobilityScore =  (wMobility - bMobility) ;
+    int32_t mobilityScore = (wMobility - bMobility) ;
 
     // cout << "DEBUG , matérial = " << materialScore <<" mobility" << mobilityScore << endl;
     return (materialScore + mobilityScore) * _playerToMove ;
