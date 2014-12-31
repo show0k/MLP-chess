@@ -18,9 +18,9 @@ void API::loop() {
         logfile.flush();
 
         if (token == "quit" || token == "stop" || token == "exit") {
-             // close ofstream;
+            // close ofstream;
             logfile.close();
-            cout << "closing ..." << endl ;
+            cout << "closing engine ..." << endl ;
             exit(EXIT_SUCCESS);
 
         } else if (token == "newgame") newgame(cmd);
@@ -73,9 +73,10 @@ void API::show(string cmd) {
     // engine_cout << "DEBUG avant taille = " << _moveLst.size();
     _board.cleanChecksFromMoveLst(_moveLst);
     // engine_cout << "DEBUG après taille = " << _moveLst.size();
-    engine_cout << "show> " ;
-    if (_moveLst.size() != 0)
+    if (_moveLst.size() != 0) {
+        engine_cout << "show>" ;
         displayMoveLst(_moveLst);
+    }
 
 
 
@@ -153,7 +154,7 @@ void API::setDificulty(string cmd) {
 
 void displayMoveLst(vector<Move> &moves) {
     for (Move m : moves)
-        engine_cout << m << " ";
+        engine_cout << " "<< m ;
     engine_cout << endl ;
 }
 
