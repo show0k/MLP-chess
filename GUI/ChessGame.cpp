@@ -143,6 +143,8 @@ void addDeadPony(std::vector<GraphicElement*> &vect, char color){
 
 void notifyGame(sf::Event event){
 	caseSelect = plateau.notifyCases(event);
+	if(nbMouvementsAffiches == 0)
+		caseSelect->baseAction();
 	if((nbMouvementsAffiches != 0) && pieceSelect->notNull() && (pieceSelect->getColor() == joueurActu)){
 		if(caseSelect->isInVector(casesAutorisees)){
 			resetPossibleMove();
