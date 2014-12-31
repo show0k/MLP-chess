@@ -146,12 +146,12 @@ void notifyGame(sf::Event event){
 	switch(caseSelect->getType()){
 		case BLANC:	if(joueurActu ==caseSelect->getType()){
 					pieceSelect = michelBlanc.getPieceAt(*caseSelect);
-					cout<<pieceSelect->toString()<<"\n";
+					//cout<<pieceSelect->toString()<<"\n";
 				}
 				break;
 		case NOIR:	if(joueurActu ==caseSelect->getType()){
 					pieceSelect = michelNoir.getPieceAt(*caseSelect);
-					cout<<pieceSelect->toString()<<"\n";
+					//cout<<pieceSelect->toString()<<"\n";
 				}
 				break;
 		case VIDE: 	pieceSelect = new ChessPiece();
