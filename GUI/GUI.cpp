@@ -26,6 +26,7 @@ void GUI(){
 			if (event.type == sf::Event::Closed){
 				window.close();
 				check = false;
+				sendCommand("exit");
 				exit(0);
 			}
 			else if (event.type == sf::Event::MouseButtonPressed ){
