@@ -10,6 +10,7 @@ ChessBoard plateau;
 int nbMouvementsAffiches = 0;
 std::vector<ChessCase*> casesAutorisees;
 int joueurActu = 0;
+extern int nbJoueurs;
 
 extern std::vector<GraphicElement*> interface ;
 extern std::vector<ClickableElement*> boutons ;
@@ -75,6 +76,10 @@ void parseAction(string action){	// move A3 B9, show B1
 			interface.push_back(new GraphicElement("victoire-noir.png"));
 			sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
 			interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
+		}else if (splited[1] == "MATE"){
+			interface.push_back(new GraphicElement("victoire-noir.png"));
+			sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
+			interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
 		}
 		else
 			cout<<"De qui??\n";
@@ -136,12 +141,10 @@ void notifyGame(sf::Event event){
 	caseSelect = plateau.notifyCases(event);
 	if((nbMouvementsAffiches != 0) && pieceSelect->notNull() && (pieceSelect->getColor() == joueurActu)){
 		if(caseSelect->isInVector(casesAutorisees)){
+			resetPossibleMove();
 			makePieceMove(caseSelect);
-			resetPossibleMove();
-			changePlayer();
-		}else{
-			resetPossibleMove();
 		}
+		resetPossibleMove();
 	}
 	switch(caseSelect->getType()){
 		case BLANC:	if(joueurActu ==caseSelect->getType()){
@@ -209,6 +212,7 @@ void makePieceMove(ChessCase *c){
 		cmd = cmd.append(1u,l);
 		cmd = cmd.append(1u,ch);
 		sendCommand(cmd);
+		changePlayer();
 	}
 	else{
 		cout<<"Aucune pièce selectionnée\n";
@@ -218,9 +222,11 @@ void makePieceMove(ChessCase *c){
 void changePlayer(){
 	interface.pop_back();
 	boutons.pop_back();
-	if(joueurActu == BLANC)
+	if(joueurActu == BLANC){
+		if(nbJoueurs == 1)
+			sendCommand("go");
 		joueurActu = NOIR;
-	else
+	}else
 		joueurActu = BLANC;
 	displayPlayer(joueurActu);
 }
