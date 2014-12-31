@@ -59,67 +59,30 @@ int32_t IA::alphabeta(int alpha, int beta, int depth) {
     }
 
 
-    // alphabeta through all legal moveLst
-    // for (Move move : moveLst) {
-    //     if (score >= beta) {
-    //         // This is the alpha-beta pruning.
-    //         // Stop alphabetaing, if we already have found a "killer" move.
-    //         break;
-    //     }
-    //     if (score > alpha) {
-    //         // This is part of the alpha-beta pruning too.
-    //         // Tighten the alphabeta window.
-    //         alpha = score;
-    //     }
-    //     // cout << "DEBUG alphabeta1 " ;
-    //     if (move.isCapturedAKing()) {
-    //         return 900 + depth; // Opponent's king can be captured. That means he is check-mated.
-    //     }
-
-    //     _board.doMove(move);
-    //     int num = -alphabeta(-beta, -alpha, depth - 1);
-    //     _board.undoMove(move);
-
-    //     if (num > score) {
-    //         score = num;
-    //     }
-    // }
-
     return score;
 
-    //    return best_val;
+}
 
-} // end of int alphabeta
 
-/***************************************************************
- * find_best_move
- *
- * This is the main AI.
- * It returns what it considers to be the best legal move in the
- * current position.
- ***************************************************************/
 Move IA::findBestMove(int depth) {
     // Make a list of all legal moveLst
     vector<Move> moveLst = vector<Move>();
     _board.getAllLegalMoves(moveLst);
 
-    engine_cout << "info " << moveLst.size() << " legal moves" << std::endl;
+    engine_cout << "debug string " << moveLst.size() << " legal moves" << std::endl;
 
     vector<Move> bestMoveLst = vector<Move>(); // Array of the (one or more) best moveLst so far
     int best_val = -999;
 
     // alphabeta through all legal moveLst
-    // for (uint i = 0; i < moveLst.size(); i++) {
     for (Move move : moveLst) {
-        // Move move = moveLst[i];
-
         // Get value of current move
         _board.doMove(move);
         // cout << "DEBUG findBestMove level=" << _level << " " ;
         int val = -alphabeta(-999, 999, depth);
         _board.undoMove(move);
 
-        engine_cout << "info string " << val << " : " << move << std::endl;
+        engine_cout << "debug string eval = " << val << " : " << move << std::endl;
 
         if (val > best_val) {
             best_val = val;
@@ -131,7 +94,7 @@ Move IA::findBestMove(int depth) {
     }
 
     if (bestMoveLst.size() == 0) {
-        engine_cout << "BUG: No legal moveLst!" << std::endl;
+        engine_cout << "invalid : No legal moveLst!" << std::endl;
         exit(1);
     }
 
