@@ -41,13 +41,22 @@ void displayGameIn(sf::RenderWindow &window){
 }
 
 void parseAction(string action){	// move A3 B9, show B1
-	if(!stringContains(action, "invalid") && !stringContains(action, "ok")){
-		if(stringContains(action, "move")){
+	if(!stringContains(action, "invalid") && !stringContains(action, "ok")&& !stringContains(action, "legal")){
+		if(stringContains(action, "move" )){
 			ChessCase *caseActu = NULL;
-			string piece = action.substr(5,2);
-			string destination = action.substr(8,2);
-		
-			char lettre = convertCharToArrayIndex(piece.at(0)), chiffre = 8- (piece.at(1)-40);
+			string piece;
+			string destination ;
+			if(stringContains(action, "bestmove")){
+				piece = action.substr(9,2);
+				destination = action.substr(11,2);
+			}else{
+				piece = action.substr(5,2);
+				destination = action.substr(7,2);
+			}
+			
+			char lettre = convertCharToArrayIndex(piece.at(0)), chiffre = 8 - (piece.at(1)-48);
+			cout<<"("<<convertCharToArrayIndex(piece.at(0))<<","<<8 - (piece.at(1)-48)<<")";
+
 			switch(caseActu->getType()){
 				case BLANC:	pieceSelect = michelBlanc.getPieceAt(*caseActu);
 						//cout<<pieceSelect->toString();
