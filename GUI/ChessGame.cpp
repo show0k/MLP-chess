@@ -78,7 +78,7 @@ void parseAction(string action){	// move A3 B9, show B1
 				sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
 				interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
 			}else if (splited[1] == "MATE"){
-				interface.push_back(new GraphicElement("victoire-noir.png"));
+				interface.push_back(new GraphicElement("victoire-mate.png"));
 				sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
 				interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
 			}
