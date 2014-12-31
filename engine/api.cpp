@@ -10,6 +10,8 @@ void API::loop(int argc, char *argv[]) {
         cmd += string(argv[i]) + " ";
 
     do {
+
+
         if (_state == TERMINAL && _gameStarted) {
             cout << _board ;
             if (_board.getPlayer() == WHITE)
@@ -35,64 +37,20 @@ void API::loop(int argc, char *argv[]) {
             exit(EXIT_SUCCESS);
 
 
-        } else if (token == "newgame") {
-
-            if (cmd.size() > 8) {
-                string input = cmd.substr(8) ;
-                _board.newGame(input);
-            } else {
-                _board.newGame();
-            }
-
-            _gameStarted = 1 ;
-            cout << "ok" << endl;
-
-        } else if (token == "go")   cout << cmd << endl ;
+        } else if (token == "newgame") newgame(cmd);
+        else if (token == "go")   cout << cmd << endl ;
 
 
-        else if (token == "show" && _gameStarted) {
+        else if (token == "show" && _gameStarted) show(cmd) ;
 
-            if (cmd.size() > 5) {
-                string sqStr = cmd.substr(5, 2) ;
-                if (sqStr.size() >= 2) {
-                    _moveLst.clear();
-                    _board.getLegalMoves(_moveLst, Square(sqStr), _board.getPlayer());
-                } else {
-                    invalid(cmd);
-                }
-            } else {
-                _board.getAllLegalMoves(_moveLst);
-            }
-
-            displayMoveLst(_moveLst);
-
-
-        } else if (token == "move" && _gameStarted)  {
-            Move move = Move(cmd.substr(5, 4));
-
-            // Is this move valid ?
-            if (_board.isValidMove(move)) {
-                _board.doMove(move);
-                bool check = _board.isKingInCheck();
-                _board.undoMove(move);
-                if (check)
-                {
-                    std::cout << "You are in CHECK. Play another move." << std::endl;
-                    continue;
-                }
-
-
-                cout << "ok" << endl;
-            } else {
-                invalid(cmd) ;
-            }
-
-
-        } //position(pos, is);
+        else if (token == "move" && _gameStarted) move(cmd);
         else if (token == "isready")    cout << "readyok" << endl;
         else if (token == "getbackup") cout << _board.getBackupGame() << endl;
-
-
+        else if (token == "getbackup") cout << _board.getBackupGame() << endl;
+        else if (token == "undo") {
+            if (_board.undoLastMove()) cout << "ok" << endl ;
+            else cout << "invalid : no last move" << endl ;
+        } else if (token == "get_evaluation") cout << _board.getEvaluation() << endl ;
         else if (_state == TERMINAL)
             help();
         else
@@ -108,15 +66,95 @@ void API::invalid(string cmd) {
     //     help();
 }
 
+
+void API::show(string cmd) {
+
+    if (cmd.size() > 5) {
+        string sqStr = cmd.substr(5, 2) ;
+        if (sqStr.size() >= 2) {
+            _moveLst.clear();
+            _board.getLegalMoves(_moveLst, Square(sqStr), _board.getPlayer());
+        } else {
+            invalid(cmd);
+        }
+    } else {
+        _board.getAllLegalMoves(_moveLst);
+    }
+
+    // Sppression des mouvements de mise en echec
+    cout << "DEBUG avant taille = " << _moveLst.size();
+    displayMoveLst(_moveLst);
+    cleanMoveLstFromChecks(_moveLst, _board);
+    cout << "DEBUG après taille = " << _moveLst.size();
+    displayMoveLst(_moveLst);
+
+    cout << "show" << "> " ;
+
+
+}
+
+void API::move(string cmd) {
+    Move move = Move(cmd.substr(5, 4));
+
+    // Is this move valid ?
+    if (_board.isValidMove(move)) {
+        if (_board.isMoveGoToChess(move))
+            std::cout << "invalid : You are in CHECK. Play another move." << std::endl;
+        else {
+            _board.doMove(move) ;
+            cout << "ok" << endl;
+
+            if (_board.isKingInCheck()) {
+                if (_board.getPlayer() == WHITE)
+                    cout << "victore BLANC" << endl ;
+                else
+                    cout << "victore NOIR" << endl ;
+
+            }
+        }
+    } else {
+        invalid(cmd) ;
+    }
+}
+
+void API::newgame(string cmd) {
+
+    if (cmd.size() > 8) {
+        string input = cmd.substr(8) ;
+        _board.newGame(input);
+    } else {
+        _board.newGame();
+    }
+
+    _gameStarted = 1 ;
+    cout << "ok" << endl;
+
+}
+
+
+
 void displayMoveLst(vector<Move> &moves) {
     for (Move m : moves)
         cout << m << " ";
     cout << endl ;
 }
 
+void cleanMoveLstFromChecks(vector<Move> &moveLst, Board &board) {
+
+    vector<Move> tmpLst = moveLst ; // copy
+    moveLst.clear();
+    for (uint8_t i = 0 ; i < tmpLst.size() ; i++) {
+        if (!board.isMoveGoToChess(moveLst[i]))
+            moveLst.push_back(tmpLst[i]);
+    }
+
+
+    //todebug : newgame k7/8/8/KQ6/8/8/8/8
+}
+
 void help(void) {
 
     cout << "Some examples : " << "\n" << "\"move a2a3\"" << "\n" << "\"show\"" << endl
-     << "\"show f2\"" << endl << "\"go\"" << endl 
-     << "\"newgame RNBQKBNR/1PPPPPPP/P7/8/8/p7/1ppppppp/rnbqkbnr \"" << endl;
+         << "\"show f2\"" << endl << "\"go\"" << endl
+         << "\"newgame RNBQKBNR/1PPPPPPP/P7/8/8/p7/1ppppppp/rnbqkbnr \"" << endl;
 }

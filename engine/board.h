@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 #include <vector>
-#include <assert.h> 
+#include <assert.h>
 
 #include "move.h"
 #include "utils.h"
@@ -31,8 +31,22 @@ typedef enum { // Directions
     soSoWe = -19, soSoEa = -21, soWeWe = -8, soEaEa = -12
 } EDirections;
 
-// return weight of each piece (usefull for evaluation)
-int materialWt(int8_t pieceCode) ;
+
+const vector<uint8_t> INIT_GAME {
+    X, X, X, X, X, X, X, X, X, X,
+    X, X, X, X, X, X, X, X, X, X,
+    X, R, N, B, Q, K, B, N, R, X,
+    X, P, P, P, P, P, P, P, P, X,
+    X, _, _, _, _, _, _, _, _, X,
+    X, _, _, _, _, _, _, _, _, X,
+    X, _, _, _, _, _, _, _, _, X,
+    X, _, _, _, _, _, _, _, _, X,
+    X, p, p, p, p, p, p, p, p, X,
+    X, r, n, b, q, k, b, n, r, X,
+    X, X, X, X, X, X, X, X, X, X,
+    X, X, X, X, X, X, X, X, X, X
+} ;
+
 
 class Board {
 
@@ -74,6 +88,10 @@ public:
 
 
     bool isKingInCheck(void);
+    bool isOtherKingInCheck(void);
+
+    // return true if this move make a chess (assume is it a valid move)
+    bool isMoveGoToChess(Move move) ;
 
     int8_t getPlayer() {
         return _playerToMove ;
@@ -82,23 +100,17 @@ public:
     // Print the current board as in UCI specification (ex : rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR)
     string getBackupGame() ;
 
+    // pop the last move
+    bool undoLastMove(void) {
+        int movesCount = _moveList.size() ;
+        if (movesCount == 0)
+            return false ;
+        else {
+            undoMove(_moveList[movesCount - 1]);
+            return true ;
+        }
+    }
 
-
-
-    const vector<uint8_t> INIT_GAME {
-        X, X, X, X, X, X, X, X, X, X,
-        X, X, X, X, X, X, X, X, X, X,
-        X, R, N, B, Q, K, B, N, R, X,
-        X, P, P, P, P, P, P, P, P, X,
-        X, _, _, _, _, _, _, _, _, X,
-        X, _, _, _, _, _, _, _, _, X,
-        X, _, _, _, _, _, _, _, _, X,
-        X, _, _, _, _, _, _, _, _, X,
-        X, p, p, p, p, p, p, p, p, X,
-        X, r, n, b, q, k, b, n, r, X,
-        X, X, X, X, X, X, X, X, X, X,
-        X, X, X, X, X, X, X, X, X, X
-    } ;
 private:
 
     bool parseNewGame(string &input, vector<uint8_t> &backupGame) ;

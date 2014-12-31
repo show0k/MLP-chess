@@ -51,7 +51,7 @@ void Board::newGame(string &input) {
     _pieceCounter.reserve(100);
     _board.reserve(120);
 
-    assert(backupGame.size() == 120 && "la sauvegarde n'est pas correcte !") ;   
+    assert(backupGame.size() == 120 && "la sauvegarde n'est pas correcte !") ;
 
     for (int i = 0; i < 120; i++) {
         _pieceCounter[backupGame[i]] += 1 ;
@@ -62,24 +62,12 @@ void Board::newGame(string &input) {
 // Usefull to load an old game configuration
 bool Board::parseNewGame(string &input, vector<uint8_t> &backupGame) {
 
-
-    /*
-    *
-    *  TODOOOOOOOOOOOOOOOOO
-    *
-    *
-    */
-
     vector<uint8_t> tmp_board ;
     // tmp_board.reserve(120) ;
     int spaceNumber = 0 ;
     bool first = true ;
     for (char &c : input) {
-
         if (!isdigit(c) && c != '/') {
-            if(first) {
-                first = 0; 
-            }
             tmp_board.push_back(pieceFromStr(c));
         } else if (isdigit(c) && c != '/') {
             spaceNumber =  int(c) - 48 ;
@@ -141,6 +129,7 @@ void Board::doMove(Move &move) {
     if (move.getPieceCaptured() != _) {
         _pieceCounter[move.getPieceCaptured()] -= 1 ;
     }
+    _moveList.push_back(move) ;
 
     swapPlayers() ;
 
@@ -160,6 +149,8 @@ void Board::undoMove(Move &move) {
         _pieceCounter[move.getPiecePromoted()] -= 1 ;
         _pieceCounter[move.getPiece()] += 1 ;
     }
+
+    _moveList.pop_back() ;
 
     swapPlayers();
 }
@@ -183,6 +174,25 @@ bool Board::isKingInCheck(void) {
 
 }
 
+bool Board::isOtherKingInCheck(void) {
+    swapPlayers() ;
+    bool out = isKingInCheck() ;
+    swapPlayers() ;
+    return out ;
+}
+
+bool Board::isMoveGoToChess(Move move) {
+    bool out;
+    doMove(move);
+    if (isOtherKingInCheck()) {
+        out = true ;
+    } else {
+        out = false;
+    }
+    undoMove(move);
+    return out ;
+}
+
 bool Board::isValidMove(Move &move) {
 
     vector<Move> moveLst = vector<Move>() ;
@@ -190,6 +200,7 @@ bool Board::isValidMove(Move &move) {
     for (Move m : moveLst) {
         if (m == move) {
             // l'égalité ne prend pas en compte les pieces promu et capturées
+            move.setPiece(m.getPiece()) ;
             move.setPieceCaptured(m.getPieceCaptured()) ;
             move.setPiecePromoted(m.getPiecePromoted()) ;
             return true ;

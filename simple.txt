@@ -1,0 +1,25 @@
+Fuck off UCI
+# GUI to engine
+* "quit" : close current game
+* "newgame" : create a new game
+    * gameconfiguration
+    engine answer "ok"
+* "move a1b2" 
+    engine answer "ok" or "invalid"
+* "go" : find best move
+    engine answer  : "bestmove a1b2" 
+* "show" :
+    * [optional] "b1"
+    engine answer move list for current player, orcurrent square for example : "show> b1c3 b1a3 d1e2 d1f3 d1g4 d1h5"
+* "set_difficulty" une 
+
+* "getbackup" 
+    engine answer current game configuration
+* "undo" : pop the last move (lifo of moves)
+    engine answer ok
+* "get_evaluation" : ask the result of the evaluation fonction
+    engine answer a 32 bits signed integer
+
+
+dup2 et pipe ? http://forum.rue-montgallet.com/ruemontgallet/Programmation/aide-pipe-dup2-sujet_20276_1.htm
+http://michele-garoche.org/progsys/progsys05.shtml.fr
