@@ -6,7 +6,7 @@ struct addrinfo *host_info_list;
 int socketfd;*/
 
 void sendCommand(string s){
-	cout<<s<<"\n";
+	cout<<s<<endl;
 	/*char *msg = new char [s.length()+1];
  	 strcpy (msg, s.c_str());
 	int len;
