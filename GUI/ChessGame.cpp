@@ -65,12 +65,12 @@ void parseAction(string action){	// move A3 B9, show B1
 	}else if(stringContains(action, "victoire")){
 		std::vector<string> splited;
 		stringSplit(action, ' ',splited);
-		if(splited[1] == "blanc"){
+		if(splited[1] == "BLANC"){
 			interface.push_back(new GraphicElement("victoire-blanc.png"));
 			sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
 			interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));
 		}
-		else if (splited[1] == "noir"){
+		else if (splited[1] == "NOIR"){
 			interface.push_back(new GraphicElement("victoire-noir.png"));
 			sf::Vector2u v = interface[interface.size()-1]->getSprite(0).getTexture()->getSize();
 			interface[interface.size()-1]->setPosition(Point2I((int)(WINDOW_W/2 - v.x/2 ),(int)(WINDOW_H/2 - v.y/2)));

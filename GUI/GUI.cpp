@@ -13,7 +13,7 @@ string engineIP = "localhost";
 
 void GUI(){
 	srand (time(NULL));
-	initAPI(engineIP.c_str());
+	//initAPI(engineIP.c_str());
 	musicInitialisation();
 	interfaceInitialisation(0);
 	
