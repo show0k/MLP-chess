@@ -4,6 +4,8 @@
 void API::loop() {
 
     string token, cmd;
+    ofstream logfile("engine.log");
+    assert(logfile.is_open()) ;
 
     do {
         displayTerminalInfo();
@@ -12,9 +14,12 @@ void API::loop() {
             cmd = "quit";
         istringstream is(cmd);
         is >> skipws >> token;
+        logfile << token << endl ;
 
-        if (token == "quit" || token == "stop") {
-
+        if (token == "quit" || token == "stop" || token == "exit") {
+             // close ofstream;
+            logfile.close();
+            cout << "closing ..." << endl ;
             exit(EXIT_SUCCESS);
 
         } else if (token == "newgame") newgame(cmd);
@@ -28,13 +33,17 @@ void API::loop() {
         else if (token == "undo" && _gameStarted) {
             if (_board.undoLastMove()) engine_cout << "undo> ok" << endl ;
             else engine_cout << "undo> invalid : no last move" << endl ;
-        } else if (token == "getevaluation" && _gameStarted ) engine_cout << "getevaluation> " <<  _board.getEvaluation() << endl ;
-        else if (_state == TERMINAL)
+        } else if (token == "getevaluation" && _gameStarted) engine_cout << "getevaluation> " <<  _board.getEvaluation() << endl ;
+        else if (_state == TERMINAL) {
             help();
-        else
             engine_cout << "unknown command: " << cmd << endl;
+        }
 
     } while (token != "quit"); // Passed args have one-shot behaviour
+
+    // close ofstream;
+    logfile.close();
+
 }
 
 void API::invalid(string cmd) {
