@@ -1,5 +1,5 @@
 # Description
-My Little Poney Chess game is an humouristic c++ game made for a school project.
+My Little Poney Chess is an humouristic c++ game made for a school project.
 
 # Backend
 Engine and GUI are two separated programms which are communicating throw a pipe with a protocol based on Unified Chess Interface (described in api_specification.txt).
