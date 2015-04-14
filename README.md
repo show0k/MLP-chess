@@ -15,6 +15,8 @@ Graphic interface is made with SFML library.
 You have to execute Makefiles in GUI and engine directories, or run build.sh
 
 # Licence
-You can do whatever you want with the sources files. For more information, see the below LICENCE file
+You can do whatever you want with the sources files. For more informations, see the below LICENCE file
 
-Théo & Edouard
+# Notice
+"My Little Poney" is a trademark owned by Hasbro Studio, and the generic song of "Happy Tree Friends" is ownd by Mondo Media
+
