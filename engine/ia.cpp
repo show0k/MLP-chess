@@ -1,3 +1,11 @@
+/*
+ * ---------------------------------------------------------------------------------------------------
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * <edouembe@ensea.fr> and <showok@showok.info> wrote this file. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy me a beer in return. Edouard Emberger and Théo Segonds
+ * ---------------------------------------------------------------------------------------------------
+ */
 #include "ia.h"
 
 
@@ -31,7 +39,7 @@ int32_t IA::alphabeta(int32_t alpha, int32_t beta, int32_t depth) {
 
     _board.getAllLegalMoves(moveLst);
 
-    int32_t score = -20000; // Assume the worst
+    int32_t score = -10000; // Assume the worst
 
     for (Move move : moveLst) {
         if (score >= beta) {
@@ -46,7 +54,7 @@ int32_t IA::alphabeta(int32_t alpha, int32_t beta, int32_t depth) {
         }
         // cout << "DEBUG alphabeta1 " ;
         if (move.isCapturedAKing()) {
-            return 10000 + depth; // Opponent's king can be captured. That means he is check-mated.
+            return 900 + depth; // Opponent's king can be captured. That means he is check-mated.
         }
 
         _board.doMove(move);
@@ -64,28 +72,22 @@ int32_t IA::alphabeta(int32_t alpha, int32_t beta, int32_t depth) {
 
 Move IA::findBestMove(int32_t depth) {
     // Make a list of all legal moveLst
-
     vector<Move> moveLst = vector<Move>();
     _board.getAllLegalMoves(moveLst);
     _board.cleanChecksFromMoveLst(moveLst) ;
 
-    // Addapt the time of search
-    int level = depth ;
-    if (moveLst.size() <= 10 && level < 4) level ++ ;
-    else if (moveLst.size() <= 6 && level < 5) level +=2 ;
-
     engine_cout << "debug string " << moveLst.size() << " legal moves" << std::endl;
-    engine_cout << "debug string depth = " << level << std::endl;
+    engine_cout << "debug string depth = " << depth << std::endl;
 
     vector<Move> bestMoveLst = vector<Move>(); // Array of the (one or more) best moveLst so far
-    int32_t best_val = -20000;
+    int32_t best_val = -10000;
 
     // alphabeta through all legal moveLst
     for (Move move : moveLst) {
         // Get value of current move
         _board.doMove(move);
         // cout << "DEBUG findBestMove level=" << _level << " " ;
-        int32_t val = -alphabeta(-20000, 20000, level);
+        int32_t val = -alphabeta(-10000, 10000, depth);
         _board.undoMove(move);
 
         engine_cout << "debug string eval = " << val << " : " << move << std::endl;

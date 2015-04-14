@@ -10,12 +10,12 @@ rm fifo* 2>/dev/null
 # tosolve some bugs
 pkill GUI
 
-
-mkfifo fifo0 fifo1
+# Alternative command which should works on windows to make the pipe
 # ./GUI.out < fifo0 | ./../engine/chessEngine.out > fifo0 
 
+# Usefull for communication debuging in terminal
+mkfifo fifo0 fifo1
 (./../engine/chessEngine.out< fifo1| tee fifo0 )&
 (./GUI.out < fifo0 | tee fifo1)&
-#( exec 30<fifo0 31<fifo1 )   
 
 trap "echo 'Chess program closed.'" SIGINT SIGTERM SIGKILL

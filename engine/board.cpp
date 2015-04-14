@@ -1,3 +1,11 @@
+/*
+ * ---------------------------------------------------------------------------------------------------
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * <edouembe@ensea.fr> and <showok@showok.info> wrote this file. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy me a beer in return. Edouard Emberger and Théo Segonds
+ * ---------------------------------------------------------------------------------------------------
+ */
 #include "board.h"
 
 
@@ -15,6 +23,18 @@ ostream &operator<<(ostream &out, const Board &b) { // output
     return out;
 }
 
+int materialWt(int8_t pieceCode) {
+
+    switch (pieceCode) {
+        case p: case P: return 1; break;
+        case b: case B: case n: case N: return 3; break;
+        case r: case R: return 5; break;
+        case q: case Q: return 9; break;
+        case k: case K: return 200; break;
+        default : return 0 ;
+    }
+
+}
 
 void Board::newGame(void) {
 

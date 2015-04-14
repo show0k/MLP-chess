@@ -1,3 +1,11 @@
+/*
+ * ---------------------------------------------------------------------------------------------------
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * <edouembe@ensea.fr> and <showok@showok.info> wrote this file. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy me a beer in return. Edouard Emberger and Théo Segonds
+ * ---------------------------------------------------------------------------------------------------
+ */
 #include "api.h"
 
 // inspired from
@@ -59,7 +67,6 @@ void API::show(string cmd) {
             _moveLst.clear();
             _board.getLegalMoves(_moveLst, Square(sqStr), _board.getPlayer());
             engine_cout << "debug string " << _board.getPieceStringFromSquare(Square(sqStr)) << endl ;
-            displayVictoryOrDoNothing();
         } else {
             invalid(cmd);
         }
@@ -76,7 +83,7 @@ void API::show(string cmd) {
         displayMoveLst(_moveLst);
 
     }
-    engine_cout << "debug string evaluation = " << _board.getEvaluation() << endl ;
+    engine_cout << "debug string  evaluation = " << _board.getEvaluation() << endl ;
 
 }
 
@@ -186,9 +193,6 @@ void displayMoveLst(vector<Move> &moves) {
 }
 //todebug : newgame k7/8/8/KQ6/8/8/8/8
 //todebug : newgame kppppppp/8/8/1QQ5/8/8/8/K7
-//3 newgame 1N1K1BN1/4P1P1/2PP4/3B1P2/8/2Q5/6P1/kp6
-//newgame 1N1K1BN1/4P1P1/2PP4/3B1P2/8/2Q5/6P1/rk6
-
 void help(void) {
 
     engine_cout << "Some examples : " << "\n" << "\"move a2a3\"" << "\n" << "\"show\"" << endl
