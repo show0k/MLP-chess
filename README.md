@@ -20,3 +20,7 @@ You can do whatever you want with the sources files. For more informations, see 
 # Notice
 "My Little Poney" is a trademark owned by Hasbro Studio, and the generic song of "Happy Tree Friends" is ownd by Mondo Media
 
+# Some screenshots 
+![](https://raw.githubusercontent.com/show0k/MLP-chess/master/pictures/mcp_chess_2.png)
+![](https://raw.githubusercontent.com/show0k/MLP-chess/master/pictures/mlp_chess.png)
+
