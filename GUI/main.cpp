@@ -8,17 +8,21 @@
  */
 #include "Chess.hpp"
 
+void api_thread() {
+    string s ="";
+    while(s != "exit"){
+        s = getResult();
+        parseAction(s);
+    }
+}
+
+
 int main(int argc,char  **argv){
 
-	sf::Thread thread(&GUI);
-	thread.launch(); 
-	string s ="";
-	while(s != "exit"){
-		s = getResult();
-		parseAction(s);
-	}
+    sf::Thread thread(&api_thread);
+    thread.launch(); 
+    GUI() ;
 
 	return EXIT_SUCCESS;
 }
-
 
