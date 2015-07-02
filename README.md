@@ -6,6 +6,13 @@ Engine and GUI are two separated programms which are communicating throw a pipe 
 You can play on terminal with ./engine/chessEngine.out -t
 
 Graphic interface is made with SFML library.
+# Dependencies
+[SFML](http://www.sfml-dev.org) is required to run MPL-Chess, and a proper compiler like g++. 
+* On a Debian based GNU/Linux distribution you can install it by
+```sudo apt-get install libsfml-dev```
+* On OSX, with homebrew
+```brew install sfml```
+* On Windows, download it from [SFML website](http://www.sfml-dev.org/download/sfml/2.3)
 
 # Run
 * To run on linux (or Mac but untested), use ./run.sh.
